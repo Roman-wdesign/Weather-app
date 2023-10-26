@@ -50,3 +50,8 @@ npm run test:unit
 ```sh
 npm run lint
 ```
+## Features
+
+🔵 Vue3, TypeScript, Script setup
+🔵 Date Builder
+

@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import TheInput from '@/shared/components/TheInput.vue';
+import { dateBuilder } from '@/helpers/DateBuilder';
 import { apiKeys } from '@/helpers/config';
+
+
 
 
 const urlBase: string = 'https://api.openweathermap.org/data/2.5/'
@@ -24,18 +27,7 @@ const fetchWeather = (e: any) => {
   }
 }
 
-const dateBuilder = () => {
-  let d = new Date();
-  let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-  let days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
-  let day = days[d.getDay()];
-  let date = d.getDate();
-  let month = months[d.getMonth()];
-  let year = d.getFullYear();
-
-  return `${day} ${date} ${month} ${year}`;
-}
 
 
 onMounted(async () => {
@@ -69,6 +61,10 @@ onMounted(async () => {
         </div>
         <div class="weather">
           <h4 class="flex justify-center font-bold">{{ theWeather.weather[0].main }}</h4>
+
+          <img class="w-[150] h-auto" :src="`https://openweathermap.org/img/wn/${theWeather.weather[0].icon}@2x.png`
+            " />
+
         </div>
       </div>
     </div>
