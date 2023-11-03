@@ -59,12 +59,14 @@ onMounted(async () => {
         <div class="temp flex justify-center py-3">
           <h2 class="text-2xl font-extrabold">{{ Math.round(theWeather.main.temp) }} °c</h2>
         </div>
-        <div class="weather">
-          <h4 class="flex justify-center font-bold">{{ theWeather.weather[0].main }}</h4>
-
-          <img class="w-[150] h-auto" :src="`https://openweathermap.org/img/wn/${theWeather.weather[0].icon}@2x.png`
-            " />
-
+        <div class=" flex items-center justify-between weather">
+          <div class="div flex">
+            <h4 class="font-bold">{{ theWeather.weather[0].main }}</h4>
+          </div>
+          <div class="div flex">
+            <img class="w-[150] h-auto" :src="`https://openweathermap.org/img/wn/${theWeather.weather[0].icon}@2x.png`
+              " />
+          </div>
         </div>
       </div>
     </div>
