@@ -13,6 +13,5 @@ const updateValue = (event: Event) => {
 </script>
 
 <template>
-    <input class="input border-2 text-black border-amber-800" :placeholder="props.label" type="text" :value="modelValue"
-        @input="updateValue" />
+    <input :placeholder="props.label" type="text" :value="modelValue" @input="updateValue" />
 </template>
