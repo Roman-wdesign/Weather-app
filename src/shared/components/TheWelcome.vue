@@ -4,11 +4,16 @@ import type { Ref } from 'vue'
 import TheInput from '@/shared/components/TheInput.vue';
 import { dateBuilder } from '@/helpers/DateBuilder';
 import { useFetch } from '@/shared/composables/Fetch'
+import { genOpenWeatherURL } from '@/helpers/vars'
+import { imgOpenWeatherURL } from '@/helpers/vars'
 
 //destructuring fetch
 const { data, error, loading, fetchData } = useFetch();
 
-const urlBase: string = import.meta.env.VITE_URL_BASE
+const urlBase: string = genOpenWeatherURL
+const imgUrl: string = imgOpenWeatherURL
+
+//VITE is required in your env name
 const token: string = import.meta.env.VITE_WEATHER_SECRET_API_KEY
 
 const theQuery: Ref<string> = ref<string>('')
@@ -63,7 +68,7 @@ onMounted(async () => {
             <h4 class="font-bold">{{ theWeather.weather[0].main }}</h4>
           </div>
           <div class="div flex">
-            <img class="w-[150] h-auto" :src="`https://openweathermap.org/img/wn/${theWeather.weather[0].icon}@2x.png`
+            <img class="w-[150] h-auto" :src="`${imgUrl}${theWeather.weather[0].icon}@2x.png`
       " />
           </div>
         </div>
