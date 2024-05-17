@@ -1,39 +1,36 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
+import type { Ref } from 'vue'
 import TheInput from '@/shared/components/TheInput.vue';
 import { dateBuilder } from '@/helpers/DateBuilder';
-import useFetch from '@/shared/composables/Fetch'
+import { useFetch } from '@/shared/composables/Fetch'
 
-const { data: error, loading, fetchData } = useFetch();
+//destructuring fetch
+const { data, error, loading, fetchData } = useFetch();
 
+const urlBase: string = import.meta.env.VITE_URL_BASE
+const token: string = import.meta.env.VITE_WEATHER_SECRET_API_KEY
 
-const urlBase = import.meta.env.VITE_URL_BASE
-const token = import.meta.env.VITE_WEATHER_SECRET_API_KEY
-
-const theQuery = ref<any>('')
-let theWeather = ref<any>({})
+const theQuery: Ref<string> = ref<string>('')
+const theWeather: Ref<any> = ref({});
 
 
 const setResults = (results: any) => {
   theWeather.value = results
 }
 
+const fetchWeather = async () => {
+  const apiUrl = `${urlBase}weather?q=${theQuery.value}&units=metric&APPID=${token}&lang={ru}`;
 
-
-const fetchWeather = async (e: any) => {
-  const apiUrl = `${urlBase}weather?q=${theQuery.value}&appid=${token}&units=metric`;
-
-  fetch(apiUrl)
-    .then(response => {
-      return response.json()
-    }).then(setResults)
+  await fetchData(apiUrl);
+  if (data.value) {
+    setResults(data.value);
+  }
 }
 
-
-
 onMounted(async () => {
-  await fetchWeather('')
-  console.log('Weather List was mounted')
+  await fetchWeather();
+  console.log('Weather List was mounted');
 })
 
 </script>
@@ -42,7 +39,8 @@ onMounted(async () => {
   <div class="container mx-auto px-4">
     <p v-if="loading">Loading...</p>
     <p v-if="error">Error: {{ error }}</p>
-    <TheInput @keydown.enter="fetchWeather" label="название города" v-model="theQuery">
+    <TheInput class="input border-2 text-black border-amber-800" @keydown.enter="fetchWeather" label="название города"
+      v-model="theQuery">
     </TheInput>
     <div class="flex-col justify-between py-6">
       <div class="date">

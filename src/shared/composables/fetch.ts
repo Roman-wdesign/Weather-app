@@ -1,6 +1,8 @@
 import { ref } from 'vue';
 
-export default function useFetch() {
+//create fetching function
+
+export const useFetch = () =>{
  const data = ref<any>(null);
   const error = ref<string | null>(null);
   const loading = ref<boolean>(false);
