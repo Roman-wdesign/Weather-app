@@ -1,9 +1,10 @@
 import { ref } from 'vue';
+import type { Ref } from 'vue'
 
 //create fetching function
 
-export const useFetch = () =>{
- const data = ref<any>(null);
+export const useFetch = () => {
+  const data: Ref<string | null> = ref(null);
   const error = ref<string | null>(null);
   const loading = ref<boolean>(false);
 

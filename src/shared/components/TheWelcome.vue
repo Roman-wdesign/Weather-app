@@ -1,11 +1,13 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue'
 import type { Ref } from 'vue'
 import TheInput from '@/shared/components/TheInput.vue';
 import { dateBuilder } from '@/helpers/DateBuilder';
 import { useFetch } from '@/shared/composables/Fetch'
 import { genOpenWeatherURL } from '@/helpers/vars'
 import { imgOpenWeatherURL } from '@/helpers/vars'
+
+
 
 //destructuring fetch
 const { data, error, loading, fetchData } = useFetch();
@@ -25,18 +27,14 @@ const setResults = (results: any) => {
 }
 
 const fetchWeather = async () => {
-  const apiUrl = `${urlBase}weather?q=${theQuery.value}&units=metric&APPID=${token}&lang={ru}`;
+  const apiUrl = `${urlBase}weather?q=${theQuery.value}&units=metric&APPID=${token}`;
+
 
   await fetchData(apiUrl);
   if (data.value) {
     setResults(data.value);
   }
 }
-
-onMounted(async () => {
-  await fetchWeather();
-  console.log('Weather List was mounted');
-})
 
 </script>
 
