@@ -6,7 +6,7 @@ import { dateBuilder } from '@/helpers/DateBuilder';
 import { useFetch } from '@/shared/composables/Fetch'
 import { genOpenWeatherURL } from '@/helpers/vars'
 import { imgOpenWeatherURL } from '@/helpers/vars'
-
+const getDate = ref(dateBuilder())
 
 
 //destructuring fetch
@@ -47,7 +47,7 @@ const fetchWeather = async () => {
     </TheInput>
     <div class="flex-col justify-between py-6">
       <div class="date">
-        <h5 class="font-bold text-center italic text-sm">{{ dateBuilder() }}</h5>
+        <h5 class="font-bold text-center italic text-sm">{{ getDate }}</h5>
       </div>
       <div class="weather-wrap" v-if="(typeof theWeather.main != 'undefined')">
         <div class="location-box">
