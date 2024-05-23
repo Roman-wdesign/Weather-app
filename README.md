@@ -1,5 +1,21 @@
 ## Features
 
-🔵 Vue3, TypeScript, Script setup
+```
+🔵 Script setup
+```
+
+```
+🔵 Composables
+```
+
+```
 🔵 Date Builder
-🔵 fetch composables
+```
+
+```
+🔵 Fetch
+```
+
+```
+🔵 localStorage
+```
