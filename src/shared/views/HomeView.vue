@@ -10,7 +10,7 @@ import TheButton from '@/shared/components/TheButton.vue'
 import TheItemWeather from '@/shared/components/weather/TheItemWeather.vue'
 
 const getDate = ref(dateBuilder())
-const { storedValue: savedCities, setValue: saveCity, removeValue: removeCity } = useLocalStorage('savedCities', [])
+const { storedValue: savedCities, setValue: saveCity } = useLocalStorage('savedCities', [])
 
 const { data, error, loading, fetchData } = useFetch()
 
@@ -47,12 +47,19 @@ const removeCityFromStorage = (city: string) => {
 
 <template>
   <div class="container mx-auto px-4">
-    <TheButton @click="saveCurrentCity">Save City</TheButton>
-    <div class="saved-cities">
+    <div v-if="theWeather.main">
+      <TheButton @click="saveCurrentCity">Save City</TheButton>
       <h3>Saved Cities</h3>
+    </div>
+    <div class="saved-cities">
+
       <ul>
         <li v-for="city in savedCities" :key="city">
-          {{ city }}
+          <div>
+            <div class="div flex">
+              {{ city }}
+            </div>
+          </div>
           <TheButton @click="removeCityFromStorage(city)">Remove</TheButton>
         </li>
       </ul>
@@ -67,8 +74,8 @@ const removeCityFromStorage = (city: string) => {
       <div class="date">
         <h5 class="font-bold text-center italic text-sm">{{ getDate }}</h5>
       </div>
-      <TheItemWeather v-if="theWeather.main" :weather="theWeather" :imgUrl="imgUrl" :saved-cities="savedCities"
-        @remove-city="removeCityFromStorage"></TheItemWeather>
+      <TheItemWeather v-if="theWeather.main" :weather="theWeather" :imgUrl="imgUrl" :saved-cities="savedCities">
+      </TheItemWeather>
     </div>
   </div>
 </template>
