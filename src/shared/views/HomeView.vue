@@ -74,7 +74,7 @@ const removeCityFromStorage = (city: string) => {
       <div class="date">
         <h5 class="font-bold text-center italic text-sm">{{ getDate }}</h5>
       </div>
-      <TheItemWeather v-if="theWeather.main" :weather="theWeather" :imgUrl="imgUrl" :saved-cities="savedCities">
+      <TheItemWeather v-if="theWeather.main" :weather="theWeather" :imgUrl="imgUrl">
       </TheItemWeather>
     </div>
   </div>

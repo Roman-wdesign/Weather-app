@@ -1,4 +1,12 @@
-import type { IdateBuilder } from "@/shared/models/IdateBuilder";
+
+interface IdateBuilder<T,U> {
+    dayOfWeek: T;
+    dayOfMonth: U;
+    monthName: T;
+}
+
+
+
 export const dateBuilder = (): string => {
     const d = new Date();
     const months:string[] = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
