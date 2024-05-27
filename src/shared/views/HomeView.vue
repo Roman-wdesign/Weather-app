@@ -3,7 +3,7 @@ import { ref } from 'vue'
 import type { Ref } from 'vue'
 import { useLocalStorage } from '@/shared/composables/localStorage'
 import { dateBuilder } from '@/helpers/DateBuilder'
-import { useFetch } from '@/shared/composables/Fetch'
+import { useFetch } from '@/shared/composables/fetch'
 import { genOpenWeatherURL, imgOpenWeatherURL } from '@/helpers/vars'
 import TheInput from '@/shared/components/TheInput.vue'
 import TheButton from '@/shared/components/TheButton.vue'
@@ -11,6 +11,9 @@ import TheItemWeather from '@/shared/components/weather/TheItemWeather.vue'
 
 const getDate = ref(dateBuilder())
 const { storedValue: savedCities, setValue: saveCity } = useLocalStorage('savedCities', [])
+if (!Array.isArray(savedCities.value)) {
+  savedCities.value = []
+}
 
 const { data, error, loading, fetchData } = useFetch()
 
