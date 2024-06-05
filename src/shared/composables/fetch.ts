@@ -6,7 +6,7 @@ export const useFetch = () => {
   const error = ref<string | null>(null);
   const loading = ref<boolean>(false);
 
-
+// async fetch with catching errors
   async function fetchData(url:string) {
     loading.value = true;
     try {
