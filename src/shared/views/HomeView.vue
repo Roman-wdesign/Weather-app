@@ -70,12 +70,7 @@ watch(savedCities, (newCities) => {
   });
 });
 
-// Следим за изменениями в theQuery и вызываем fetchWeatherForQuery при изменении
-watch(theQuery, (newQuery) => {
-  if (newQuery) {
-    fetchWeatherForQuery();
-  }
-});
+
 </script>
 
 <template>
@@ -100,8 +95,8 @@ watch(theQuery, (newQuery) => {
 
     <p v-if="loading">Loading...</p>
     <p v-if="error">Error: {{ error }}</p>
-    <TheInput
-      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+    <TheInput @keydown.enter="fetchWeatherForQuery"
+      class="bg-gray-50 border border-grayfetchWeather-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
       label="название города" v-model="theQuery">
     </TheInput>
     <div class="flex-col justify-between py-6">
