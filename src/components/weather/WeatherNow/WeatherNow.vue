@@ -18,10 +18,10 @@ const {
 } = useWeatherNow();
 
 const handleKeyDown = (event: KeyboardEvent) => {
-    if (event.key === 'Enter') {
-        fetchWeatherForQuery();
+    if (event.key == 'Enter') {
+        fetchWeatherForQuery.value;
     }
-};
+};;
 
 
 </script>
@@ -45,7 +45,6 @@ const handleKeyDown = (event: KeyboardEvent) => {
                 </li>
             </ul>
         </div>
-
         <p v-if="loading">Loading...</p>
         <p v-if="error">Error: {{ error }}</p>
         <TheInput @keydown.enter="handleKeyDown"

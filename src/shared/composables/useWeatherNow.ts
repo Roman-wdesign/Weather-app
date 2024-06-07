@@ -1,4 +1,4 @@
-import { ref, onMounted, watch } from 'vue';
+import { ref, computed, onMounted, watch } from 'vue';
 import type { Ref } from 'vue';
 import { useLocalStorage } from '@/shared/composables/localStorage';
 import { dateBuilder } from '@/helpers/DateBuilder';
@@ -34,11 +34,14 @@ const fetchWeather = async (city: string) => {
     }
 };
 
-const fetchWeatherForQuery = async () => {
-    if (theQuery.value) {
-        await fetchWeather(theQuery.value);
-    }
-};
+// const fetchWeatherForQuery = ( async () => {
+//     if (theQuery.value) {
+//         await fetchWeather(theQuery.value);
+//     }
+    
+// });
+
+const fetchWeatherForQuery = computed( async () => theQuery.value ? await fetchWeather(theQuery.value) : undefined);
 
 const saveCurrentCity = () => {
     const cityName = theWeather.value[theQuery.value]?.name;
