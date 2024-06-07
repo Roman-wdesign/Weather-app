@@ -34,18 +34,11 @@ const fetchWeather = async (city: string) => {
     }
 };
 
-// const fetchWeatherForQuery = ( async () => {
-//     if (theQuery.value) {
-//         await fetchWeather(theQuery.value);
-//     }
-    
-// });
-
-const fetchWeatherForQuery = computed( async () => theQuery.value ? await fetchWeather(theQuery.value) : undefined);
+const fetchWeatherForQuery = computed ( async () => theQuery.value ? await fetchWeather(theQuery.value) : undefined);
 
 const saveCurrentCity = () => {
     const cityName = theWeather.value[theQuery.value]?.name;
-    if (cityName) {
+    if (cityName && !savedCities.value.includes(cityName)) {
         saveCity([...savedCities.value, cityName]);
     }
 };
