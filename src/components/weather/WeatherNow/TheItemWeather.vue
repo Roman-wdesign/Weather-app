@@ -24,8 +24,8 @@ const props = defineProps<Props>();
 <template>
     <div>
         <div class="weather-wrap" v-if="props.weather.main">
-            <div class="location-box">
-                <div class="location">
+            <div class="location-box pt-10">
+                <div class="location px-2">
                     <h3 class="text-lg font-bold text-center">
                         {{ props.weather.name }}, {{ props.weather.sys.country }}
                     </h3>
@@ -38,12 +38,12 @@ const props = defineProps<Props>();
                     {{ Math.round(props.weather.main.temp) }} °c
                 </h2>
             </div>
-            <div class="flex items-center justify-between weather">
-                <div class="div flex">
+            <div class="flex flex-col justify-center px-2">
+                <div class="div flex justify-center">
                     <h4 class="font-bold">{{ props.weather.weather[0].main }}</h4>
                 </div>
-                <div class="div flex">
-                    <img class="w-[150] h-auto" :src="`${props.imgUrl}${props.weather.weather[0].icon}@2x.png`" />
+                <div class="div flex justify-center max-w-xs">
+                    <img class=" w-[150] h-auto" :src="`${props.imgUrl}${props.weather.weather[0].icon}@2x.png`" />
                 </div>
             </div>
         </div>

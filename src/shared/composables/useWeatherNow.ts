@@ -48,6 +48,8 @@ const removeCityFromStorage = (city: string) => {
     delete theWeather.value[city];
 };
 
+const isSaveDisabled = computed(() => savedCities.value.length >= 3);
+
 // loading weather data when component mount, for saved cities in localStorage
 onMounted(() => {
     savedCities.value.forEach((city: string) => {
@@ -72,10 +74,10 @@ watch(savedCities, (newCities) => {
         loading,
         imgUrl,
         fetchWeatherForQuery,
+        isSaveDisabled,
         saveCurrentCity,
         removeCityFromStorage
     };
 }
-
 
 

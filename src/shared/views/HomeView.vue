@@ -3,7 +3,7 @@ import WeatherNow from '@/components/weather/WeatherNow/WeatherNow.vue'
 </script>
 
 <template>
-  <div>
-    <WeatherNow></WeatherNow>
-  </div>
+
+  <WeatherNow></WeatherNow>
+
 </template>
