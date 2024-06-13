@@ -27,7 +27,8 @@ const props = defineProps<Props>();
             <div class="location-box pt-10">
                 <div class="location px-2">
                     <h3 class="text-lg font-bold text-center">
-                        {{ props.weather.name }}, {{ props.weather.sys.country }}
+                        <p>{{ props.weather.sys.country }}</p>
+                        <p>{{ props.weather.name }}</p>
                     </h3>
                 </div>
             </div>

@@ -22,17 +22,17 @@ const handleKeyDown = (event: KeyboardEvent) => {
     if (event.key == 'Enter') {
         fetchWeatherForQuery.value;
     }
-};;
-
-
+};
 </script>
 
 <template>
-
-    <div class="grid gap-2">
-        <div class="saved-cities">
-            <ul class="flex flex-row flex-wrap gap-4">
-                <li v-for="city in savedCities" :key="city">
+    <div class="grid grid-flow-row-dense grid-cols-1 grid-rows-auto">
+        <div class="saved-cities mt-6">
+            <div v-if="savedCities.length !== 0" class="flex justify-center my-4">
+                <h3>Saved Cities</h3>
+            </div>
+            <ul class="flex flex-row flex-wrap justify-center gap-4">
+                <li class="mx-2" v-for="city in savedCities" :key="city">
                     <div>
                         <div class="relative">
                             <TheButton class="absolute top-0 right-0" @click="removeCityFromStorage(city)">x
@@ -46,29 +46,32 @@ const handleKeyDown = (event: KeyboardEvent) => {
                 </li>
             </ul>
         </div>
-        <div class="button" v-if="theWeather[theQuery]">
-            <div>
-                <TheButton :disabled="isSaveDisabled" @click="saveCurrentCity">Save City</TheButton>
+        <div class="flex justify-center my-4" v-if="theWeather[theQuery]">
+            <div class="flex flex-col">
+                <div>
+                    <TheButton :disabled="isSaveDisabled" @click="saveCurrentCity">Save City
+                    </TheButton>
+                </div>
             </div>
-            <h3>Saved Cities</h3>
-        </div>
-        <div class="error-message flex flex-col">
-            <p v-if="loading">Loading...</p>
-            <p v-if="error">Error: {{ error }}</p>
-        </div>
 
-        <div class="input ">
+        </div>
+        <div class="input">
             <TheInput class="max-w-32 min-w-24" @keydown.enter="handleKeyDown" label="название города"
                 v-model="theQuery">
             </TheInput>
         </div>
-        <div class="flex-col grow-0 py-6">
-            <div class="date">
-                <h5 class="font-bold text-center italic text-sm">{{ getDate }}</h5>
+        <div class="error-message">
+            <div class="flex flex-col">
+                <p v-if="loading">Loading...</p>
+                <p v-if="error">Error: {{ error }}</p>
+            </div>
+        </div>
+        <div class="date flex bg-yellow-600 py-6">
+            <div class="flex flex-auto max-w-32 min-w-24 justify-center  bg-neutral-600">
+                <h5 class="font-bold italic text-sm">{{ getDate }}</h5>
             </div>
             <TheItemWeather v-if="theWeather[theQuery]" :weather="theWeather[theQuery]" :imgUrl="imgUrl">
             </TheItemWeather>
         </div>
     </div>
-
 </template>
