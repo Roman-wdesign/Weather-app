@@ -15,7 +15,7 @@ interface IWeather {
 
 export interface Props {
     weather: IWeather;
-    imgUrl: string;
+    imgUrl?: string;
 }
 
 const props = defineProps<Props>();
@@ -24,7 +24,7 @@ const props = defineProps<Props>();
 <template>
     <div>
         <div class="weather-wrap" v-if="props.weather.main">
-            <div class="location-box pt-10">
+            <div class="location-box">
                 <div class="location px-2">
                     <h3 class="text-lg font-bold text-center">
                         <p>{{ props.weather.sys.country }}</p>
@@ -43,8 +43,8 @@ const props = defineProps<Props>();
                 <div class="div flex justify-center">
                     <h4 class="font-bold">{{ props.weather.weather[0].main }}</h4>
                 </div>
-                <div class="div flex justify-center max-w-xs">
-                    <img class=" w-[150] h-auto" :src="`${props.imgUrl}${props.weather.weather[0].icon}@2x.png`" />
+                <div class="div flex justify-center">
+                    <img class="min-w-24 h-auto" :src="`${props.imgUrl}${props.weather.weather[0].icon}@2x.png`" />
                 </div>
             </div>
         </div>
