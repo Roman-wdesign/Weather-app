@@ -27,15 +27,29 @@ const handleKeyDown = (event: KeyboardEvent) => {
 };
 
 // hide error message
+// watchEffect(() => {
+//     if (error.value) {
+//         true;
+//         setTimeout(() => {
+//             false;
+//             error.value = null;
+//         }, 2000);
+//     }
+// })
+
 watchEffect(() => {
+    console.log('watchEffect triggered:', error.value);
     if (error.value) {
-        true;
+        const showError = error.value
+        showError
+        console.log('Error set, showError set to true');
         setTimeout(() => {
-            false;
+            console.log('Timeout completed, hiding error');
+            !showError
             error.value = null;
-        }, 2000);
+        }, 2000); // скрыть ошибку через 3 секунды
     }
-})
+});
 </script>
 
 <template>
