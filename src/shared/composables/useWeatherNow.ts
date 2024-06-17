@@ -80,5 +80,3 @@ watch(savedCities, (newCities) => {
         removeCityFromStorage
     };
 }
-
-

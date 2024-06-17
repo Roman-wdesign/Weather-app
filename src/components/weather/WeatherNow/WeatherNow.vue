@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { watchEffect } from 'vue';
 import { useWeatherNow } from '@/shared/composables/useWeatherNow'
 import IconClose from '@/shared/components/icons/IconClose.vue'
 import TheInput from '@/shared/components/TheInput.vue'
@@ -22,9 +23,19 @@ const {
 const handleKeyDown = (event: KeyboardEvent) => {
     if (event.key == 'Enter') {
         fetchWeatherForQuery.value
-
     }
 };
+
+// hide error message
+watchEffect(() => {
+    if (error.value) {
+        true;
+        setTimeout(() => {
+            false;
+            error.value = null;
+        }, 2000);
+    }
+})
 </script>
 
 <template>
