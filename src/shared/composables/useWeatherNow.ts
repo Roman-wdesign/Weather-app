@@ -40,6 +40,7 @@ const saveCurrentCity = () => {
     const cityName = theWeather.value[theQuery.value]?.name;
     if (cityName && !savedCities.value.includes(cityName)) {
         saveCity([...savedCities.value, cityName]);
+         theQuery.value = ''
     }
 };
 
