@@ -5,7 +5,12 @@ export function useLocalStorage(key: string, initialValue: any) {
 
   const readValue = () => {
     const item = window.localStorage.getItem(key);
-    return item ? JSON.parse(item) : initialValue;
+    try {
+      return item ? JSON.parse(item) : initialValue;
+    } catch (error) {
+      console.error(`Error parsing localStorage key "${key}":`, error);
+      return initialValue;
+    }
   };
 
   const setValue = (value: any) => {

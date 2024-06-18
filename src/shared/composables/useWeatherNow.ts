@@ -1,6 +1,6 @@
 import { ref, computed, onMounted, watch } from 'vue';
 import type { Ref } from 'vue';
-import { useLocalStorage } from '@/shared/composables/localStorage';
+import { useLocalStorage } from '@/shared/composables/localstorage/localStorage';
 import { dateBuilder } from '@/helpers/DateBuilder';
 import { useFetch } from '@/shared/composables/fetch';
 import { genOpenWeatherURL, imgOpenWeatherURL } from '@/helpers/vars';

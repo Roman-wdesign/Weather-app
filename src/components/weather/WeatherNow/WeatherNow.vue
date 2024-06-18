@@ -5,6 +5,7 @@ import IconClose from '@/shared/components/icons/IconClose.vue'
 import TheInput from '@/shared/components/TheInput.vue'
 import TheButton from '@/shared/components/TheButton.vue'
 import TheItemWeather from '@/components/weather/WeatherNow/TheItemWeather.vue'
+import TheNavbar from '@/shared/components/TheNavbar.vue'
 
 const {
     getDate,
@@ -26,17 +27,6 @@ const handleKeyDown = (event: KeyboardEvent) => {
     }
 };
 
-// hide error message
-// watchEffect(() => {
-//     if (error.value) {
-//         true;
-//         setTimeout(() => {
-//             false;
-//             error.value = null;
-//         }, 2000);
-//     }
-// })
-
 watchEffect(() => {
     console.log('watchEffect triggered:', error.value);
     if (error.value) {
@@ -47,7 +37,7 @@ watchEffect(() => {
             console.log('Timeout completed, hiding error');
             !showError
             error.value = null;
-        }, 2000); // скрыть ошибку через 3 секунды
+        }, 2000);
     }
 });
 </script>
@@ -56,6 +46,10 @@ watchEffect(() => {
     <div class="grid grid-cols-1 gap-6 p-4">
 
 
+        <!-- Navbar mobile -->
+        <div>
+            <TheNavbar></TheNavbar>
+        </div>
 
         <!-- Date Display -->
         <div class="flex justify-center  py-6">
