@@ -24,11 +24,7 @@ export const useNavbar=()=> {
     if (isDarkMode.value) {
       document.documentElement.classList.add('dark');
     } else {
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      if (prefersDark) {
-        setDarkMode(true);
-        document.documentElement.classList.add('dark');
-      }
+      document.documentElement.classList.remove('dark');
     }
   });
 
