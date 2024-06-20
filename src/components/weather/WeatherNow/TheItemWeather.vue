@@ -22,14 +22,14 @@ const props = defineProps<Props>();
 </script>
 
 <template>
-    <div>
+    <div class="dark:bg-gray-400">
         <div class="weather-wrap" v-if="props.weather.main">
             <div class="location-box">
                 <div class="location px-2">
-                    <h3 class="text-lg font-bold text-center">
+                    <div class="text-lg font-bold text-center ">
                         <p>{{ props.weather.sys.country }}</p>
                         <p>{{ props.weather.name }}</p>
-                    </h3>
+                    </div>
                 </div>
             </div>
         </div>

@@ -47,7 +47,7 @@ watchEffect(() => {
         <!-- Date Display -->
         <div class="flex justify-center  py-6">
             <div class="max-w-xs  p-4 text-center">
-                <h5 class="font-bold italic text-lg">{{ getDate }}</h5>
+                <h5 class="font-bold italic text-lg dark:text-white">{{ getDate }}</h5>
             </div>
         </div>
 
@@ -73,23 +73,22 @@ watchEffect(() => {
                 </div>
             </div>
             <div>
-                <TheItemWeather v-if="theWeather[theQuery]" :weather="theWeather[theQuery]" :imgUrl="imgUrl"
-                    class="w-full" />
+                <TheItemWeather v-if="theWeather[theQuery]" :weather="theWeather[theQuery]" :imgUrl="imgUrl" />
             </div>
         </div>
 
         <!-- Saved Cities -->
         <div v-if="savedCities.length !== 0" class="saved-cities">
             <div class="flex justify-center mb-2">
-                <h3 class="text-xl font-semibold">Saved Cities</h3>
+                <h3 class="text-xl font-semibold dark:text-gray-400">Saved Cities</h3>
             </div>
             <ul class="flex flex-wrap justify-center gap-4">
-                <li v-for="city in savedCities" :key="city" class="relative min-w-40">
+                <li v-for="city in savedCities" :key="city" class="relative min-w-40 ">
                     <IconClose
                         class="absolute top-0 right-0 w-8 h-8 rounded-full  fill-blue-600 hover:fill-blue-500 cursor-pointer"
                         @click="removeCityFromStorage(city)"></IconClose>
                     <TheItemWeather v-if="theWeather[city]" :weather="theWeather[city]" :imgUrl="imgUrl"
-                        class="w-full h-80 pt-10 border-2 rounded-md border-blue-500" />
+                        class="w-full h-80 pt-10 border-2 rounded-md dark:bg-white border-blue-500" />
                 </li>
             </ul>
         </div>
