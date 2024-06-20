@@ -8,7 +8,7 @@ const { showMenu, isDarkMode, toggleNav, toggleDarkMode } = useNavbar();
 
 <template>
     <div :class="isDarkMode ? 'dark' : ''">
-        <div class="bg-indigo-600 dark:bg-gray-800 relative">
+        <div class="bg-indigo-600 dark:bg-gray-400 relative">
             <nav class="container px-4 mb-8 py-4 mx-auto md:flex md:justify-between md:items-center">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center">
@@ -29,7 +29,7 @@ const { showMenu, isDarkMode, toggleNav, toggleDarkMode } = useNavbar();
                 </div>
                 <!-- Mobile Menu open: "block", Menu closed: "hidden" -->
                 <ul :class="showMenu ? 'flex' : 'hidden'"
-                    class="absolute top-full left-0 w-full bg-indigo-600 dark:bg-gray-800 flex-col mt-4 space-y-4 md:static md:mt-0 md:flex md:flex-row md:items-center md:space-y-0 md:space-x-10">
+                    class="absolute top-full left-0 w-full opacity-75 bg-indigo-600 dark:bg-gray-400 flex-col mt-4 space-y-4 md:static md:mt-0 md:flex md:flex-row md:items-center md:space-y-0 md:space-x-10">
                     <li>A
                         <!-- <div class="flex ">
                             <p>Geolocation</p>

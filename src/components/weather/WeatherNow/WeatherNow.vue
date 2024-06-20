@@ -53,7 +53,7 @@ watchEffect(() => {
 
         <!-- Input Field -->
         <div class="flex justify-center p-4">
-            <TheInput class="max-w-xs" @keydown.enter="handleKeyDown" label="название города" v-model="theQuery" />
+            <TheInput class="max-w-xs" @keydown.enter="handleKeyDown" label="city name" v-model="theQuery" />
         </div>
 
         <!-- Error and Loading Messages -->
@@ -88,7 +88,7 @@ watchEffect(() => {
                         class="absolute top-0 right-0 w-8 h-8 rounded-full  fill-blue-600 hover:fill-blue-500 cursor-pointer"
                         @click="removeCityFromStorage(city)"></IconClose>
                     <TheItemWeather v-if="theWeather[city]" :weather="theWeather[city]" :imgUrl="imgUrl"
-                        class="w-full h-80 pt-10 border-2 rounded-md dark:bg-white border-blue-500" />
+                        class="w-full h-80 pt-10 border-2 rounded-md border-blue-500" />
                 </li>
             </ul>
         </div>
