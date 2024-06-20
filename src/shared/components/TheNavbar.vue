@@ -9,7 +9,7 @@ const { showMenu, isDarkMode, toggleNav, toggleDarkMode } = useNavbar();
 <template>
     <div :class="isDarkMode ? 'dark' : ''">
         <div class="bg-indigo-600 dark:bg-gray-800 relative">
-            <nav class="container px-6 mb-8 py-8 mx-auto md:flex md:justify-between md:items-center">
+            <nav class="container px-4 mb-8 py-4 mx-auto md:flex md:justify-between md:items-center">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center">
                         <button @click="toggleDarkMode"
@@ -29,10 +29,12 @@ const { showMenu, isDarkMode, toggleNav, toggleDarkMode } = useNavbar();
                 </div>
                 <!-- Mobile Menu open: "block", Menu closed: "hidden" -->
                 <ul :class="showMenu ? 'flex' : 'hidden'"
-                    class="absolute left-0 w-full bg-indigo-600 dark:bg-gray-800 flex-col mt-4 space-y-4 md:static md:mt-0 md:flex md:flex-row md:items-center md:space-y-0 md:space-x-10">
+                    class="sm:absolute sm:left-0 sm:w-full  bg-indigo-600 dark:bg-gray-800 flex-col mt-4 space-y-4 md:static md:mt-0 md:flex md:flex-row md:items-center md:space-y-0 md:space-x-10 lg:static lg:items-center xl:static xl:items-center">
                     <li>
-                        <div>Geolocation</div>
-                        <TheToggle />
+                        <div class="flex ">
+                            <p>Geolocation</p>
+                            <TheToggle />
+                        </div>
                     </li>
                     <li>B</li>
                     <li>C</li>

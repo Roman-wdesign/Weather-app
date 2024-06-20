@@ -5,7 +5,7 @@ import IconClose from '@/shared/components/icons/IconClose.vue'
 import TheInput from '@/shared/components/TheInput.vue'
 import TheButton from '@/shared/components/TheButton.vue'
 import TheItemWeather from '@/components/weather/WeatherNow/TheItemWeather.vue'
-import TheNavbar from '@/shared/components/TheNavbar.vue'
+
 
 const {
     getDate,
@@ -44,13 +44,6 @@ watchEffect(() => {
 
 <template>
     <div class="grid grid-cols-1 gap-6 p-4">
-
-
-        <!-- Navbar mobile -->
-        <div>
-            <TheNavbar></TheNavbar>
-        </div>
-
         <!-- Date Display -->
         <div class="flex justify-center  py-6">
             <div class="max-w-xs  p-4 text-center">
