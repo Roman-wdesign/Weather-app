@@ -58,8 +58,8 @@ watchEffect(() => {
 
         <!-- Error and Loading Messages -->
         <div class="error-message flex justify-center my-4">
-            <p v-if="loading">Loading...</p>
-            <p v-if="error">Error: {{ error }}</p>
+            <p class="dark:text-gray-50" v-if="loading">Loading...</p>
+            <p class="dark:text-gray-50" v-if="error">Error: {{ error }}</p>
         </div>
 
         <!-- Queried Weather -->
