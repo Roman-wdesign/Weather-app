@@ -36,3 +36,7 @@ npm run dev
 🔵 localStorage
 
 🔵 Grid + Flex
+
+🔵 Dark theme
+
+🔵 Drag saved cities

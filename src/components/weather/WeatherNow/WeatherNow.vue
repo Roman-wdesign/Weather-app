@@ -1,14 +1,17 @@
 <script setup lang="ts">
-import { watchEffect } from 'vue';
+import { ref, watchEffect } from 'vue'
 import { useWeatherNow } from '@/shared/composables/useWeatherNow'
+import { dateBuilder } from '@/helpers/DateBuilder'
+import { useDragAndDrop } from '@/shared/composables/useDragAndDrop'
 import IconClose from '@/shared/components/icons/IconClose.vue'
 import TheInput from '@/shared/components/TheInput.vue'
 import TheButton from '@/shared/components/TheButton.vue'
 import TheItemWeather from '@/components/weather/WeatherNow/TheItemWeather.vue'
+import BarsFour from '@/shared/components/icons/BarsFour.vue'
 
+const getDate = ref(dateBuilder())
 
 const {
-    getDate,
     savedCities,
     theQuery,
     theWeather,
@@ -19,34 +22,36 @@ const {
     isSaveDisabled,
     saveCurrentCity,
     removeCityFromStorage
-} = useWeatherNow();
+} = useWeatherNow()
+
+const { handleDragStart, handleDragOver, handleDrop } = useDragAndDrop(savedCities)
 
 const handleKeyDown = (event: KeyboardEvent) => {
     if (event.key == 'Enter') {
-        fetchWeatherForQuery.value
+        fetchWeatherForQuery.value;
     }
 };
 
 watchEffect(() => {
-    console.log('watchEffect triggered:', error.value);
+    console.log('watchEffect triggered:', error.value)
     if (error.value) {
         const showError = error.value
         showError
-        console.log('Error set, showError set to true');
+        console.log('Error set, showError set to true')
         setTimeout(() => {
-            console.log('Timeout completed, hiding error');
+            console.log('Timeout completed, hiding error')
             !showError
-            error.value = null;
-        }, 2000);
+            error.value = null
+        }, 2000)
     }
-});
+})
 </script>
 
 <template>
     <div class="grid grid-cols-1 gap-6 p-4">
         <!-- Date Display -->
-        <div class="flex justify-center  py-6">
-            <div class="max-w-xs  p-4 text-center">
+        <div class="flex justify-center py-6">
+            <div class="max-w-xs p-4 text-center">
                 <h5 class="font-bold italic text-lg dark:text-white">{{ getDate }}</h5>
             </div>
         </div>
@@ -65,9 +70,9 @@ watchEffect(() => {
         <!-- Queried Weather -->
         <div v-if="theWeather[theQuery]" class="query_weather flex flex-col py-4">
             <div>
-                <div class=" flex justify-center my-2">
+                <div class="flex justify-center my-2">
                     <TheButton :disabled="isSaveDisabled" @click="saveCurrentCity"
-                        class="w-auto  text-white font-bold py-2 px-4 rounded disabled:opacity-50 disabled:cursor-not-allowed">
+                        class="w-auto text-white font-bold py-2 px-4 rounded disabled:opacity-50 disabled:cursor-not-allowed">
                         Save City
                     </TheButton>
                 </div>
@@ -83,12 +88,18 @@ watchEffect(() => {
                 <h3 class="text-xl font-semibold dark:text-gray-400">Saved Cities</h3>
             </div>
             <ul class="flex flex-wrap justify-center gap-4">
-                <li v-for="city in savedCities" :key="city" class="relative min-w-40 ">
+                <li v-for="(city, index) in savedCities" :key="city" :data-index="index" class="relative min-w-40"
+                    draggable="true" @dragstart="handleDragStart" @dragover="handleDragOver" @drop="handleDrop">
                     <IconClose
-                        class="absolute top-0 right-0 w-8 h-8 rounded-full  fill-blue-600 hover:fill-blue-500 cursor-pointer"
-                        @click="removeCityFromStorage(city)"></IconClose>
+                        class="absolute top-0 right-0 w-8 h-8 rounded-full fill-blue-600 hover:fill-blue-500 cursor-pointer"
+                        @click="removeCityFromStorage(city)">
+                    </IconClose>
+                    <div>
+                        <BarsFour class="absolute top-2 left-2 hover: cursor-pointer" />
+                    </div>
                     <TheItemWeather v-if="theWeather[city]" :weather="theWeather[city]" :imgUrl="imgUrl"
-                        class="w-full h-80 pt-10 border-2 rounded-md border-blue-500" />
+                        class="w-full h-80 pt-10 border-2 rounded-md border-blue-500">
+                    </TheItemWeather>
                 </li>
             </ul>
         </div>
