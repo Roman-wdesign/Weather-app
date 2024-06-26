@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import TodayView from '../shared/views/TodayView.vue'
+import NowWeather from '../shared/views/NowWeatherView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -7,7 +7,7 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: TodayView
+      component: NowWeather
     },
    
   ]

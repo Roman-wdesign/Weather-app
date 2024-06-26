@@ -1,6 +1,12 @@
 {
+  "author": {
+    "name": "Roman Gabbasov",
+    "email": "gabbasov.tomsk@gmail.com",
+    "url": "https://github.com/Roman-wdesign"
+  },
   "name": "vue-project",
-  "version": "0.0.0",
+  "description": "A Vue.js weather app",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "vite",
