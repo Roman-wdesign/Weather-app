@@ -1,6 +1,6 @@
 # Weather-app Contributing Guide
 Hi! I'm really excited that you are interested in contributing to Weather-app. Before submitting your contribution, please make sure to take a moment and read through the following guidelines:
-- [Code of Conduct](https://github.com/Roman-wdesign/Weather-app?tab=coc-ov-file)
+- [Code of Conduct](https://github.com/Roman-wdesign/Weather-app/blob/main/CODE_OF_CONDUCT.md)
 - [Issue Reporting Guidelines](#issue-reporting-guidelines)
 
 
