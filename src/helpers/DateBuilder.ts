@@ -16,7 +16,7 @@ export const dateBuilder = (): string => {
     const dayOfMonth: number = d.getDate();
     const monthName: string = months[d.getMonth()];
 
-    const dateObj: IdateBuilder<string, number> = {
+    const dateObj: Readonly<IdateBuilder<string, number>> = {
         dayOfWeek,
         dayOfMonth,
         monthName

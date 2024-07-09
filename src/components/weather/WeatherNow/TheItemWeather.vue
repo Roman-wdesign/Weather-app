@@ -15,15 +15,15 @@ interface IWeather {
 
 export interface Props {
     weather: IWeather
-    imgUrl?: string
+    imgUrl: string
 }
 
-const props = defineProps<Props>()
+const props = defineProps<Partial<Props>>()
 </script>
 
 <template>
     <div class="dark:bg-gray-800">
-        <div class="weather-wrap" v-if="props.weather.main">
+        <div class="weather-wrap" v-if="props.weather?.main">
             <div class="location-box">
                 <div class="location px-2">
                     <div class="text-lg font-bold text-center flex flex-col justify-center">
@@ -33,7 +33,7 @@ const props = defineProps<Props>()
                 </div>
             </div>
         </div>
-        <div class="weather-box py-3" v-if="props.weather.main">
+        <div class="weather-box py-3" v-if="props.weather?.main">
             <div class="temp flex justify-center py-3">
                 <h2 class="text-2xl font-extrabold">
                     {{ Math.round(props.weather.main.temp) }} °c

@@ -22,7 +22,7 @@ const token: string = import.meta.env.VITE_WEATHER_SECRET_API_KEY
 const theQuery: Ref<string> = ref<string>('')
 const theWeather: Ref<Record<string, any>> = ref({})
 
-const setResults = (city: string, results: any) => {
+const setResults = (city: string, results: string) => {
     theWeather.value[city] = results
 };
 
