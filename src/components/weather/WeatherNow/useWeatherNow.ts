@@ -1,9 +1,10 @@
 import { ref, computed, onMounted, watch } from 'vue'
 import type { Ref } from 'vue'
-import { useLocalStorage } from '@/shared/composables/localstorage/localStorage'
+import { useLocalStorage } from '@/shared/composables/localstorage/useLocalStorage'
 
-import { useFetch } from '@/shared/composables/fetch'
+import { useFetch } from '@/shared/composables/useFetch'
 import { genOpenWeatherURL, imgOpenWeatherURL } from '@/helpers/vars'
+import {generateWeatherUrl} from '@/helpers/generateWeatherUrl'
 
 
 export function useWeatherNow(){
@@ -27,7 +28,7 @@ const setResults = (city: string, results: string) => {
 };
 
 const fetchWeather = async (city: string) => {
-    const apiUrl = `${urlBase}weather?q=${city}&units=metric&APPID=${token}`
+    const apiUrl = generateWeatherUrl(urlBase,city,token)
     await fetchData(apiUrl);
     if (data.value) {
         setResults(city, data.value)

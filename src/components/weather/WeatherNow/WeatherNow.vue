@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, watchEffect } from 'vue'
-import { useWeatherNow } from '@/shared/composables/useWeatherNow'
+import { useWeatherNow } from '@/components/weather/WeatherNow/useWeatherNow'
 import { dateBuilder } from '@/helpers/DateBuilder'
 import { useDragAndDrop } from '@/shared/composables/useDragAndDrop'
 import IconClose from '@/shared/components/icons/IconClose.vue'
@@ -31,6 +31,9 @@ const handleKeyDown = (event: KeyboardEvent) => {
         fetchWeatherForQuery.value;
     }
 };
+
+
+
 
 watchEffect(() => {
     console.log('watchEffect triggered:', error.value)
@@ -105,3 +108,4 @@ watchEffect(() => {
         </div>
     </div>
 </template>
+@/components/weather/WeatherNow/useWeatherNow

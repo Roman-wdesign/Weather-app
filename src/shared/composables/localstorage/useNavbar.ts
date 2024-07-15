@@ -1,8 +1,8 @@
 import { ref, onMounted } from 'vue'
-import { useLocalStorage } from '@/shared/composables/localstorage/localStorage'
+import { useLocalStorage } from '@/shared/composables/localstorage/useLocalStorage'
 
 
-export const useNavbar=()=> {
+export const useNavbar =()=> {
   const showMenu = ref(false);
   const { storedValue: isDarkMode, setValue: setDarkMode } = useLocalStorage('theme', false);
 
