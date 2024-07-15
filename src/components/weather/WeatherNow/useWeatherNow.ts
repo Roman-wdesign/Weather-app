@@ -1,5 +1,6 @@
 // useWeatherNow.ts
 import { ref, computed, onMounted } from 'vue';
+
 import { useFetch } from '@/shared/composables/useFetch';
 import { genOpenWeatherURL, imgOpenWeatherURL } from '@/helpers/vars';
 import { generateWeatherUrl } from '@/helpers/generateWeatherUrl';
@@ -27,6 +28,7 @@ export function useWeatherNow() {
     }
   };
 
+  // if theQuery is no empty - get data, or undefined
   const fetchWeatherForQuery = computed(async () => (theQuery.value ? await fetchWeather(theQuery.value) : undefined));
 
   const { savedCities, saveCurrentCity, removeCityFromStorage, loadSavedCities } = useSavedCities(theWeather, fetchWeather);

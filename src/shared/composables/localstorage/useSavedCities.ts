@@ -1,8 +1,7 @@
-// useSavedCities.ts
-import { ref, watch } from 'vue';
+import { watch } from 'vue';
 import { useLocalStorage } from '@/shared/composables/localstorage/useLocalStorage';
 
-export function useSavedCities(theWeather:any, fetchWeather:any) {
+export function useSavedCities(firstCityArg:any, secondCityArg:any) {
   const { storedValue: savedCities, setValue: saveCity } = useLocalStorage('savedCities', []);
   if (!Array.isArray(savedCities.value)) {
     savedCities.value = [];
@@ -16,19 +15,19 @@ export function useSavedCities(theWeather:any, fetchWeather:any) {
 
   const removeCityFromStorage = (city: string) => {
     saveCity(savedCities.value.filter((savedCity: string) => savedCity !== city));
-    delete theWeather.value[city];
+    delete firstCityArg.value[city];
   };
 
   const loadSavedCities = () => {
     savedCities.value.forEach((city: string) => {
-      fetchWeather(city);
+      secondCityArg(city);
     });
   };
 
   watch(savedCities, (newCities) => {
     newCities.forEach((city: string) => {
-      if (!theWeather.value[city]) {
-        fetchWeather(city);
+      if (!firstCityArg.value[city]) {
+        secondCityArg(city);
       }
     });
   });
