@@ -1,15 +1,15 @@
 <script setup lang="ts">
-import { ref, watchEffect } from 'vue'
-import { useWeatherNow } from '@/components/weather/WeatherNow/useWeatherNow'
-import { dateBuilder } from '@/helpers/DateBuilder'
-import { useDragAndDrop } from '@/shared/composables/useDragAndDrop'
-import IconClose from '@/shared/components/icons/IconClose.vue'
-import TheInput from '@/shared/components/TheInput.vue'
-import TheButton from '@/shared/components/TheButton.vue'
-import TheItemWeather from '@/components/weather/WeatherNow/TheItemWeather.vue'
-import BarsFour from '@/shared/components/icons/BarsFour.vue'
+import { ref, watchEffect } from 'vue';
+import { useWeatherNow } from '@/components/weather/WeatherNow/useWeatherNow';
+import { dateBuilder } from '@/helpers/DateBuilder';
+import { useDragAndDrop } from '@/shared/composables/useDragAndDrop';
+import IconClose from '@/shared/components/icons/IconClose.vue';
+import TheInput from '@/shared/components/TheInput.vue';
+import TheButton from '@/shared/components/TheButton.vue';
+import TheItemWeather from '@/components/weather/WeatherNow/TheItemWeather.vue';
+import BarsFour from '@/shared/components/icons/BarsFour.vue';
 
-const getDate = ref(dateBuilder())
+const getDate = ref(dateBuilder());
 
 const {
     savedCities,
@@ -21,33 +21,25 @@ const {
     fetchWeatherForQuery,
     isSaveDisabled,
     saveCurrentCity,
-    removeCityFromStorage
-} = useWeatherNow()
+    removeCityFromStorage,
+} = useWeatherNow();
 
-const { handleDragStart, handleDragOver, handleDrop } = useDragAndDrop(savedCities)
+const { handleDragStart, handleDragOver, handleDrop } = useDragAndDrop(savedCities);
 
 const handleKeyDown = (event: KeyboardEvent) => {
-    if (event.key == 'Enter') {
+    if (event.key === 'Enter') {
         fetchWeatherForQuery.value;
     }
 };
 
-
-
-
 watchEffect(() => {
-    console.log('watchEffect triggered:', error.value)
     if (error.value) {
-        const showError = error.value
-        showError
-        console.log('Error set, showError set to true')
+        const showError = error.value;
         setTimeout(() => {
-            console.log('Timeout completed, hiding error')
-            !showError
-            error.value = null
-        }, 2000)
+            error.value = null;
+        }, 2000);
     }
-})
+});
 </script>
 
 <template>
@@ -74,7 +66,7 @@ watchEffect(() => {
         <div v-if="theWeather[theQuery]" class="query_weather flex flex-col py-4">
             <div>
                 <div class="flex justify-center my-2">
-                    <TheButton :disabled="isSaveDisabled" @click="saveCurrentCity"
+                    <TheButton :disabled="isSaveDisabled" @click="saveCurrentCity(theQuery)"
                         class="w-auto text-white font-bold py-2 px-4 rounded disabled:opacity-50 disabled:cursor-not-allowed">
                         Save City
                     </TheButton>
@@ -108,4 +100,3 @@ watchEffect(() => {
         </div>
     </div>
 </template>
-@/components/weather/WeatherNow/useWeatherNow
