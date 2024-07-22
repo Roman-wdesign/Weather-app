@@ -3,7 +3,7 @@ import { useNavbar } from '@/shared/composables/localstorage/useNavbar'
 import IconClose from '@/shared/components/icons/IconClose.vue'
 import BarsTree from '@/shared/components/icons/BarsTree.vue'
 import TheToggle from '@/shared/components/TheToggle.vue'
-const { showMenu, isDarkMode, toggleNav, toggleDarkMode } = useNavbar();
+const { showMenu, isDarkMode, toggleNav, toggleDarkMode } = useNavbar()
 </script>
 
 <template>

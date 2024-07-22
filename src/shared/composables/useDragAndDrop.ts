@@ -1,5 +1,5 @@
-import { ref } from 'vue';
-import type { Ref } from 'vue';
+import { ref } from 'vue'
+import type { Ref } from 'vue'
 
 // argument of this funcrtion is saved cities in array
 
@@ -7,15 +7,15 @@ export function useDragAndDrop(savedCities: Ref<string[]>) {
   const draggedIndex = ref<number | null>(null)
 
   const handleDragStart = (event: DragEvent) => {
-    const target = event.target as HTMLElement;
+    const target = event.target as HTMLElement
     draggedIndex.value = Number(target.dataset.index)
     // dataTransfer for init drag
     event.dataTransfer?.setData('text/plain', '')
-  };
+  }
 
   const handleDragOver = (event: DragEvent) => {
     event.preventDefault()
-  };
+  }
 
   const handleDrop = (event: DragEvent) => {
     event.preventDefault()
@@ -32,7 +32,7 @@ export function useDragAndDrop(savedCities: Ref<string[]>) {
       savedCities.value = updatedCities
       draggedIndex.value = null
     }
-  };
+  }
 
   return {
     handleDragStart,

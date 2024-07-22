@@ -18,6 +18,8 @@
 
 🔵 Grid + Flex
 
+🔵 Cache
+
 ## Questions
 
 For questions and support please use [community chat](https://discord.gg/tutcdcGtpx). The issue list of this repo is **exclusively** for bug reports and feature requests.
