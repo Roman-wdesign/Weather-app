@@ -1,4 +1,4 @@
-// useWeatherNow.ts
+
 import { ref, computed, onMounted } from 'vue'
 
 import {urlBase,imgUrl,token} from '@/helpers/vars'

@@ -31,6 +31,20 @@ const { showMenu, isDarkMode, toggleNav, toggleDarkMode } = useNavbar()
                 <ul :class="showMenu ? 'flex' : 'hidden'"
                     class="absolute top-full left-0 w-full opacity-75 bg-indigo-600 dark:bg-gray-400 flex-col mt-4 space-y-4 md:static md:mt-0 md:flex md:flex-row md:items-center md:space-y-0 md:space-x-10">
                     <li>
+                        <div>
+                            <RouterLink to="/">
+                                Home
+                            </RouterLink>
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <RouterLink to="/geolocation">
+                                Geolocation
+                            </RouterLink>
+                        </div>
+                    </li>
+                    <li>
                         <div class="flex">
                             <p>Geolocation</p>&nbsp
                             <TheToggle />
