@@ -5,7 +5,7 @@ import { dateBuilder } from '@/helpers/DateBuilder'
 import { useDragAndDrop } from '@/shared/composables/useDragAndDrop'
 import IconClose from '@/shared/components/icons/IconClose.vue'
 import TheInput from '@/shared/components/TheInput.vue'
-import TheButton from '@/shared/components/TheButton.vue'
+import TheButton from '@/shared/components/buttons/TheButton.vue'
 import TheItemWeather from '@/components/weather/WeatherNow/TheItemWeather.vue'
 import BarsFour from '@/shared/components/icons/BarsFour.vue'
 

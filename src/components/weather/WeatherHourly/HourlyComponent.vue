@@ -19,7 +19,6 @@ const fetchWeather = async () => {
         await fetchData(url);
         if (data.value) {
             rawResponse.value = JSON.stringify(data.value); // Save data to debug
-
         }
     }
 };
