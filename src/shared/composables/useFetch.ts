@@ -1,10 +1,10 @@
-import { ref } from 'vue';
+import { ref } from 'vue'
 import type { Ref } from 'vue'
 
 export const useFetch = () => {
-  const data: Ref<string | null> = ref(null);
-  const error = ref<string | null>(null);
-  const loading = ref<boolean>(false);
+  const data: Ref<string | null> = ref(null)
+  const error = ref<string | null>(null)
+  const loading = ref<boolean>(false)
 
 // async fetch with catching errors
   async function fetchData(url:string) {
@@ -12,19 +12,19 @@ export const useFetch = () => {
     try {
       const response = await fetch(url);
       if (!response.ok) {
-        throw new Error('Failed to fetch data');
+        throw new Error('Failed to fetch data')
       }
-      data.value = await response.json();
+      data.value = await response.json()
     } catch (err) {
        if (err instanceof Error) {
-        error.value = err.message;
+        error.value = err.message
       } else {
-        error.value = 'An unknown error occurred';
+        error.value = 'An unknown error occurred'
       }
     } finally {
-      loading.value = false;
+      loading.value = false
     }
   }
 
-  return { data, error, loading, fetchData };
+  return { data, error, loading, fetchData }
 }
