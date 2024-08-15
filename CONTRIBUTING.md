@@ -9,8 +9,21 @@ Hi! I'm really excited that you are interested in contributing to Weather-app. B
 ## Development Setup
 You will need [Node.js](https://nodejs.org) **version 18.12+**, and [NPM](https://docs.npmjs.com/cli/v10/commands/npm-install) **version 10.3.0+**.
 
+A high level overview of tools used:
+
+- [TypeScript](https://www.typescriptlang.org/) as the development language
+- [Vite](https://vitejs.dev/) for development bundling
+- [Vitest](https://vitest.dev/) for unit testing
+- [Prettier](https://prettier.io/) for code formatting
+- [ESLint](https://eslint.org/) for static error prevention (outside of types)
+
 ## Settings
 
+- [npm run dev](#npm-run-dev)
+- [npm run test](#npm-run-test)
+
+
+#### npm run dev
 Create file **_.env_** in this poject (no in src directory)
 
 Put your API key from OpenWeather to VITE_WEATHER_SECRET_API_KEY in
@@ -24,7 +37,7 @@ VITE_WEATHER_SECRET_API_KEY = //your API key
 
 prefix **\_VITE\_\_** is required for expose as import.meta.env.VITE_WEATHER_SECRET_API_KEY
 
-#### Run
+
 
 ```
 npm install
@@ -32,6 +45,17 @@ npm install
 
 ```
 npm run dev
+```
+
+Default way  
+
+**`http://localhost:5173/`**
+
+#### npm run test
+Unit test with Vitest
+
+```
+npm run test
 ```
 
 ## Issue Reporting Guidelines
