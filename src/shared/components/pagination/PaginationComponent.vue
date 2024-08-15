@@ -2,8 +2,8 @@
 import TheButton from '@/shared/components/buttons/TheButton.vue'
 
 interface Props {
-    currentPage: any,
-    totalPages: any,
+    currentPage: number,
+    totalPages: number,
     nextPage: any,
     prevPage: any
 }

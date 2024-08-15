@@ -65,9 +65,10 @@ const { currentPage, totalPages, paginatedData, nextPage, prevPage } = usePagina
                 <p>Timezone: {{ parsedResponse.city.timezone }}</p> -->
             <div v-if="parsedResponse.city">
                 <div class="city flex justify-center my-4">
-                    <h1 class="text-2xl">City: {{ parsedResponse.city.name }}, {{ parsedResponse.city.country }}</h1>
+                    <h1 class="text-2xl dark:text-gray-400">City: {{ parsedResponse.city.name }}, {{
+            parsedResponse.city.country }}</h1>
                 </div>
-                <div class="city-sun_sun flex justify-evenly my-8">
+                <div class=" city-sun_sun flex justify-evenly my-8 dark:text-gray-400">
                     <p>Sunrise: {{ new Date(parsedResponse.city.sunrise * 1000).toLocaleTimeString() }}</p>
 
                     <p>Sunset: {{ new Date(parsedResponse.city.sunset * 1000).toLocaleTimeString() }}</p>
@@ -77,21 +78,21 @@ const { currentPage, totalPages, paginatedData, nextPage, prevPage } = usePagina
             <div v-if="paginatedData && paginatedData.length > 0">
                 <div v-for="(forecast, index) in paginatedData" :key="index">
                     <div class="screen-container flex justify-center items-center">
-                        <div class="temp-date flex mr-6">
-                            <div class="mr-6">
+                        <div class="temp-date flex mr-6 gap-4">
+                            <div class=" dark:text-gray-400">
                                 <strong>{{ new Date(forecast.dt * 1000).toLocaleString() }}
                                 </strong>
                             </div>
 
                             <div>
-                                <p> {{ (forecast.main.temp - 273.15).toFixed(1) }}°C</p>
+                                <p class="dark:text-stone-400"> {{ (forecast.main.temp - 273.15).toFixed(1) }}°C</p>
                             </div>
 
                         </div>
 
                         <div class="description-icon flex flex-row items-center">
                             <div>
-                                <p>{{ forecast.weather[0].description }}</p>
+                                <p class="dark:text-gray-400">{{ forecast.weather[0].description }}</p>
                             </div>
 
                             <div class="img-container h-16 w-16"><img
@@ -100,7 +101,7 @@ const { currentPage, totalPages, paginatedData, nextPage, prevPage } = usePagina
                     </div>
 
                 </div>
-                <PaginationComponent class="flex justify-center mt-6" :currentPage="currentPage"
+                <PaginationComponent class="flex justify-center mt-6 dark:text-gray-400" :currentPage="currentPage"
                     :totalPages="totalPages" :nextPage="nextPage" :prevPage="prevPage" />
             </div>
             <div v-else>
