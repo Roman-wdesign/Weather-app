@@ -1,9 +1,12 @@
 <script setup lang="ts">
 import { ref, watchEffect } from 'vue'
+
 import { useWeatherNow } from '@/components/weather/WeatherNow/useWeatherNow'
 import { dateBuilder } from '@/helpers/DateBuilder'
+
 import { useDragAndDrop } from '@/shared/composables/useDragAndDrop'
 import IconClose from '@/shared/components/icons/IconClose.vue'
+
 import TheInput from '@/shared/components/TheInput.vue'
 import TheButton from '@/shared/components/buttons/TheButton.vue'
 import TheItemWeather from '@/components/weather/WeatherNow/TheItemWeather.vue'

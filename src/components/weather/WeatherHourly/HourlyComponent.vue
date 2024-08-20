@@ -57,9 +57,9 @@ const { currentPage, totalPages, paginatedData, nextPage, prevPage } = usePagina
 <template>
     <div>
         <div v-if="geoError" class="text-red-500">{{ geoError }}</div>
-        <div v-else-if="error" class="text-red-500">{{ error }}</div>
+        <div v-else="error" class="text-red-500">{{ error }}</div>
 
-        <div v-else-if="parsedResponse">
+        <div v-if="parsedResponse">
             <!-- <p>Coordinates: {{ parsedResponse.city.coord.lat }}, {{ parsedResponse.city.coord.lon }}</p>
                 <p>Population: {{ parsedResponse.city.population }}</p>
                 <p>Timezone: {{ parsedResponse.city.timezone }}</p> -->

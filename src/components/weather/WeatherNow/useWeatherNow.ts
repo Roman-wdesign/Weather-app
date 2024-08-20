@@ -3,17 +3,18 @@ import { ref, computed, onMounted } from 'vue'
 
 import {urlBase, imgUrl, token} from '@/helpers/vars'
 
-import { useFetch } from '@/shared/composables/useFetch'
+import { fetchWithCache } from '@/shared/composables/cache/useCache'
+
 import { generateWeatherUrl } from '@/helpers/generateWeatherUrl'
 import { useSavedCities } from '@/shared/composables/localstorage/useSavedCities'
 
 
 
 export function useWeatherNow() {
-  const { data, error, loading, fetchData } = useFetch()
-
   const theQuery = ref<string>('')
   const theWeather = ref<Record<string, any>>({})
+  const error = ref<string | null>(null)
+  const loading = ref<boolean>(false)
 
   const setResults = (city: string, results: any) => {
     theWeather.value[city] = results
@@ -21,13 +22,22 @@ export function useWeatherNow() {
 
   const fetchWeather = async (city: string) => {
     const apiUrl = generateWeatherUrl(urlBase, city, token)
-    await fetchData(apiUrl)
-    if (data.value) {
-      setResults(city, data.value)
+    loading.value = true
+    error.value = null
+    try {
+      const data = await fetchWithCache(apiUrl) 
+      setResults(city, data)
+    } catch (err) {
+      if (err instanceof Error) {
+        error.value = err.message
+      } else {
+        error.value = 'An unknown error occurred'
+      }
+    } finally {
+      loading.value = false
     }
   }
 
-  // if theQuery is no empty - get data, or undefined
   const fetchWeatherForQuery = computed(async () => (theQuery.value ? await fetchWeather(theQuery.value) : undefined))
 
   const { savedCities, saveCurrentCity, removeCityFromStorage, loadSavedCities } = useSavedCities(theWeather, fetchWeather)
