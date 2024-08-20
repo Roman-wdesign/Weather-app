@@ -38,7 +38,7 @@ function handleGeolocationToggle(enabled: boolean) {
                 </div>
                 <!-- Mobile Menu  -->
                 <ul :class="showMenu ? 'flex' : 'hidden'"
-                    class="absolute top-full left-0 w-full opacity-75 bg-indigo-600 dark:bg-gray-400 flex-col mt-4 space-y-4 md:static md:mt-0 md:flex md:flex-row md:items-center md:space-y-0 md:space-x-10">
+                    class="absolute top-full left-0 w-full  bg-indigo-600 dark:bg-gray-400 flex-col mt-4 space-y-4 md:static md:mt-0 md:flex md:flex-row md:items-center md:space-y-0 md:space-x-10">
                     <li>
                         <div>
                             <RouterLink to="/">
