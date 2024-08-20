@@ -3,7 +3,7 @@ import { watch, onMounted, ref, computed } from 'vue'
 import { useGeolocation } from '@/shared/composables/useGeolocation'
 import { useFetch } from '@/shared/composables/useFetch'
 import { generateHourlyWeather } from '@/helpers/generateHourlyWeather'
-import { genOpenWeatherURL, token, imgUrl } from '@/helpers/vars'
+import { urlBase, token, imgUrl } from '@/helpers/vars'
 import { usePagination } from '@/shared/composables/usePagination'
 import { fetchWithCache } from '@/shared/composables/cache/useCache'
 
@@ -17,7 +17,7 @@ const rawResponse = ref<string | null>(null)
 const fetchWeather = async () => {
 
     if (latitude.value !== null && longitude.value !== null) {
-        const url = generateHourlyWeather(genOpenWeatherURL, latitude.value, longitude.value, token)
+        const url = generateHourlyWeather(urlBase, latitude.value, longitude.value, token)
         console.log(url);
         try {
             const data = await fetchWithCache(url)

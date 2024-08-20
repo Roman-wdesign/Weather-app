@@ -21,12 +21,3 @@ const props = defineProps<Props>()
             :disabled="props.currentPage === props.totalPages">Next</TheButton>
     </div>
 </template>
-
-
-<style scoped>
-.pagination {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-</style>

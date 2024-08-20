@@ -1,7 +1,7 @@
 
 import { ref, computed, onMounted } from 'vue'
 
-import {urlBase,imgUrl,token} from '@/helpers/vars'
+import {urlBase, imgUrl, token} from '@/helpers/vars'
 
 import { useFetch } from '@/shared/composables/useFetch'
 import { generateWeatherUrl } from '@/helpers/generateWeatherUrl'

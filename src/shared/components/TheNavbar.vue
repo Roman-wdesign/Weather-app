@@ -1,9 +1,18 @@
 <script setup lang="ts">
 import { useNavbar } from '@/shared/composables/localstorage/useNavbar'
+import { useGeolocation } from '@/shared/composables/useGeolocation'
+
 import IconClose from '@/shared/components/icons/IconClose.vue'
 import BarsTree from '@/shared/components/icons/BarsTree.vue'
 import TheToggle from '@/shared/components/TheToggle.vue'
+
 const { showMenu, isDarkMode, toggleNav, toggleDarkMode } = useNavbar()
+const { setGeolocationEnabled } = useGeolocation()
+
+function handleGeolocationToggle(enabled: boolean) {
+    setGeolocationEnabled(enabled)
+}
+
 </script>
 
 <template>
@@ -47,7 +56,7 @@ const { showMenu, isDarkMode, toggleNav, toggleDarkMode } = useNavbar()
                     <li>
                         <div class="flex">
                             <p>Geolocation</p>&nbsp
-                            <TheToggle />
+                            <TheToggle @geolocation-toggle="handleGeolocationToggle" />
                         </div>
                     </li>
                 </ul>
