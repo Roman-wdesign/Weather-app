@@ -1,5 +1,5 @@
 import { watch } from 'vue'
-import { useLocalStorage } from '@/shared/composables/localstorage/useLocalStorage'
+import { useLocalStorage } from '@/shared/composables/localStorage/useLocalStorage'
 
 export function useSavedCities(firstCityArg:any, secondCityArg:any) {
   const { storedValue: savedCities, setValue: saveCity } = useLocalStorage('savedCities', [])

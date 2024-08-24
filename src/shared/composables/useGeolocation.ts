@@ -1,5 +1,5 @@
 import { ref, watch, onMounted } from 'vue'
-import { useLocalStorage } from '@/shared/composables/localstorage/useLocalStorage'
+import { useLocalStorage } from '@/shared/composables/localStorage/useLocalStorage'
 
 export function useGeolocation() {
   const { storedValue: isGeolocationEnabled, setValue: setGeolocationEnabled, removeValue } = useLocalStorage('geolocationEnabled', false)

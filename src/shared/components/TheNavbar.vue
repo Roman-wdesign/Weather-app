@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useNavbar } from '@/shared/composables/localstorage/useNavbar'
+import { useNavbar } from '@/shared/composables/localStorage/useNavbar'
 import { useGeolocation } from '@/shared/composables/useGeolocation'
 
 import IconClose from '@/shared/components/icons/IconClose.vue'
@@ -64,3 +64,4 @@ function handleGeolocationToggle(enabled: boolean) {
         </div>
     </div>
 </template>
+@/shared/composables/localStorage/useNavbar
