@@ -10,14 +10,12 @@ describe('useLocalStorage', () => {
     key = 'testKey'
     initialValue = 'initialValue'
 
-    // mock localStorage
     localStorageMock = {
       getItem: vi.fn(),
       setItem: vi.fn(),
       removeItem: vi.fn()
     }
 
-    // mock window.localStorage 
     Object.defineProperty(window, 'localStorage', {
       value: localStorageMock,
       writable: true

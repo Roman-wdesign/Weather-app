@@ -24,7 +24,7 @@ export function useSavedCities(firstCityArg:any, secondCityArg:any) {
     })
   }
 
-  watch(savedCities, (newCities) => {
+  watch(savedCities, (newCities:any) => {
     newCities.forEach((city: string) => {
       if (!firstCityArg.value[city]) {
         secondCityArg(city)

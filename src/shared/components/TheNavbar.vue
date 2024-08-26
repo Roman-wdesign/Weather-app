@@ -64,4 +64,3 @@ function handleGeolocationToggle(enabled: boolean) {
         </div>
     </div>
 </template>
-@/shared/composables/localStorage/useNavbar
