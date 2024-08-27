@@ -1,4 +1,4 @@
-import {getCachedData, setCachedData} from '@/shared/composables/cache/cacheStorage'
+import {getCachedData, setCachedData} from '@/shared/composables/cache/useCacheStorage'
 
 export async function fetchWithCache(url: string): Promise<any> {
     const request = new Request(url)
