@@ -6,7 +6,7 @@ export const useFetch = () => {
   const error = ref<string | null>(null)
   const loading = ref<boolean>(false)
 
-function fetchData(url: string) {
+  function fetchData(url: string) {
     loading.value = true
     fetch(url)
       .then(response => {

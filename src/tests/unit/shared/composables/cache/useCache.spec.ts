@@ -21,24 +21,24 @@ describe('fetchWithCache', () => {
     })
     global.fetch = vi.fn().mockResolvedValue(mockFetchResponse)
 
-    
+
     const result = await fetchWithCache(mockUrl)
 
-    
+
     expect(global.fetch).toHaveBeenCalledWith(mockRequest)
     expect(result).toEqual({ data: 'fetchedData' })
   })
 
   it('should throw an error if fetching fails', async () => {
-   
+
     vi.fn().mockResolvedValue(undefined)
     const mockFailedResponse = new Response(null, { status: 500, statusText: 'Internal Server Error' })
     global.fetch = vi.fn().mockResolvedValue(mockFailedResponse)
 
-    
+
     await expect(fetchWithCache(mockUrl)).rejects.toThrow(`Fetching ${mockUrl} cached failed`)
 
-    
+
     expect(setCachedData).toHaveBeenCalled()
   })
 })

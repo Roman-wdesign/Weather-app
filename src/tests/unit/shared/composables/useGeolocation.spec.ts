@@ -2,20 +2,20 @@ import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { useGeolocation } from '@/shared/composables/useGeolocation'
 
 describe('useGeolocation', () => {
-  let watchPositionMock:any
-  let clearWatchMock:any
+  let watchPositionMock: any
+  let clearWatchMock: any
 
   beforeEach(() => {
-    
+
     watchPositionMock = vi.fn()
     clearWatchMock = vi.fn()
 
     const globalNavigator = {
-      geolocation :{
-      watchPosition: watchPositionMock,
-      clearWatch: clearWatchMock,
+      geolocation: {
+        watchPosition: watchPositionMock,
+        clearWatch: clearWatchMock,
       }
-      
+
     }
   })
 
@@ -35,7 +35,7 @@ describe('useGeolocation', () => {
   })
 
   it('should update latitude and longitude on position update', () => {
-    
+
     const mockPosition = {
       coords: {
         latitude: 10,
@@ -43,7 +43,7 @@ describe('useGeolocation', () => {
       },
     }
 
-    watchPositionMock.mockImplementation((successCallback:any) => {
+    watchPositionMock.mockImplementation((successCallback: any) => {
       successCallback(mockPosition)
     })
 
@@ -56,12 +56,12 @@ describe('useGeolocation', () => {
   })
 
   it('should set error if geolocation is not supported', () => {
-  const globalNavigator = {
-     geolocation:{
-       return :null
-    } 
-  }
-    
+    const globalNavigator = {
+      geolocation: {
+        return: null
+      }
+    }
+
 
     const { error } = useGeolocation()
 

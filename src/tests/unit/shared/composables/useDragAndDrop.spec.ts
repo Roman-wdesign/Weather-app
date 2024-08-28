@@ -1,12 +1,12 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { ref } from 'vue'
-import type { Ref} from 'vue'
+import type { Ref } from 'vue'
 import { useDragAndDrop } from '@/shared/composables/useDragAndDrop'
 
 
 describe('useDragAndDrop', () => {
-  let savedCities:Ref<string[]>
-  let dragAndDrop:any
+  let savedCities: Ref<string[]>
+  let dragAndDrop: any
 
   beforeEach(() => {
     savedCities = ref(['City1', 'City2', 'City3'])
@@ -26,7 +26,7 @@ describe('useDragAndDrop', () => {
 
 
   it('should not update cities if dropped in the same position', () => {
- 
+
 
     const mockEvent = {
       target: { dataset: { index: '1' } },
@@ -36,6 +36,6 @@ describe('useDragAndDrop', () => {
     dragAndDrop.handleDrop(mockEvent)
 
     expect(savedCities.value).toEqual(['City1', 'City2', 'City3'])
-   
+
   })
 })

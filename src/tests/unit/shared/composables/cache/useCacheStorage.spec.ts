@@ -5,8 +5,8 @@ const CACHE_NAME = 'weather-cache'
 const CACHE_TTL = 60 * 60 * 1000 // 1 hour
 
 
-let cacheMock:any 
-let cacheStorageMock:any
+let cacheMock: any
+let cacheStorageMock: any
 
 beforeEach(() => {
   cacheMock = {
@@ -81,7 +81,7 @@ describe('cacheService', () => {
     const mockRequest = new Request('https://example.com')
     const mockResponse = new Response('Error content', { status: 500 })
 
-    const consoleWarnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
+    const consoleWarnSpy = vi.spyOn(console, 'warn').mockImplementation(() => { })
 
     await setCachedData(mockRequest, mockResponse)
 
@@ -106,7 +106,7 @@ describe('cacheService', () => {
 
     cacheMock.delete.mockResolvedValueOnce(false)
 
-    const consoleWarnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
+    const consoleWarnSpy = vi.spyOn(console, 'warn').mockImplementation(() => { })
 
     await clearCachedData(mockRequest)
 

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-interface IWeather {
+export interface IWeather {
     name: string
     sys: {
         country: string

@@ -1,7 +1,7 @@
 
 import { ref, computed, onMounted } from 'vue'
 
-import {urlBase, imgUrl, token} from '@/helpers/vars'
+import { urlBase, imgUrl, token } from '@/helpers/vars'
 
 import { fetchWithCache } from '@/shared/composables/cache/useCache'
 
@@ -25,7 +25,7 @@ export function useWeatherNow() {
     loading.value = true
     error.value = null
     try {
-      const data = await fetchWithCache(apiUrl) 
+      const data = await fetchWithCache(apiUrl)
       setResults(city, data)
     } catch (err) {
       if (err instanceof Error) {

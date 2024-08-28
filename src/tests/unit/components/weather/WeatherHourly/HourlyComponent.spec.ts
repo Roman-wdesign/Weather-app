@@ -1,12 +1,12 @@
 import { flushPromises, mount } from '@vue/test-utils'
-import {ref, computed} from 'vue'
-import type {Ref, ComputedRef} from 'vue'
+import { ref, computed } from 'vue'
+import type { Ref, ComputedRef } from 'vue'
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import HourlyComponent from '@/components/weather/WeatherHourly/HourlyComponent.vue'
 import * as geolocationModule from '@/shared/composables/useGeolocation'
 import * as cacheModule from '@/shared/composables/cache/useCache'
 import * as paginationModule from '@/shared/composables/usePagination'
-import type {Mock} from 'vitest'
+import type { Mock } from 'vitest'
 
 // Interface for geolocation
 interface GeolocationData {
@@ -41,7 +41,7 @@ describe('HourlyComponent.vue', () => {
 
   beforeEach(() => {
     mockedGeolocation = {
-       isGeolocationEnabled: ref(true),
+      isGeolocationEnabled: ref(true),
       latitude: ref(50),
       longitude: ref(50),
       error: ref<string | null>(null),
@@ -92,11 +92,11 @@ describe('HourlyComponent.vue', () => {
       }),
     })
 
-mockedPagination.paginatedData = computed(() => Array(5).fill({
-  dt: 1639098000,
-  main: { temp: 285.15 },
-  weather: [{ description: 'clear', icon: '01d' }],
-}))
+    mockedPagination.paginatedData = computed(() => Array(5).fill({
+      dt: 1639098000,
+      main: { temp: 285.15 },
+      weather: [{ description: 'clear', icon: '01d' }],
+    }))
 
     const wrapper = mount(HourlyComponent)
 
