@@ -26,23 +26,30 @@ A high level overview of tools used:
 #### npm run dev
 Create file **_.env_** in this poject (no in src directory)
 
+
 Put your API key from OpenWeather to VITE_WEATHER_SECRET_API_KEY in
 **.env** file of this project.
 
 Example
 
 ```
-VITE_WEATHER_SECRET_API_KEY = //your API key
+VITE_WEATHER_SECRET_API_KEY = 12345
 ```
 
 prefix **\_VITE\_\_** is required for expose as import.meta.env.VITE_WEATHER_SECRET_API_KEY
 
 
+Your .env file must be added to your .gitignore file
 
+
+
+
+
+Install dependencies
 ```
 npm install
 ```
-
+Run the App
 ```
 npm run dev
 ```
