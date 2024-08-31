@@ -19,4 +19,3 @@ watch(isGeolocationEnabled, (newValue) => {
         </div>
     </label>
 </template>
-@/shared/composables/localStorage/useLocalStorage
