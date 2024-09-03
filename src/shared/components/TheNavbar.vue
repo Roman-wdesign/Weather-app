@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ref, onMounted, onUnmounted } from 'vue'
 import { useNavbar } from '@/shared/composables/localStorage/useNavbar'
 import { useGeolocation } from '@/shared/composables/useGeolocation'
 
@@ -12,7 +13,26 @@ const { setGeolocationEnabled } = useGeolocation()
 function handleGeolocationToggle(enabled: boolean) {
     setGeolocationEnabled(enabled)
 }
+const menuRef = ref<HTMLElement | null>(null)
 
+const handleClickOutside = (e: MouseEvent) => {
+    if (showMenu.value && menuRef.value && !menuRef.value.contains(e.target as Node)) {
+        showMenu.value = false
+    }
+}
+
+const handleMenuToggle = (e: MouseEvent) => {
+    e.stopPropagation()
+    toggleNav()
+}
+
+onMounted(() => {
+    document.addEventListener('click', handleClickOutside)
+})
+
+onUnmounted(() => {
+    document.removeEventListener('click', handleClickOutside)
+})
 </script>
 
 <template>
@@ -28,7 +48,7 @@ function handleGeolocationToggle(enabled: boolean) {
                         </button>
                     </div>
                     <!-- Mobile menu button -->
-                    <div @click="toggleNav" class="flex md:hidden">
+                    <div @click="handleMenuToggle" class="flex md:hidden">
                         <button type="button"
                             class="text-gray-100 hover:text-gray-400 focus:outline-none focus:text-gray-400">
                             <BarsTree class="h-6 w-6 text-gray-50" :class="showMenu ? 'hidden' : 'flex'" />
@@ -37,7 +57,7 @@ function handleGeolocationToggle(enabled: boolean) {
                     </div>
                 </div>
                 <!-- Mobile Menu  -->
-                <ul :class="showMenu ? 'flex' : 'hidden'"
+                <ul v-show="showMenu" ref="menuRef"
                     class="absolute top-full left-0 w-full  bg-indigo-600 dark:bg-gray-400 flex-col mt-4 space-y-4 md:static md:mt-0 md:flex md:flex-row md:items-center md:space-y-0 md:space-x-10">
                     <li>
                         <div>

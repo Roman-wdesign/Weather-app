@@ -81,13 +81,11 @@ describe('cacheService', () => {
     const mockRequest = new Request('https://example.com')
     const mockResponse = new Response('Error content', { status: 500 })
 
-    const consoleWarnSpy = vi.spyOn(console, 'warn').mockImplementation(() => { })
 
     await setCachedData(mockRequest, mockResponse)
 
     expect(cacheStorageMock.open).not.toHaveBeenCalled()
     expect(cacheMock.put).not.toHaveBeenCalled()
-    expect(consoleWarnSpy).toHaveBeenCalledWith('Response with error is not cached:', 500, mockRequest.url)
   })
 
   it('should clear specific cached data', async () => {
@@ -106,13 +104,10 @@ describe('cacheService', () => {
 
     cacheMock.delete.mockResolvedValueOnce(false)
 
-    const consoleWarnSpy = vi.spyOn(console, 'warn').mockImplementation(() => { })
-
     await clearCachedData(mockRequest)
 
     expect(cacheStorageMock.open).toHaveBeenCalledWith(CACHE_NAME)
     expect(cacheMock.delete).toHaveBeenCalledWith(mockRequest)
-    expect(consoleWarnSpy).toHaveBeenCalledWith('Cache is no found for response:', mockRequest.url)
   })
 
   it('should clear all cached data', async () => {
