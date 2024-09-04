@@ -57,7 +57,7 @@ onUnmounted(() => {
                     </div>
                 </div>
                 <!-- Mobile Menu  -->
-                <ul v-show="showMenu" ref="menuRef"
+                <ul ref="menuRef" :class="{ 'flex': showMenu, 'hidden': !showMenu, 'md:flex': true }"
                     class="absolute top-full left-0 w-full  bg-indigo-600 dark:bg-gray-400 flex-col mt-4 space-y-4 md:static md:mt-0 md:flex md:flex-row md:items-center md:space-y-0 md:space-x-10">
                     <li>
                         <div>
