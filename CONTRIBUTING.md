@@ -20,11 +20,13 @@ A high level overview of tools used:
 
 ## Settings
 
+- [env](#env)
+- [npm install](#npm-install)
 - [npm run dev](#npm-run-dev)
 - [npm run test](#npm-run-test)
 - [auto delete](#auto-delete)
 
-#### npm run dev
+#### env
 
 Create file **_.env_** in this poject (no in src directory)
 
@@ -37,9 +39,11 @@ Example
 VITE_WEATHER_SECRET_API_KEY = 12345
 ```
 
-prefix **\_VITE\_\_** is required for expose as import.meta.env.VITE_WEATHER_SECRET_API_KEY
+prefix **VITE\_** is required for expose as import.meta.env.VITE_WEATHER_SECRET_API_KEY
 
 Your .env file must be added to your .gitignore file
+
+#### npm install
 
 Install dependencies
 
@@ -47,13 +51,15 @@ Install dependencies
 npm install
 ```
 
+#### npm run dev
+
 Run the App
 
 ```
 npm run dev
 ```
 
-Default way
+Default port
 
 **`http://localhost:5173/`**
 
