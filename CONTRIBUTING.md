@@ -1,14 +1,19 @@
-# Weather-app Contributing Guide
+# The Weather-app Contributing Guide
 
 Hi! I'm really excited that you are interested in contributing to Weather-app. Before submitting your contribution, please make sure to take a moment and read through the following guidelines:
 
+- [The Architectural Methodology](#the-architectural-methodology)
 - [Development Setup](#development-setup)
 - [Code of Conduct](https://github.com/Roman-wdesign/Weather-app/blob/main/CODE_OF_CONDUCT.md)
 - [Issue Reporting Guidelines](#issue-reporting-guidelines)
 
+## The Architectural Methodology
+
+In this App use the [FSD](https://feature-sliced.design/docs) Architectural methodology.
+
 ## Development Setup
 
-You will need [Node.js](https://nodejs.org) **version 18.12+**, and [NPM](https://docs.npmjs.com/cli/v10/commands/npm-install) **version 10.3.0+**.
+You will need [Node.js](https://nodejs.org) **version 21.6.11+**, and [NPM](https://docs.npmjs.com/cli/v10/commands/npm-install) **version 10.3.0+**.
 
 A high level overview of tools used:
 
