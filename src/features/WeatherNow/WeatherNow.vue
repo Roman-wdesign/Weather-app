@@ -1,18 +1,18 @@
 <script setup lang="ts">
 import { ref, watchEffect } from 'vue'
 
-import { useWeatherNow } from '@/components/weather/WeatherNow/useWeatherNow'
-import { dateBuilder } from '@/helpers/DateBuilder'
+import { useWeatherNow } from '@/features/WeatherNow/useWeatherNow'
+import { dateBuilder } from '@/shared/api/helpers/DateBuilder'
 
 import { useDragAndDrop } from '@/shared/composables/useDragAndDrop'
-import IconClose from '@/shared/components/icons/IconClose.vue'
+import IconClose from '@/shared/assets/image/svg/IconClose.vue'
 
-import TheInput from '@/shared/components/TheInput.vue'
-import TheButton from '@/shared/components/buttons/TheButton.vue'
-import TheItemWeather from '@/components/weather/WeatherNow/TheItemWeather.vue'
-import BarsFour from '@/shared/components/icons/BarsFour.vue'
+import TheInput from '@/shared/ui/inputs/TheInput.vue'
+import TheButton from '@/shared/ui/buttons/TheButton.vue'
+import TheItemWeather from '@/features/WeatherNow/TheItemWeather.vue'
+import BarsFour from '@/shared/assets/image/svg/BarsFour.vue'
 
-const getDate = ref(dateBuilder());
+const getDate = ref(dateBuilder())
 
 const {
     savedCities,

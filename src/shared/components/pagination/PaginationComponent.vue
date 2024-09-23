@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import TheButton from '@/shared/components/buttons/TheButton.vue'
+import TheButton from '@/shared/ui/buttons/TheButton.vue'
 
 interface Props {
     currentPage: number,

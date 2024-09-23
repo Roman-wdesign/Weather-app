@@ -2,9 +2,9 @@ import { ref } from 'vue'
 import { mount } from '@vue/test-utils'
 import type { Ref } from 'vue'
 import { describe, it, expect, vi, beforeEach } from 'vitest'
-import { useWeatherNow } from '@/components/weather/WeatherNow/useWeatherNow'
+import { useWeatherNow } from '@/features/WeatherNow/useWeatherNow'
 import * as cacheModule from '@/shared/composables/cache/useCache'
-import * as urlModule from '@/helpers/generateWeatherUrl'
+import * as urlModule from '@/shared/api/helpers/generateWeatherUrl'
 import * as localStorageModule from '@/shared/composables/localStorage/useSavedCities'
 
 describe('useWeatherNow composable', () => {

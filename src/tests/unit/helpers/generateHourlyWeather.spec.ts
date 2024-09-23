@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { generateHourlyWeather } from '@/helpers/generateHourlyWeather'
+import { generateHourlyWeather } from '@/shared/api/helpers/generateHourlyWeather'
 
 describe('generateHourlyWeather', () => {
     it('should to create correct link', () => {

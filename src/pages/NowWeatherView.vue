@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import WeatherNow from '@/components/weather/WeatherNow/WeatherNow.vue'
+import WeatherNow from '@/features/WeatherNow/WeatherNow.vue'
 </script>
 
 <template>

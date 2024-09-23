@@ -1,11 +1,11 @@
 
 import { ref, computed, onMounted } from 'vue'
 
-import { urlBase, imgUrl, token } from '@/helpers/vars'
+import { urlBase, imgUrl, token } from '@/shared/config/vars'
 
 import { fetchWithCache } from '@/shared/composables/cache/useCache'
 
-import { generateWeatherUrl } from '@/helpers/generateWeatherUrl'
+import { generateWeatherUrl } from '@/shared/api/helpers/generateWeatherUrl'
 import { useSavedCities } from '@/shared/composables/localStorage/useSavedCities'
 
 

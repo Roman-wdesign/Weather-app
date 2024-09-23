@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { generateWeatherUrl } from '@/helpers/generateWeatherUrl'
+import { generateWeatherUrl } from '@/shared/api/helpers/generateWeatherUrl'
 
 describe('generateWeatherUrl', () => {
     it('должен корректно генерировать URL с правильными параметрами', () => {

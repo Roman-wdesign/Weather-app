@@ -2,8 +2,8 @@
 import { watch, onMounted, ref, computed } from 'vue'
 import { useGeolocation } from '@/shared/composables/useGeolocation'
 import { useFetch } from '@/shared/composables/useFetch'
-import { generateHourlyWeather } from '@/helpers/generateHourlyWeather'
-import { urlBase, token, imgUrl } from '@/helpers/vars'
+import { generateHourlyWeather } from '@/shared/api/helpers/generateHourlyWeather'
+import { urlBase, token, imgUrl } from '@/shared/config/vars'
 import { usePagination } from '@/shared/composables/usePagination'
 import { fetchWithCache } from '@/shared/composables/cache/useCache'
 
@@ -66,7 +66,7 @@ const { currentPage, totalPages, paginatedData, nextPage, prevPage } = usePagina
             <div v-if="parsedResponse.city">
                 <div class="city flex justify-center my-4">
                     <h1 class="text-2xl dark:text-gray-400">City: {{ parsedResponse.city.name }}, {{
-            parsedResponse.city.country }}</h1>
+                        parsedResponse.city.country }}</h1>
                 </div>
                 <div class=" city-sun_sun flex justify-evenly my-8 dark:text-gray-400">
                     <p>Sunrise: {{ new Date(parsedResponse.city.sunrise * 1000).toLocaleTimeString() }}</p>
@@ -95,8 +95,8 @@ const { currentPage, totalPages, paginatedData, nextPage, prevPage } = usePagina
                                 <p class="dark:text-gray-400">{{ forecast.weather[0].description }}</p>
                             </div>
 
-                            <div class="img-container h-16 w-16"><img
-                                    :src="`${imgUrl}${forecast.weather[0].icon}@2x.png`" alt="Weather Icon" /></div>
+                            <div class="img-container h-16 w-16"><img :src="`${imgUrl}${forecast.weather[0].icon}@2x.png`"
+                                    alt="Weather Icon" /></div>
                         </div>
                     </div>
 
