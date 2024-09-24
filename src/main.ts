@@ -3,7 +3,7 @@ import { createPinia } from 'pinia'
 
 
 import App from '@/app/App.vue'
-import router from './router'
+import router from '@/app/router'
 import './index.css';
 
 const app = createApp(App)

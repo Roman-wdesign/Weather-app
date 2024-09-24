@@ -1,0 +1,1 @@
+export { default as HourlyComponent } from './ui/HourlyComponent.vue'

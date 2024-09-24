@@ -9,10 +9,8 @@
         <p class="mt-4 text-gray-500 dark:text-gray-300">
           Try searching again, or return home to start from the beginning.
         </p>
-        <router-link
-          to="/"
-          class="mt-6 inline-block rounded bg-indigo-600 dark:bg-indigo-500 px-5 py-3 text-sm font-medium text-white hover:bg-indigo-700 dark:hover:bg-indigo-400 focus:outline-none focus:ring"
-        >
+        <router-link to="/"
+          class="mt-6 inline-block rounded bg-indigo-600 dark:bg-indigo-500 px-5 py-3 text-sm font-medium text-white hover:bg-indigo-700 dark:hover:bg-indigo-400 focus:outline-none focus:ring">
           Go Back Home
         </router-link>
       </div>

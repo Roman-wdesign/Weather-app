@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils'
 import { describe, it, expect, vi } from 'vitest'
-import TheToggle from '@/shared/components/TheToggle.vue'
+import { TheToggle } from '@/shared/ui/buttons/toggle'
 import { ref } from 'vue'
 
 

@@ -1,7 +1,7 @@
 import { mount } from '@vue/test-utils'
 import { nextTick } from 'vue'
 import { describe, it, expect, vi, beforeEach } from 'vitest'
-import WeatherNow from '@/components/weather/WeatherNow/WeatherNow.vue'
+import { WeatherNow } from '@/features/WeatherNow'
 
 let fetchWeatherForQueryMock: any
 let saveCurrentCityMock: any

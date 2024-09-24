@@ -3,9 +3,9 @@ import { ref, onMounted, onUnmounted } from 'vue'
 import { useNavbar } from '@/shared/composables/localStorage/useNavbar'
 import { useGeolocation } from '@/shared/composables/useGeolocation'
 
-import IconClose from '@/shared/assets/image/svg/IconClose.vue'
-import BarsTree from '@/shared/assets/image/svg/BarsTree.vue'
-import TheToggle from '@/shared/ui/buttons/TheToggle.vue'
+import { IconClose } from '@/shared/assets/image/svg/close'
+import { BarsTree } from '@/shared/assets/image/svg/burger'
+import { TheToggle } from '@/shared/ui/buttons/toggle'
 
 const { showMenu, isDarkMode, toggleNav, toggleDarkMode } = useNavbar()
 const { setGeolocationEnabled } = useGeolocation()

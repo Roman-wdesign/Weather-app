@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils'
 import { describe, it, expect, vi } from 'vitest'
-import TheNavbar from '@/shared/components/TheNavbar.vue'
+import { TheNavbar } from '@/widgets/navbar'
 
 vi.mock('@/shared/composables/localStorage/useNavbar', () => ({
     useNavbar: () => ({

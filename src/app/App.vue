@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import TheNavbar from '@/widgets/TheNavbar.vue'
+import { TheNavbar } from '@/widgets/navbar'
 </script>
 
 <template>

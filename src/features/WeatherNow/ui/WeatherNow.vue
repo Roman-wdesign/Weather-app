@@ -1,16 +1,16 @@
 <script setup lang="ts">
 import { ref, watchEffect } from 'vue'
 
-import { useWeatherNow } from '@/features/WeatherNow/useWeatherNow'
+import { useWeatherNow } from '@/features/WeatherNow/model/useWeatherNow'
 import { dateBuilder } from '@/shared/api/helpers/DateBuilder'
 
 import { useDragAndDrop } from '@/shared/composables/useDragAndDrop'
-import IconClose from '@/shared/assets/image/svg/IconClose.vue'
+import { IconClose } from '@/shared/assets/image/svg/close'
 
-import TheInput from '@/shared/ui/inputs/TheInput.vue'
-import TheButton from '@/shared/ui/buttons/TheButton.vue'
-import TheItemWeather from '@/features/WeatherNow/TheItemWeather.vue'
-import BarsFour from '@/shared/assets/image/svg/BarsFour.vue'
+import { TheInput } from '@/shared/ui/inputs'
+import { TheButton } from '@/shared/ui/buttons/main-btn'
+import { TheItemWeather } from '@/features/WeatherNow/item-weather'
+import { BarsFour } from '@/shared/assets/image/svg/dragable'
 
 const getDate = ref(dateBuilder())
 

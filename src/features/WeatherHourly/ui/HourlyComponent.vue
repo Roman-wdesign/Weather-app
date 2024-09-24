@@ -7,7 +7,7 @@ import { urlBase, token, imgUrl } from '@/shared/config/vars'
 import { usePagination } from '@/shared/composables/usePagination'
 import { fetchWithCache } from '@/shared/composables/cache/useCache'
 
-import PaginationComponent from '@/shared/components/pagination/PaginationComponent.vue'
+import { PaginationComponent } from '@/shared/components/pagination'
 
 const { isGeolocationEnabled, latitude, longitude, error: geoError } = useGeolocation()
 const { error } = useFetch()

@@ -1,7 +1,7 @@
 import { mount } from '@vue/test-utils'
 import { describe, it, expect } from 'vitest'
-import TheItemWeather from '@/components/weather/WeatherNow/TheItemWeather.vue'
-import type { IWeather } from '@/components/weather/WeatherNow/TheItemWeather.vue'
+import { TheItemWeather } from '@/features/WeatherNow/item-weather'
+import type { IWeather } from '@/features/WeatherNow/item-weather/'
 describe('TheItemWeather.vue', () => {
     const weather: IWeather = {
         name: 'Test City',

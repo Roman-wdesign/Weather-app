@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import NowWeather from '@/pages/NowWeatherView.vue'
-import HourlyWeather from '@/pages/HourlyWeather.vue'
-import PageNotFound from '@/pages/PageNotFound.vue'
+import { NowWeatherView } from '@/pages/main'
+import { HourlyWeather } from '@/pages/hourly'
+import { PageNotFound } from '@/pages/not-found'
 
 
 const router = createRouter({
@@ -10,7 +10,7 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: NowWeather
+      component: NowWeatherView
     },
     {
       path: '/geolocation',

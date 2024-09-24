@@ -1,0 +1,1 @@
+export { default as NowWeatherView } from './ui/NowWeatherView.vue'
