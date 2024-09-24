@@ -1,13 +1,13 @@
 import { mount } from '@vue/test-utils'
 import { describe, it, expect, vi } from 'vitest'
-import Pagination from '@/shared/components/pagination/PaginationComponent.vue'
+import { PaginationComponent } from '@/shared/components/pagination/'
 
 describe('Pagination Component', () => {
     const nextPage = vi.fn()
     const prevPage = vi.fn()
 
     const createWrapper = (currentPage: number, totalPages: number) => {
-        return mount(Pagination, {
+        return mount(PaginationComponent, {
             props: {
                 currentPage,
                 totalPages,

@@ -1,17 +1,5 @@
 <script setup lang="ts">
-export interface IWeather {
-    name: string
-    sys: {
-        country: string
-    }
-    main: {
-        temp: number
-    }
-    weather: Array<{
-        main: string
-        icon: string
-    }>
-}
+import type { IWeather } from '@/features/WeatherNow/item-weather/model/index'
 
 export interface Props {
     weather: IWeather
