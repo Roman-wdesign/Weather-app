@@ -8,8 +8,7 @@ module.exports = {
       fontFamily: {
         sans: ['"Roboto"', ...defaultTheme.fontFamily.sans]
       }
-    },
-    colors: {}
+    }
   },
   plugins: []
 }

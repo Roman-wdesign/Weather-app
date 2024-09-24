@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, afterEach } from 'vitest'
-import { dateBuilder } from '@/helpers/DateBuilder'
+import { dateBuilder } from '@/shared/api/helpers/DateBuilder'
 
 describe('dateBuilder', () => {
     it('должен возвращать корректную строку даты для текущей даты', () => {
