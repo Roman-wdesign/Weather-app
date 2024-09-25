@@ -4,7 +4,7 @@ import type { Ref } from 'vue'
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { useWeatherNow } from '@/features/WeatherNow/model/useWeatherNow'
 import * as cacheModule from '@/shared/composables/cache/useCache'
-import * as urlModule from '@/shared/api/helpers/generateWeatherUrl'
+import * as urlModule from '@/shared/api/helpers/generate-now/api/generateNowWeather'
 import * as localStorageModule from '@/shared/composables/localStorage/useSavedCities'
 
 describe('useWeatherNow composable', () => {

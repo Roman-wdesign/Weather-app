@@ -1,11 +1,4 @@
-
-interface IdateBuilder<T, U> {
-    dayOfWeek: T
-    dayOfMonth: U
-    monthName: T
-}
-
-
+import type { IdateBuilder } from '../model/types'
 
 export const dateBuilder = (): string => {
     const d = new Date();
@@ -21,6 +14,5 @@ export const dateBuilder = (): string => {
         dayOfMonth,
         monthName
     }
-
     return `${dateObj.dayOfWeek}, ${dateObj.dayOfMonth} ${dateObj.monthName}`
 }

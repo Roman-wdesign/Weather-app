@@ -5,7 +5,7 @@ import { urlBase, imgUrl, token } from '@/shared/config/vars'
 
 import { fetchWithCache } from '@/shared/composables/cache/useCache'
 
-import { generateWeatherUrl } from '@/shared/api/helpers/generateWeatherUrl'
+import { generateWeatherUrl } from '@/shared/api/helpers/generate-now/api/generateNowWeather'
 import { useSavedCities } from '@/shared/composables/localStorage/useSavedCities'
 
 
