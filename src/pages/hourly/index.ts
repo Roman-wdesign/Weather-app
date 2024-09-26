@@ -1,1 +1,1 @@
-export { default as HourlyWeather } from './ui/HourlyWeather.vue'
+export { default as HourlyWeather } from './ui/HourlyWeatherView.vue'

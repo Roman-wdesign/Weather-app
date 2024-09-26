@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { IWeather } from '@/features/WeatherNow/item-weather/model/index'
+import type { IWeather } from '@/features/WeatherNow/item-weather'
 
 export interface Props {
     weather: IWeather

@@ -2,9 +2,9 @@
 import { ref, watchEffect } from 'vue'
 
 import { useWeatherNow } from '@/features/WeatherNow/model/useWeatherNow'
-import { dateBuilder } from '@/shared/api/helpers/DateBuilder'
+import { dateBuilder } from '@/shared/api/helpers/date-builder'
 
-import { useDragAndDrop } from '@/shared/composables/useDragAndDrop'
+import { useDragAndDrop } from '@/shared/composables/drag-drop'
 import { IconClose } from '@/shared/assets/image/svg/close'
 
 import { TheInput } from '@/shared/ui/inputs'

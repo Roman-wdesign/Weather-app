@@ -1,18 +1,11 @@
 ![GitHub License](https://img.shields.io/github/license/Roman-wdesign/Weather-app?style=flat&logoColor=%23063970&labelColor=%23063970)
 ![GitHub branch status](https://img.shields.io/github/checks-status/Roman-wdesign/Weather-app/main?labelColor=%23063970)
+![Documentation](https://img.shields.io/badge/docs-passing-brightgreen)
+![Node](https://img.shields.io/badge/node-%3E%3D%2021.6.11-brightgreen)
 
 ![Version](https://img.shields.io/github/v/release/Roman-wdesign/Weather-app?&labelColor=%23063970)
 ![Last Commit](https://img.shields.io/github/last-commit/Roman-wdesign/Weather-app?&labelColor=%23063970)
 ![GitHub Issues or Pull Requests](https://img.shields.io/github/issues/Roman-wdesign/Weather-app?labelColor=%23063970)
-
-![Documentation](https://img.shields.io/badge/docs-passing-brightgreen)
-![Node](https://img.shields.io/badge/node-%3E%3D%2021.6.11-brightgreen)
-
-<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-
-[![All Contributors](https://img.shields.io/badge/all_contributors-0-orange.svg?style=flat-square)](#contributors-)
-
-<!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 [![Feature-Sliced Design][shields-fsd-domain]](https://feature-sliced.design/)
 
