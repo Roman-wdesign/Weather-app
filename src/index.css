@@ -8,6 +8,6 @@
     font-style: normal;
     font-weight: 400;
     font-display: swap;
-    src: url(/src/shared/fonts/Roboto/Roboto-Regular.ttf) format('truetype');
+    src: url(/src/shared/assets/fonts/Roboto/Roboto-Regular.ttf) format('truetype');
   }
 }

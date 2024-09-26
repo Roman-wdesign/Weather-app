@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue'
-import { useNavbar } from '@/shared/composables/localStorage/useNavbar'
-import { useGeolocation } from '@/shared/composables/useGeolocation'
+import { useNavbar } from '@/widgets/navbar'
+import { useGeolocation } from '@/shared/composables/geolocation'
 
 import { IconClose } from '@/shared/assets/image/svg/close'
 import { BarsTree } from '@/shared/assets/image/svg/burger'

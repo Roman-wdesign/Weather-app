@@ -3,10 +3,10 @@ import { ref, computed, onMounted } from 'vue'
 
 import { urlBase, imgUrl, token } from '@/shared/config/vars'
 
-import { fetchWithCache } from '@/shared/composables/cache/useCache'
+import { fetchWithCache } from '@/shared/composables/cache/use-cache/model/useCache'
 
 import { generateWeatherUrl } from '@/shared/api/helpers/generate-now/api/generateNowWeather'
-import { useSavedCities } from '@/shared/composables/localStorage/useSavedCities'
+import { useSavedCities } from '@/shared/composables/localStorage/saved-cities/model/useSavedCities'
 
 
 
