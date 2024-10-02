@@ -1,4 +1,4 @@
-import type { IdateBuilder } from '../model/types'
+import type { IdateBuilder } from '@/shared/api/helpers/date-builder/model'
 
 export const dateBuilder = (): string => {
     const d = new Date();

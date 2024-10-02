@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils'
 import { describe, it, expect, vi } from 'vitest'
-import { PaginationComponent } from '@/shared/ui/pagination'
+import { PaginationComponent } from '@/shared/ui/pagination/ui'
 
 describe('Pagination Component', () => {
     const nextPage = vi.fn()

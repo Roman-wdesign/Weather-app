@@ -1,1 +1,0 @@
-export { default as WeatherNow } from './ui/WeatherNow.vue'

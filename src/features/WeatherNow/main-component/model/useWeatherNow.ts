@@ -1,12 +1,12 @@
 
 import { ref, computed, onMounted } from 'vue'
 
-import { urlBase, imgUrl, token } from '@/shared/config/vars'
+import { urlBase, imgUrl, token } from '@/shared/config'
 
-import { fetchWithCache } from '@/shared/composables/cache/use-cache/model/useCache'
+import { fetchWithCache } from '@/shared/composables/cache/model'
 
-import { generateWeatherUrl } from '@/shared/api/helpers/generate-now/api/generateNowWeather'
-import { useSavedCities } from '@/shared/composables/localStorage/saved-cities/model/useSavedCities'
+import { generateWeatherUrl } from '@/features/WeatherNow/main-component/api'
+import { useSavedCities } from '@/shared/composables/localStorage/saved-cities/model'
 
 
 

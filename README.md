@@ -48,4 +48,4 @@ Please make sure to respect issue requirements and use [the new issue helper](ht
 
 ## Contribution
 
-Please make sure to read the [Contributing Guide](https://github.com/Roman-wdesign/Weather-app/blob/main/CONTRIBUTING.md#issue-reporting-guidelines) before making a pull request.
+Please make sure to read the [Contributing Guide](https://github.com/Roman-wdesign/Weather-app/blob/main/CONTRIBUTING.md) before making a pull request.

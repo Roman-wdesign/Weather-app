@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { watch, onMounted, ref, computed } from 'vue'
-import { useGeolocation } from '@/shared/composables/geolocation'
-import { useFetch } from '@/shared/composables/fetch'
-import { generateHourlyWeather } from '@/shared/api/helpers/generate-hourly'
-import { urlBase, token, imgUrl } from '@/shared/config/vars'
-import { usePagination } from '@/shared/ui/pagination'
-import { fetchWithCache } from '@/shared/composables/cache/use-cache'
+import { useGeolocation } from '@/shared/composables/geolocation/model'
+import { useFetch } from '@/shared/composables/fetch/api'
+import { generateHourlyWeather } from '@/features/WeatherHourly/main-component/api'
+import { urlBase, token, imgUrl } from '@/shared/config'
+import { usePagination } from '@/shared/ui/pagination/model'
+import { fetchWithCache } from '@/shared/composables/cache/use-cache/model'
 
-import { PaginationComponent } from '@/shared/ui/pagination'
+import { PaginationComponent } from '@/shared/ui/pagination/ui'
 
 const { isGeolocationEnabled, latitude, longitude, error: geoError } = useGeolocation()
 const { error } = useFetch()

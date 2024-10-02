@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { ref } from 'vue'
 import type { Ref } from 'vue'
-import { useDragAndDrop } from '@/shared/composables/drag-drop'
+import { useDragAndDrop } from '@/features/WeatherNow'
 
 
 describe('useDragAndDrop', () => {
