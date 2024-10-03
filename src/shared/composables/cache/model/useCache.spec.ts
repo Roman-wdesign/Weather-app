@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
-import { fetchWithCache } from '@/shared/composables/cache/use-cache/model/useCache'
+import { fetchWithCache } from '@/shared/composables/cache/model'
 
 
 describe('fetchWithCache', () => {

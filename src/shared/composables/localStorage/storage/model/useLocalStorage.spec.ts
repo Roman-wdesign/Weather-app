@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
-import { useLocalStorage } from '@/shared/composables/localStorage/storage/model/useLocalStorage'
+import { useLocalStorage } from '@/shared/composables/localStorage/storage/model'
 
 describe('useLocalStorage', () => {
   let key: string

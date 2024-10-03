@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { generateWeatherUrl } from '@/shared/api/helpers/generate-now/api/generateNowWeather'
+import { generateWeatherUrl } from '@/features/WeatherNow/main-component/api'
 
 describe('generateWeatherUrl', () => {
     it('должен корректно генерировать URL с правильными параметрами', () => {

@@ -5,7 +5,7 @@ import { useFetch } from '@/shared/composables/fetch/api'
 import { generateHourlyWeather } from '@/features/WeatherHourly/main-component/api'
 import { urlBase, token, imgUrl } from '@/shared/config'
 import { usePagination } from '@/shared/ui/pagination/model'
-import { fetchWithCache } from '@/shared/composables/cache/use-cache/model'
+import { fetchWithCache } from '@/shared/composables/cache/model'
 
 import { PaginationComponent } from '@/shared/ui/pagination/ui'
 

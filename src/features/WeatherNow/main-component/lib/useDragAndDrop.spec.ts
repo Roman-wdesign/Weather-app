@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { ref } from 'vue'
 import type { Ref } from 'vue'
-import { useDragAndDrop } from '@/features/WeatherNow'
+import { useDragAndDrop } from '@/features/WeatherNow/main-component/lib'
 
 
 describe('useDragAndDrop', () => {

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { TheButton } from '@/shared/ui/buttons/main-btn'
+import { TheButton } from '@/shared/ui/buttons/main-btn/ui'
 
 interface Props {
     currentPage: number,
