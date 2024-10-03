@@ -1,1 +1,2 @@
-export { default as PageNotFound } from './ui/PageNotFound.vue'
+import PageNotFound from './ui/PageNotFound.vue'
+export default PageNotFound

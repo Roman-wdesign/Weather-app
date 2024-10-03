@@ -1,10 +1,10 @@
 import { mount } from '@vue/test-utils'
 import { describe, it, expect, vi } from 'vitest'
-import { TheToggle } from '@/shared/ui/buttons/toggle'
+import { TheToggle } from '@/shared/ui/buttons/toggle/ui'
 import { ref } from 'vue'
 
 
-vi.mock('@/shared/composables/localStorage/useLocalStorage', () => ({
+vi.mock('@/shared/composables/localStorage/storage/model', () => ({
     useLocalStorage: () => ({
         storedValue: ref(false),
         setValue: vi.fn(),

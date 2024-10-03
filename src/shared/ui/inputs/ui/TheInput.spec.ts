@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils'
 import { describe, it, expect } from 'vitest'
-import { TheInput } from '@/shared/ui/inputs'
+import { TheInput } from '@/shared/ui/inputs/ui'
 
 describe('TheInput Component', () => {
     it('renders correctly with props', () => {

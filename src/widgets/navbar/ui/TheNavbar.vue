@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue'
-import { useNavbar } from '@/widgets/navbar'
-import { useGeolocation } from '@/shared/composables/geolocation'
+import { useNavbar } from '@/widgets/navbar/model'
+import { useGeolocation } from '@/shared/composables/geolocation/model'
 
 import { IconClose } from '@/shared/assets/image/svg/close'
 import { BarsTree } from '@/shared/assets/image/svg/burger'
-import { TheToggle } from '@/shared/ui/buttons/toggle'
+import { TheToggle } from '@/shared/ui/buttons/toggle/ui'
 
 const { showMenu, isDarkMode, toggleNav, toggleDarkMode } = useNavbar()
 const { setGeolocationEnabled } = useGeolocation()

@@ -1,1 +1,2 @@
-export { default as NowWeatherView } from './ui/NowWeatherView.vue'
+import NowWeatherView from './ui/NowWeatherView.vue'
+export default NowWeatherView

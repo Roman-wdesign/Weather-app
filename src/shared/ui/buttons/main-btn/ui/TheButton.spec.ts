@@ -1,6 +1,7 @@
 import { mount } from '@vue/test-utils'
 import { describe, it, expect } from 'vitest'
 import { TheButton } from '@/shared/ui/buttons/main-btn'
+
 describe('Button Component', () => {
     it('renders correctly with default props', () => {
         const wrapper = mount(TheButton, {

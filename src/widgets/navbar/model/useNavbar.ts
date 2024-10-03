@@ -1,5 +1,5 @@
 import { ref, onMounted } from 'vue'
-import { useLocalStorage } from '@/shared/composables/localStorage/storage/model/useLocalStorage'
+import { useLocalStorage } from '@/shared/composables/localStorage/storage/model'
 
 
 export const useNavbar = () => {
