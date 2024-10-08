@@ -3,6 +3,8 @@
 Hi! I'm really excited that you are interested in contributing to Weather-app. Before submitting your contribution, please make sure to take a moment and read through the following guidelines:
 
 - [The Architectural Methodology](#the-architectural-methodology)
+- [Naming of Branches](#naming-of-branches)
+- [Naming of Commits](#naming-of-commits)
 - [Development Setup](#development-setup)
 - [Code of Conduct](https://github.com/Roman-wdesign/Weather-app/blob/main/CODE_OF_CONDUCT.md)
 - [Issue Reporting Guidelines](#issue-reporting-guidelines)
@@ -10,6 +12,68 @@ Hi! I'm really excited that you are interested in contributing to Weather-app. B
 ## The Architectural Methodology
 
 In this App use the [FSD](https://feature-sliced.design/docs) Architectural methodology.
+
+## Naming of Branches
+
+In git you can create folders and subfolders. Just add / in the branch name and your branch will get the following folder/name structure. This feature helps sort branches in git.
+
+- `build` changes regarding the build process (npm, vite)
+- `chore` changes that do not directly affect the code, something that the end user will not see (installing/removing dependencies, setting up a project/tools)
+- `ci` changes regarding CI/CD
+- `docs` changes regarding documentation
+- `feat` new feature
+- `fix` bug fix
+- `perf` performance improvements
+- `refactor` code refactoring
+- `revert` commit cancel
+- `style` style changes
+- `test` adding missing tests or correcting existing tests
+
+Examples:
+
+```
+feat/DEV-666-add-custom-input
+
+fix/DEV-1125-issue-with-user-avatar-dimensions
+
+chore/DEV-25-upgrade-vite-version
+
+style/add-outline-to-primary-button
+```
+
+## Naming of Commits
+
+Logical code codes are easy to sort, and selecting a commit type becomes a trivial group. You have added a new function - this is the type feat. Fixed a bug - this is a type of correction. We refactored the code without changing the main logic of the work - this is a type of refactoring. Etc.
+
+After adding the commit type, you put :, a space, and write a short generic name of what exactly you did. The message itself should be written in the imperative mood, begin, as a rule, with a verb (“add”, “remove”, “correct”, “change”, etc.) and not contain any punctuation at the end.
+
+Examples:
+
+```
+feat: add booking widget to product page
+
+refactor: remove info button in tariff card
+
+ci: update CI/CD for performance reason
+```
+
+If you want to describe in detail the work done, then create a large commit message with a header, message body and footer (optional). The git commit command will help you with this, which opens the code editor built into the command line shell (vim, nano, etc.). You can also use the GUI option in your IDE.
+
+Examples:
+
+```
+# HEADING
+feat: add button for loading new posts
+
+# BODY
+Add a button for loading new posts on blog page. It can be hidden if there're no more info and shown if it exists.
+
+There is a small delay on button hidding(maybe it's a problem with rerendering), so it needs to be fixed on future refactoring.
+
+# FOOTER(optional)
+Signed-of-by: John Doe
+Issue: DEV-123
+```
 
 ## Development Setup
 
