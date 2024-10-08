@@ -87,6 +87,12 @@ const { currentPage, totalPages, paginatedData, nextPage, prevPage } = usePagina
                             <div>
                                 <p class="dark:text-stone-400"> {{ (forecast.main.temp - 273.15).toFixed(1) }}°C</p>
                             </div>
+                            <div>
+                                <p class="dark:text-gray-400">{{ forecast.main.pressure }} hpa </p>
+                            </div>
+                            <div>
+                                <p class="dark:text-gray-400">{{ Math.round(forecast.main.humidity) }} %</p>
+                            </div>
 
                         </div>
 
@@ -94,7 +100,6 @@ const { currentPage, totalPages, paginatedData, nextPage, prevPage } = usePagina
                             <div>
                                 <p class="dark:text-gray-400">{{ forecast.weather[0].description }}</p>
                             </div>
-
                             <div class="img-container h-16 w-16"><img :src="`${imgUrl}${forecast.weather[0].icon}@2x.png`"
                                     alt="Weather Icon" /></div>
                         </div>

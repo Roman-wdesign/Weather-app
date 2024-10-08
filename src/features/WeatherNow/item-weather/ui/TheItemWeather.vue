@@ -27,6 +27,16 @@ const props = defineProps<Partial<Props>>()
                     {{ Math.round(props.weather.main.temp) }} °c
                 </h2>
             </div>
+            <div class="pressure flex flex-col items-center py-3">
+                <h2>Atmospheric pressure</h2>
+                <h3 class="font-bold">{{ Math.round(props.weather.main.pressure) }} hPa</h3>
+            </div>
+            <div class="humidity flex flex-col items-center py-3">
+                <h2>Humidity</h2>
+                <h3 class=" font-bold">{{ Math.round(props.weather.main.humidity) }} %</h3>
+            </div>
+            
+
             <div class="px-2">
                 <div class="div flex justify-center">
                     <h4 class="font-bold">{{ props.weather.weather[0].main }}</h4>
