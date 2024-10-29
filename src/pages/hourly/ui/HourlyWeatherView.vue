@@ -3,5 +3,5 @@ import { HourlyComponent } from '@/features/WeatherHourly/main-component/ui'
 </script>
 
 <template>
-    <HourlyComponent></HourlyComponent>
+  <HourlyComponent></HourlyComponent>
 </template>

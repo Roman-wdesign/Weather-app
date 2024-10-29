@@ -25,7 +25,7 @@ export function useLocalStorage(key: string, initialValue: any) {
 
   storedValue.value = readValue()
 
-   watch(storedValue, (newValue) => {
+  watch(storedValue, (newValue) => {
     window.localStorage.setItem(key, JSON.stringify(newValue))
   })
 

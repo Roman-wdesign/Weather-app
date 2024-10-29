@@ -2,7 +2,11 @@ import { ref, watch, onMounted } from 'vue'
 import { useLocalStorage } from '@/shared/composables/localStorage/storage/model/useLocalStorage'
 
 export function useGeolocation() {
-  const { storedValue: isGeolocationEnabled, setValue: setGeolocationEnabled, removeValue } = useLocalStorage('geolocationEnabled', false)
+  const {
+    storedValue: isGeolocationEnabled,
+    setValue: setGeolocationEnabled,
+    removeValue
+  } = useLocalStorage('geolocationEnabled', false)
   const latitude = ref<number | null>(null)
   const longitude = ref<number | null>(null)
   const error = ref<string | null>(null)
@@ -40,7 +44,7 @@ export function useGeolocation() {
       getCurrentPosition()
     } else {
       stopGeolocation()
-      removeValue()  // Remove from localStorage
+      removeValue() // Remove from localStorage
     }
   })
 
@@ -61,5 +65,12 @@ export function useGeolocation() {
     window.addEventListener('geolocation-toggle', handleToggle)
   })
 
-  return { isGeolocationEnabled, latitude, longitude, error, setGeolocationEnabled, stopGeolocation }
+  return {
+    isGeolocationEnabled,
+    latitude,
+    longitude,
+    error,
+    setGeolocationEnabled,
+    stopGeolocation
+  }
 }

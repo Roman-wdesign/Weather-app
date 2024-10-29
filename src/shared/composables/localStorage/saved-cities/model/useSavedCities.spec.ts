@@ -5,7 +5,7 @@ import { useSavedCities } from '@/shared/composables/localStorage/saved-cities/m
 import { useLocalStorage } from '@/shared/composables/localStorage/storage/model/useLocalStorage'
 
 vi.mock('@/shared/composables/localStorage/storage/model/useLocalStorage', () => ({
-  useLocalStorage: vi.fn(),
+  useLocalStorage: vi.fn()
 }))
 
 describe('useSavedCities', () => {
@@ -20,8 +20,8 @@ describe('useSavedCities', () => {
     mockUseLocalStorage = {
       storedValue: ref([]),
       setValue: vi.fn()
-    };
-    (useLocalStorage as any).mockReturnValue(mockUseLocalStorage)
+    }
+    ;(useLocalStorage as any).mockReturnValue(mockUseLocalStorage)
   })
 
   it('should initialize savedCities as an empty array if not present in localStorage', () => {
@@ -31,7 +31,6 @@ describe('useSavedCities', () => {
 
   it('should save a city if it is not already in the savedCities array', () => {
     const { saveCurrentCity } = useSavedCities(firstCityArg, secondCityArg)
-
 
     mockUseLocalStorage.setValue.mockImplementation((newCities: string[]) => {
       mockUseLocalStorage.storedValue.value = newCities

@@ -6,16 +6,14 @@ describe('useGeolocation', () => {
   let clearWatchMock: any
 
   beforeEach(() => {
-
     watchPositionMock = vi.fn()
     clearWatchMock = vi.fn()
 
     const globalNavigator = {
       geolocation: {
         watchPosition: watchPositionMock,
-        clearWatch: clearWatchMock,
+        clearWatch: clearWatchMock
       }
-
     }
   })
 
@@ -35,12 +33,11 @@ describe('useGeolocation', () => {
   })
 
   it('should update latitude and longitude on position update', () => {
-
     const mockPosition = {
       coords: {
         latitude: 10,
-        longitude: 20,
-      },
+        longitude: 20
+      }
     }
 
     watchPositionMock.mockImplementation((successCallback: any) => {
@@ -61,7 +58,6 @@ describe('useGeolocation', () => {
         return: null
       }
     }
-
 
     const { error } = useGeolocation()
 

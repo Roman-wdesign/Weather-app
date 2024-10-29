@@ -3,13 +3,12 @@ import { ref, onMounted } from 'vue'
 import { useNavbar } from '@/widgets/navbar/model/useNavbar'
 import { useLocalStorage } from '@/shared/composables/localStorage/storage/model/useLocalStorage'
 
-
 vi.mock('@/shared/composables/localStorage/storage/model/useLocalStorage', () => {
   return {
     useLocalStorage: vi.fn().mockReturnValue({
       storedValue: ref(false),
-      setValue: vi.fn(),
-    }),
+      setValue: vi.fn()
+    })
   }
 })
 
@@ -18,10 +17,8 @@ describe('useNavbar', () => {
   let setDarkModeMock: any
 
   beforeEach(() => {
-
     vi.spyOn(document.documentElement.classList, 'add')
     vi.spyOn(document.documentElement.classList, 'remove')
-
 
     const localStorageMock = useLocalStorage('theme', false)
     isDarkModeMock = localStorageMock.storedValue
@@ -58,7 +55,6 @@ describe('useNavbar', () => {
   })
 
   it('should apply correct class on mount based on isDarkMode value', () => {
-
     isDarkModeMock.value = false
     useNavbar()
     onMounted(() => {

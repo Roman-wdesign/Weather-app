@@ -3,78 +3,78 @@ import { describe, it, expect } from 'vitest'
 import { TheItemWeather } from '@/features/WeatherNow/item-weather/ui'
 import type { IWeather } from '@/features/WeatherNow/item-weather/model'
 describe('TheItemWeather.vue', () => {
-    const weather: IWeather = {
-        name: 'Test City',
-        sys: {
-            country: 'TC',
-        },
-        main: {
-            temp: 22,
-        },
-        weather: [
-            {
-                main: 'Clear',
-                icon: '01d',
-            },
-        ],
-    }
+  const weather: IWeather = {
+    name: 'Test City',
+    sys: {
+      country: 'TC'
+    },
+    main: {
+      temp: 22
+    },
+    weather: [
+      {
+        main: 'Clear',
+        icon: '01d'
+      }
+    ]
+  }
 
-    const imgUrl = 'http://example.com/img/'
+  const imgUrl = 'http://example.com/img/'
 
-    it('should render name of country and city', () => {
-        const wrapper = mount(TheItemWeather, {
-            props: {
-                weather,
-                imgUrl,
-            },
-        })
-
-        expect(wrapper.text()).toContain('Test City')
-        expect(wrapper.text()).toContain('TC')
+  it('should render name of country and city', () => {
+    const wrapper = mount(TheItemWeather, {
+      props: {
+        weather,
+        imgUrl
+      }
     })
 
-    it('should render temperature', () => {
-        const wrapper = mount(TheItemWeather, {
-            props: {
-                weather,
-                imgUrl,
-            },
-        })
+    expect(wrapper.text()).toContain('Test City')
+    expect(wrapper.text()).toContain('TC')
+  })
 
-        expect(wrapper.text()).toContain('22 °c')
+  it('should render temperature', () => {
+    const wrapper = mount(TheItemWeather, {
+      props: {
+        weather,
+        imgUrl
+      }
     })
 
-    it('should render description of the weather', () => {
-        const wrapper = mount(TheItemWeather, {
-            props: {
-                weather,
-                imgUrl,
-            },
-        })
+    expect(wrapper.text()).toContain('22 °c')
+  })
 
-        expect(wrapper.text()).toContain('Clear')
+  it('should render description of the weather', () => {
+    const wrapper = mount(TheItemWeather, {
+      props: {
+        weather,
+        imgUrl
+      }
     })
 
-    it('should render the icon of the weather', () => {
-        const wrapper = mount(TheItemWeather, {
-            props: {
-                weather,
-                imgUrl,
-            },
-        })
+    expect(wrapper.text()).toContain('Clear')
+  })
 
-        const img = wrapper.find('img')
-        expect(img.exists()).toBe(true)
-        expect(img.attributes('src')).toBe(`${imgUrl}01d@2x.png`)
+  it('should render the icon of the weather', () => {
+    const wrapper = mount(TheItemWeather, {
+      props: {
+        weather,
+        imgUrl
+      }
     })
 
-    it('should render has div, if the data about the weather is no empty', () => {
-        const wrapper = mount(TheItemWeather, {
-            props: {
-                weather,
-                imgUrl,
-            },
-        })
-        expect(wrapper.find('.weather-wrap').exists()).toBe(true)
+    const img = wrapper.find('img')
+    expect(img.exists()).toBe(true)
+    expect(img.attributes('src')).toBe(`${imgUrl}01d@2x.png`)
+  })
+
+  it('should render has div, if the data about the weather is no empty', () => {
+    const wrapper = mount(TheItemWeather, {
+      props: {
+        weather,
+        imgUrl
+      }
     })
+    expect(wrapper.find('.weather-wrap').exists()).toBe(true)
+  })
 })

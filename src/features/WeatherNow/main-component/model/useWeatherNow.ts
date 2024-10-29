@@ -1,4 +1,3 @@
-
 import { ref, computed, onMounted } from 'vue'
 
 import { urlBase, imgUrl, token } from '@/shared/config'
@@ -7,8 +6,6 @@ import { fetchWithCache } from '@/shared/composables/cache/model'
 
 import { generateWeatherUrl } from '@/features/WeatherNow/main-component/api'
 import { useSavedCities } from '@/shared/composables/localStorage/saved-cities/model'
-
-
 
 export function useWeatherNow() {
   const theQuery = ref<string>('')
@@ -38,9 +35,14 @@ export function useWeatherNow() {
     }
   }
 
-  const fetchWeatherForQuery = computed(async () => (theQuery.value ? await fetchWeather(theQuery.value) : undefined))
+  const fetchWeatherForQuery = computed(async () =>
+    theQuery.value ? await fetchWeather(theQuery.value) : undefined
+  )
 
-  const { savedCities, saveCurrentCity, removeCityFromStorage, loadSavedCities } = useSavedCities(theWeather, fetchWeather)
+  const { savedCities, saveCurrentCity, removeCityFromStorage, loadSavedCities } = useSavedCities(
+    theWeather,
+    fetchWeather
+  )
 
   const isSaveDisabled = computed(() => savedCities.value.length >= 3)
 
@@ -58,6 +60,6 @@ export function useWeatherNow() {
     fetchWeatherForQuery,
     isSaveDisabled,
     saveCurrentCity,
-    removeCityFromStorage,
+    removeCityFromStorage
   }
 }

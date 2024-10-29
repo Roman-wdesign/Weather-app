@@ -1,9 +1,13 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
-import { getCachedData, setCachedData, clearCachedData, clearAllCachedData } from '@/shared/composables/cache/storage/model/useCacheStorage'
+import {
+  getCachedData,
+  setCachedData,
+  clearCachedData,
+  clearAllCachedData
+} from '@/shared/composables/cache/storage/model/useCacheStorage'
 
 const CACHE_NAME = 'weather-cache'
 const CACHE_TTL = 60 * 60 * 1000 // 1 hour
-
 
 let cacheMock: any
 let cacheStorageMock: any
@@ -12,12 +16,12 @@ beforeEach(() => {
   cacheMock = {
     match: vi.fn(),
     put: vi.fn(),
-    delete: vi.fn(),
+    delete: vi.fn()
   }
 
   cacheStorageMock = {
     open: vi.fn(() => Promise.resolve(cacheMock)),
-    delete: vi.fn(),
+    delete: vi.fn()
   }
 
   global.caches = cacheStorageMock
@@ -31,7 +35,7 @@ describe('cacheService', () => {
   it('should return cached data if it is not expired', async () => {
     const mockRequest = new Request('https://example.com')
     const mockResponse = new Response('Cached content', {
-      headers: { 'sw-cache-date': new Date().toISOString() },
+      headers: { 'sw-cache-date': new Date().toISOString() }
     })
 
     cacheMock.match.mockResolvedValueOnce(mockResponse)
@@ -47,7 +51,7 @@ describe('cacheService', () => {
     const mockRequest = new Request('https://example.com')
     const expiredDate = new Date(Date.now() - CACHE_TTL - 1000).toISOString()
     const mockResponse = new Response('Cached content', {
-      headers: { 'sw-cache-date': expiredDate },
+      headers: { 'sw-cache-date': expiredDate }
     })
 
     cacheMock.match.mockResolvedValueOnce(mockResponse)
@@ -80,7 +84,6 @@ describe('cacheService', () => {
   it('should not cache response with a non-200 status code', async () => {
     const mockRequest = new Request('https://example.com')
     const mockResponse = new Response('Error content', { status: 500 })
-
 
     await setCachedData(mockRequest, mockResponse)
 
