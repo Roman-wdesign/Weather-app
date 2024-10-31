@@ -57,32 +57,39 @@ const { currentPage, totalPages, paginatedData, nextPage, prevPage } = usePagina
 
 const temperFaringate = 273.15
 
-const polarwinter = -60
-const yakutWinter = -50
-const siberiaWinter = -40
-const uralWinter = -30
-const asianWinter = -20
-const europeWinter = -10
+type TemperatureRange = {
+  min: number
+  max: number
+  color: string
+}
 
-const polarSpring = 10
-const europeSpring = 15
-const miamiSummer = 30
-const bahrainSummer = 40
+const temperatureRanges: TemperatureRange[] = [
+  { min: -Infinity, max: -60, color: 'text-fuchsia-900' }, // yakut winter
+  { min: -59.9, max: -50, color: 'text-purple-800' }, // arctic winter
+  { min: -49.9, max: -40, color: 'text-violet-600' }, // siberian winter
+  { min: -39.9, max: -30, color: 'text-violet-500' }, // ural winter
+  { min: -29.9, max: -20, color: 'text-indigo-400' }, // asian winter
+  { min: -19.9, max: -10, color: 'text-cyan-300' }, // europian winter
+  { min: -9.9, max: -5, color: 'text-sky-400' },
+  { min: -4.9, max: -0.1, color: 'text-cyan-400' },
+  { min: -0.1, max: -0.0, color: 'text-neutral-900 dark:text-neutral-200' }, // - 0
+  { min: 0.0, max: 0.1, color: 'text-zinc-900 dark:text-zinc-500' }, // 0
+  { min: 0.1, max: 5, color: 'text-emerald-400' }, // arctic spring
+  { min: 5.1, max: 10, color: 'text-lime-400' }, //  siberian spring
+  { min: 10.1, max: 15, color: 'text-yellow-400' }, // europian spring
+  { min: 15.1, max: 20, color: 'text-amber-300' },
+  { min: 20.1, max: 35, color: 'text-orange-600' }, // miami summer
+  { min: 35.1, max: 40, color: 'text-pink-600' }, // turkmenistan summer
+  { min: 40.1, max: Infinity, color: 'text-rose-600' } // quatar summer
+]
 
-const getTemperatureColor = (tempCelsius: number) => {
-  if (tempCelsius <= polarwinter) return 'text-fuchsia-900'
-  if (tempCelsius <= yakutWinter) return 'text-purple-800'
-  if (tempCelsius <= siberiaWinter) return 'text-violet-600'
-  if (tempCelsius <= uralWinter) return 'text-violet-500'
-  if (tempCelsius <= asianWinter) return 'text-indigo-400'
-  if (tempCelsius <= europeWinter) return 'text-cyan-300'
-  if (tempCelsius <= -0.1) return 'text-cyan-400'
-  if (tempCelsius >= 0.1) return 'text-teal-400'
-  if (tempCelsius >= polarSpring) return 'text-emerald-400'
-  if (tempCelsius >= europeSpring) return 'text-lime-400'
-  if (tempCelsius >= miamiSummer) return 'text-orange-600'
-  if (tempCelsius >= bahrainSummer) return 'text-pink-600'
-  return 'text-stone-300'
+const getTemperatureColor = (tempCelsius: number): string => {
+  for (const range of temperatureRanges) {
+    if (tempCelsius >= range.min && tempCelsius <= range.max) {
+      return range.color
+    }
+  }
+  return 'text-stone-300' // default color
 }
 </script>
 
@@ -101,90 +108,86 @@ const getTemperatureColor = (tempCelsius: number) => {
             City: {{ parsedResponse.city.name }}, {{ parsedResponse.city.country }}
           </h1>
         </div>
-        <div class="city-sun_sun flex justify-evenly my-8 dark:text-gray-400">
+        <div class="city-sun_sun flex justify-evenly my-8 text-slate-700 dark:text-slate-400">
           <p>Sunrise: {{ new Date(parsedResponse.city.sunrise * 1000).toLocaleTimeString() }}</p>
-
           <p>Sunset: {{ new Date(parsedResponse.city.sunset * 1000).toLocaleTimeString() }}</p>
         </div>
       </div>
       <div v-if="paginatedData && paginatedData.length > 0">
-        <div v-for="(forecast, index) in paginatedData" :key="index">
-          <div class="screen-container px-2 flex justify-between items-center">
-            <div class="temp-date flex mr-6 gap-4">
-              <div class="dark:text-gray-400">
-                <!-- date format -->
-                <div class="flex flex-col">
-                  <div>
-                    <div class="flex flex-row">
-                      <div>
-                        <p>
-                          {{ new Date(forecast.dt * 1000).getHours().toString().padStart(2, '0') }}:
-                        </p>
-                      </div>
-                      <div>
-                        <p>
-                          {{
-                            new Date(forecast.dt * 1000).getMinutes().toString().padStart(2, '0')
-                          }}
-                        </p>
-                      </div>
-                    </div>
-                    <div class="flex">
-                      <div>
-                        <p>
-                          {{
-                            new Date(forecast.dt * 1000).toLocaleDateString('ru-RU', {
-                              day: '2-digit'
-                            })
-                          }}
-                        </p>
-                      </div>
-                      <div>
-                        <p>/</p>
-                      </div>
-                      <div>
-                        <p>
-                          {{
-                            new Date(forecast.dt * 1000).toLocaleDateString('ru-RU', {
-                              month: '2-digit'
-                            })
-                          }}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
+        <div
+          class="flex justify-between items-center max-w-screen-sm mx-auto px-4"
+          v-for="(forecast, index) in paginatedData"
+          :key="index"
+        >
+          <div class="flex items-center">
+            <!-- date format -->
+            <div class="date-format flex flex-col dark:text-gray-400">
+              <div class="flex flex-row">
+                <div>
+                  <p>{{ new Date(forecast.dt * 1000).getHours().toString().padStart(2, '0') }}:</p>
+                </div>
+                <div>
+                  <p>
+                    {{ new Date(forecast.dt * 1000).getMinutes().toString().padStart(2, '0') }}
+                  </p>
                 </div>
               </div>
-
-              <div class="flex items-center">
-                <p :class="getTemperatureColor(forecast.main.temp - temperFaringate)">
-                  {{ (forecast.main.temp - temperFaringate).toFixed(1) }}°C
-                </p>
+              <div class="flex flex-row">
+                <div>
+                  <p>
+                    {{
+                      new Date(forecast.dt * 1000).toLocaleDateString('ru-RU', {
+                        day: '2-digit'
+                      })
+                    }}
+                  </p>
+                </div>
+                <div>
+                  <p>/</p>
+                </div>
+                <div>
+                  <p>
+                    {{
+                      new Date(forecast.dt * 1000).toLocaleDateString('ru-RU', {
+                        month: '2-digit'
+                      })
+                    }}
+                  </p>
+                </div>
               </div>
             </div>
 
-            <div class="description-icon flex flex-row items-center">
+            <!-- temperature -->
+            <div class="temperature flex flex-col pl-4">
+              <p :class="getTemperatureColor(forecast.main.temp - temperFaringate)">
+                {{ (forecast.main.temp - temperFaringate).toFixed(1) }}&nbsp;°C
+              </p>
+            </div>
+          </div>
+          <div class="flex items-center">
+            <!-- description -->
+            <div class="description">
               <div>
                 <p class="dark:text-gray-400">{{ forecast.weather[0].description }}</p>
               </div>
-
-              <div class="img-container h-16 w-16">
-                <img :src="`${imgUrl}${forecast.weather[0].icon}@2x.png`" alt="Weather Icon" />
-              </div>
+            </div>
+            <!-- description-icon -->
+            <div class="description-icon flex flex-col img-container h-16 w-16">
+              <img :src="`${imgUrl}${forecast.weather[0].icon}@2x.png`" alt="Weather Icon" />
             </div>
           </div>
         </div>
-        <PaginationComponent
-          class="flex justify-center mt-6 dark:text-gray-400"
-          :currentPage="currentPage"
-          :totalPages="totalPages"
-          :nextPage="nextPage"
-          :prevPage="prevPage"
-        />
       </div>
-      <div v-else>
-        <p>No forecast data available.</p>
-      </div>
+      <PaginationComponent
+        class="flex justify-center mt-6 dark:text-gray-400"
+        :currentPage="currentPage"
+        :totalPages="totalPages"
+        :nextPage="nextPage"
+        :prevPage="prevPage"
+      />
+    </div>
+    <div v-else>
+      <p>No forecast data available.</p>
     </div>
   </div>
 </template>

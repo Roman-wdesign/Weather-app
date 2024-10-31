@@ -11,6 +11,7 @@ import { TheInput } from '@/shared/ui/inputs'
 import { TheButton } from '@/shared/ui/buttons/main-btn'
 import { TheItemWeather } from '@/features/WeatherNow/item-weather/ui'
 import { BarsFour } from '@/shared/assets/image/svg/dragable'
+import { TheAutocomplete } from '@/features/WeatherNow/main-component/autocomplete'
 
 const getDate = ref(dateBuilder())
 
@@ -49,19 +50,20 @@ watchEffect(() => {
   <div class="grid grid-cols-1 gap-6 p-4">
     <!-- Date Display -->
     <div class="flex justify-center py-6">
-      <div class="max-w-xs p-4 text-center">
+      <div class="max-w-xs text-center">
         <h5 class="font-bold italic text-lg dark:text-white">{{ getDate }}</h5>
       </div>
     </div>
 
     <!-- Input Field -->
-    <div class="flex justify-center p-4">
+    <div class="flex flex-col justify-center p-4">
       <TheInput
         class="max-w-xs"
         @keydown.enter="handleKeyDown"
         label="city name"
         v-model="theQuery"
       />
+      <TheAutocomplete />
     </div>
 
     <!-- Error and Loading Messages -->
