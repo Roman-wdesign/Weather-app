@@ -1,5 +1,4 @@
-
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, watch } from 'vue'
 
 import { urlBase, imgUrl, token } from '@/shared/config'
 
@@ -8,13 +7,13 @@ import { fetchWithCache } from '@/shared/composables/cache/model'
 import { generateWeatherUrl } from '@/features/WeatherNow/main-component/api'
 import { useSavedCities } from '@/shared/composables/localStorage/saved-cities/model'
 
-
-
 export function useWeatherNow() {
   const theQuery = ref<string>('')
   const theWeather = ref<Record<string, any>>({})
   const error = ref<string | null>(null)
   const loading = ref<boolean>(false)
+  const suggestions = ref<string[]>([])
+  const maxResults = 5
 
   const setResults = (city: string, results: any) => {
     theWeather.value[city] = results
@@ -38,9 +37,34 @@ export function useWeatherNow() {
     }
   }
 
-  const fetchWeatherForQuery = computed(async () => (theQuery.value ? await fetchWeather(theQuery.value) : undefined))
+  const fetchCitySuggestions = async (query: string) => {
+    if (query.length < 3) {
+      suggestions.value = []
+      return
+    }
 
-  const { savedCities, saveCurrentCity, removeCityFromStorage, loadSavedCities } = useSavedCities(theWeather, fetchWeather)
+    try {
+      const response = await fetch(
+        `https://api.openweathermap.org/data/2.5/find?q=${query}&appid=${token}`
+      )
+      const data = await response.json()
+      suggestions.value = (
+        data.list.map((city: any) => `${city.name}, ${city.sys.country}`) || []
+      ).slice(0, maxResults)
+    } catch (err) {
+      console.error('Ошибка при получении подсказок:', err)
+      suggestions.value = []
+    }
+  }
+
+  watch(theQuery, (newQuery) => {
+    fetchCitySuggestions(newQuery)
+  })
+
+  const { savedCities, saveCurrentCity, removeCityFromStorage, loadSavedCities } = useSavedCities(
+    theWeather,
+    fetchWeather
+  )
 
   const isSaveDisabled = computed(() => savedCities.value.length >= 3)
 
@@ -55,9 +79,12 @@ export function useWeatherNow() {
     error,
     loading,
     imgUrl,
-    fetchWeatherForQuery,
+    suggestions,
+    fetchWeatherForQuery: computed(async () =>
+      theQuery.value ? await fetchWeather(theQuery.value) : undefined
+    ),
     isSaveDisabled,
     saveCurrentCity,
-    removeCityFromStorage,
+    removeCityFromStorage
   }
 }

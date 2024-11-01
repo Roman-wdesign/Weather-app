@@ -4,5 +4,7 @@ import { TheNavbar } from '@/widgets/navbar'
 
 <template>
   <TheNavbar />
-  <RouterView />
+  <div class="container mx-auto px-2 md:px-4">
+    <RouterView />
+  </div>
 </template>

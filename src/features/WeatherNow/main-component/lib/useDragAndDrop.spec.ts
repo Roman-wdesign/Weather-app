@@ -3,7 +3,6 @@ import { ref } from 'vue'
 import type { Ref } from 'vue'
 import { useDragAndDrop } from '@/features/WeatherNow/main-component/lib'
 
-
 describe('useDragAndDrop', () => {
   let savedCities: Ref<string[]>
   let dragAndDrop: any
@@ -13,8 +12,6 @@ describe('useDragAndDrop', () => {
     dragAndDrop = useDragAndDrop(savedCities)
   })
 
-
-
   it('should prevent default action on drag over', () => {
     const mockEvent = { preventDefault: vi.fn() }
 
@@ -23,11 +20,7 @@ describe('useDragAndDrop', () => {
     expect(mockEvent.preventDefault).toHaveBeenCalled()
   })
 
-
-
   it('should not update cities if dropped in the same position', () => {
-
-
     const mockEvent = {
       target: { dataset: { index: '1' } },
       preventDefault: vi.fn()
@@ -36,6 +29,5 @@ describe('useDragAndDrop', () => {
     dragAndDrop.handleDrop(mockEvent)
 
     expect(savedCities.value).toEqual(['City1', 'City2', 'City3'])
-
   })
 })

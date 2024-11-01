@@ -36,6 +36,6 @@ export function useSavedCities(firstCityArg: any, secondCityArg: any) {
     savedCities,
     saveCurrentCity,
     removeCityFromStorage,
-    loadSavedCities,
+    loadSavedCities
   }
 }

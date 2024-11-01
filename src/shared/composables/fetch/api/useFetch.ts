@@ -9,16 +9,16 @@ export const useFetch = () => {
   function fetchData(url: string) {
     loading.value = true
     fetch(url)
-      .then(response => {
+      .then((response) => {
         if (!response.ok) {
           throw new Error('Failed to fetch data')
         }
         return response.json()
       })
-      .then(jsonData => {
+      .then((jsonData) => {
         data.value = jsonData
       })
-      .catch(err => {
+      .catch((err) => {
         if (err instanceof Error) {
           error.value = err.message
         } else {

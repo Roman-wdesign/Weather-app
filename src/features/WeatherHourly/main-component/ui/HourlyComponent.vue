@@ -15,98 +15,179 @@ const { error } = useFetch()
 const rawResponse = ref<string | null>(null)
 
 const fetchWeather = async () => {
-
-    if (latitude.value !== null && longitude.value !== null) {
-        const url = generateHourlyWeather(urlBase, latitude.value, longitude.value, token)
-        console.log(url);
-        try {
-            const data = await fetchWithCache(url)
-            rawResponse.value = JSON.stringify(data)
-        } catch (err) {
-            console.error('Failed to fetch weather data Hourly component', err)
-            if (err instanceof TypeError) {
-                console.error('Network Error: ', err.message)
-            }
-        }
+  if (latitude.value !== null && longitude.value !== null) {
+    const url = generateHourlyWeather(urlBase, latitude.value, longitude.value, token)
+    console.log(url)
+    try {
+      const data = await fetchWithCache(url)
+      rawResponse.value = JSON.stringify(data)
+    } catch (err) {
+      console.error('Failed to fetch weather data Hourly component', err)
+      if (err instanceof TypeError) {
+        console.error('Network Error: ', err.message)
+      }
     }
+  }
 }
 
 watch([latitude, longitude], fetchWeather)
 watch(isGeolocationEnabled, async (newValue) => {
-    if (newValue) {
-        await fetchWeather()
-    }
+  if (newValue) {
+    await fetchWeather()
+  }
 })
 
 onMounted(async () => {
-    if (isGeolocationEnabled.value) {
-        await fetchWeather()
-    }
+  if (isGeolocationEnabled.value) {
+    await fetchWeather()
+  }
 })
 
 const parsedResponse = computed(() => {
-    return rawResponse.value ? JSON.parse(rawResponse.value) : null
+  return rawResponse.value ? JSON.parse(rawResponse.value) : null
 })
 
 // Pagination logic
 const paginatedList: any = computed(() => (parsedResponse.value ? parsedResponse.value.list : []))
 const itemsPerPage = 5
-const { currentPage, totalPages, paginatedData, nextPage, prevPage } = usePagination(paginatedList, itemsPerPage)
+const { currentPage, totalPages, paginatedData, nextPage, prevPage } = usePagination(
+  paginatedList,
+  itemsPerPage
+)
+
+const temperFaringate = 273.15
+
+type TemperatureRange = {
+  min: number
+  max: number
+  color: string
+}
+
+const temperatureRanges: TemperatureRange[] = [
+  { min: -Infinity, max: -60, color: 'text-fuchsia-900' }, // yakut winter
+  { min: -59.9, max: -49.9, color: 'text-purple-800' }, // arctic winter
+  { min: -49.9, max: -39.9, color: 'text-violet-600' }, // siberian winter
+  { min: -39.9, max: -29.9, color: 'text-violet-500' }, // ural winter
+  { min: -29.9, max: -19.9, color: 'text-indigo-400' }, // asian winter
+  { min: -19.9, max: -9.9, color: 'text-cyan-300' }, // europian winter
+  { min: -9.9, max: -4.9, color: 'text-sky-400' },
+  { min: -4.9, max: -0.1, color: 'text-cyan-400' },
+  { min: -0.1, max: -0.0, color: 'text-neutral-900 dark:text-neutral-200' }, // - 0
+  { min: 0.0, max: 0.1, color: 'text-zinc-900 dark:text-zinc-500' }, // 0
+  { min: 0.1, max: 5, color: 'text-emerald-400' }, // arctic spring
+  { min: 5.1, max: 10, color: 'text-lime-400' }, //  siberian spring
+  { min: 10.1, max: 15, color: 'text-yellow-400' }, // europian spring
+  { min: 15.1, max: 20, color: 'text-amber-300' },
+  { min: 20.1, max: 35, color: 'text-orange-600' }, // miami summer
+  { min: 35.1, max: 40, color: 'text-pink-600' }, // turkmenistan summer
+  { min: 40.1, max: Infinity, color: 'text-rose-600' } // quatar summer
+]
+
+const getTemperatureColor = (tempCelsius: number): string => {
+  for (const range of temperatureRanges) {
+    if (tempCelsius >= range.min && tempCelsius <= range.max) {
+      return range.color
+    }
+  }
+  return 'text-stone-300' // default color
+}
 </script>
 
 <template>
-    <div>
-        <div v-if="geoError" class="text-red-500">{{ geoError }}</div>
-        <div v-else="error" class="text-red-500">{{ error }}</div>
+  <div>
+    <div v-if="geoError" class="text-red-500">{{ geoError }}</div>
+    <div v-else class="text-red-500">{{ error }}</div>
 
-        <div v-if="parsedResponse">
-            <!-- <p>Coordinates: {{ parsedResponse.city.coord.lat }}, {{ parsedResponse.city.coord.lon }}</p>
+    <div v-if="parsedResponse">
+      <!-- <p>Coordinates: {{ parsedResponse.city.coord.lat }}, {{ parsedResponse.city.coord.lon }}</p>
                 <p>Population: {{ parsedResponse.city.population }}</p>
                 <p>Timezone: {{ parsedResponse.city.timezone }}</p> -->
-            <div v-if="parsedResponse.city">
-                <div class="city flex justify-center my-4">
-                    <h1 class="text-2xl dark:text-gray-400">City: {{ parsedResponse.city.name }}, {{
-                        parsedResponse.city.country }}</h1>
-                </div>
-                <div class=" city-sun_sun flex justify-evenly my-8 dark:text-gray-400">
-                    <p>Sunrise: {{ new Date(parsedResponse.city.sunrise * 1000).toLocaleTimeString() }}</p>
-
-                    <p>Sunset: {{ new Date(parsedResponse.city.sunset * 1000).toLocaleTimeString() }}</p>
-                </div>
-
-            </div>
-            <div v-if="paginatedData && paginatedData.length > 0">
-                <div v-for="(forecast, index) in paginatedData" :key="index">
-                    <div class="screen-container flex justify-center items-center">
-                        <div class="temp-date flex mr-6 gap-4">
-                            <div class=" dark:text-gray-400">
-                                <strong>{{ new Date(forecast.dt * 1000).toLocaleString() }}
-                                </strong>
-                            </div>
-
-                            <div>
-                                <p class="dark:text-stone-400"> {{ (forecast.main.temp - 273.15).toFixed(1) }}°C</p>
-                            </div>
-
-                        </div>
-
-                        <div class="description-icon flex flex-row items-center">
-                            <div>
-                                <p class="dark:text-gray-400">{{ forecast.weather[0].description }}</p>
-                            </div>
-
-                            <div class="img-container h-16 w-16"><img :src="`${imgUrl}${forecast.weather[0].icon}@2x.png`"
-                                    alt="Weather Icon" /></div>
-                        </div>
-                    </div>
-
-                </div>
-                <PaginationComponent class="flex justify-center mt-6 dark:text-gray-400" :currentPage="currentPage"
-                    :totalPages="totalPages" :nextPage="nextPage" :prevPage="prevPage" />
-            </div>
-            <div v-else>
-                <p>No forecast data available.</p>
-            </div>
+      <div v-if="parsedResponse.city">
+        <div class="city flex justify-center my-4">
+          <h1 class="text-2xl dark:text-gray-400">
+            City: {{ parsedResponse.city.name }}, {{ parsedResponse.city.country }}
+          </h1>
         </div>
+        <div class="city-sun_sun flex justify-evenly my-8 text-slate-700 dark:text-slate-400">
+          <p>Sunrise: {{ new Date(parsedResponse.city.sunrise * 1000).toLocaleTimeString() }}</p>
+          <p>Sunset: {{ new Date(parsedResponse.city.sunset * 1000).toLocaleTimeString() }}</p>
+        </div>
+      </div>
+      <div v-if="paginatedData && paginatedData.length > 0">
+        <div
+          class="flex justify-between items-center max-w-screen-sm mx-auto px-4"
+          v-for="(forecast, index) in paginatedData"
+          :key="index"
+        >
+          <div class="flex items-center">
+            <!-- date format -->
+            <div class="date-format flex flex-col dark:text-gray-400">
+              <div class="flex flex-row">
+                <div>
+                  <p>{{ new Date(forecast.dt * 1000).getHours().toString().padStart(2, '0') }}:</p>
+                </div>
+                <div>
+                  <p>
+                    {{ new Date(forecast.dt * 1000).getMinutes().toString().padStart(2, '0') }}
+                  </p>
+                </div>
+              </div>
+              <div class="flex flex-row">
+                <div>
+                  <p>
+                    {{
+                      new Date(forecast.dt * 1000).toLocaleDateString('ru-RU', {
+                        day: '2-digit'
+                      })
+                    }}
+                  </p>
+                </div>
+                <div>
+                  <p>/</p>
+                </div>
+                <div>
+                  <p>
+                    {{
+                      new Date(forecast.dt * 1000).toLocaleDateString('ru-RU', {
+                        month: '2-digit'
+                      })
+                    }}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- temperature -->
+            <div class="temperature flex flex-col pl-4">
+              <p :class="getTemperatureColor(forecast.main.temp - temperFaringate)">
+                {{ (forecast.main.temp - temperFaringate).toFixed(1) }}&nbsp;°C
+              </p>
+            </div>
+          </div>
+          <div class="flex items-center">
+            <!-- description -->
+            <div class="description">
+              <div>
+                <p class="dark:text-gray-400">{{ forecast.weather[0].description }}</p>
+              </div>
+            </div>
+            <!-- description-icon -->
+            <div class="description-icon flex flex-col img-container h-16 w-16">
+              <img :src="`${imgUrl}${forecast.weather[0].icon}@2x.png`" alt="Weather Icon" />
+            </div>
+          </div>
+        </div>
+      </div>
+      <PaginationComponent
+        class="flex justify-center mt-6 dark:text-gray-400"
+        :currentPage="currentPage"
+        :totalPages="totalPages"
+        :nextPage="nextPage"
+        :prevPage="prevPage"
+      />
     </div>
+    <div v-else>
+      <p>No forecast data available.</p>
+    </div>
+  </div>
 </template>
