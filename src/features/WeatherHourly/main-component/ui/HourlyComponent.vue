@@ -65,12 +65,12 @@ type TemperatureRange = {
 
 const temperatureRanges: TemperatureRange[] = [
   { min: -Infinity, max: -60, color: 'text-fuchsia-900' }, // yakut winter
-  { min: -59.9, max: -50, color: 'text-purple-800' }, // arctic winter
-  { min: -49.9, max: -40, color: 'text-violet-600' }, // siberian winter
-  { min: -39.9, max: -30, color: 'text-violet-500' }, // ural winter
-  { min: -29.9, max: -20, color: 'text-indigo-400' }, // asian winter
-  { min: -19.9, max: -10, color: 'text-cyan-300' }, // europian winter
-  { min: -9.9, max: -5, color: 'text-sky-400' },
+  { min: -59.9, max: -49.9, color: 'text-purple-800' }, // arctic winter
+  { min: -49.9, max: -39.9, color: 'text-violet-600' }, // siberian winter
+  { min: -39.9, max: -29.9, color: 'text-violet-500' }, // ural winter
+  { min: -29.9, max: -19.9, color: 'text-indigo-400' }, // asian winter
+  { min: -19.9, max: -9.9, color: 'text-cyan-300' }, // europian winter
+  { min: -9.9, max: -4.9, color: 'text-sky-400' },
   { min: -4.9, max: -0.1, color: 'text-cyan-400' },
   { min: -0.1, max: -0.0, color: 'text-neutral-900 dark:text-neutral-200' }, // - 0
   { min: 0.0, max: 0.1, color: 'text-zinc-900 dark:text-zinc-500' }, // 0

@@ -8,37 +8,51 @@ import { useDragAndDrop } from '@/features/WeatherNow/main-component/lib'
 import { IconClose } from '@/shared/assets/image/svg/close'
 
 import { TheInput } from '@/shared/ui/inputs'
-import { TheButton } from '@/shared/ui/buttons/main-btn'
+//import { TheButton } from '@/shared/ui/buttons/main-btn'
 import { TheItemWeather } from '@/features/WeatherNow/item-weather/ui'
 import { BarsFour } from '@/shared/assets/image/svg/dragable'
-import { TheAutocomplete } from '@/features/WeatherNow/main-component/autocomplete'
 
 const getDate = ref(dateBuilder())
 
 const {
-  savedCities,
-  theQuery,
-  theWeather,
-  error,
-  loading,
-  imgUrl,
-  fetchWeatherForQuery,
-  isSaveDisabled,
-  saveCurrentCity,
-  removeCityFromStorage
+  savedCities, // Array of cities saved by the user
+  suggestions, // List of autocomplete suggestions
+  theQuery, // Input value for the city search
+  theWeather, // Weather data fetched for a specific city
+  error, // Error message if any during fetch
+  loading, // Loading state for the fetch process
+  imgUrl, // URL for the weather icon image
+  fetchWeatherForQuery, // Method to fetch weather data for a city
+  //isSaveDisabled,        // Boolean to disable "Save City" button
+  saveCurrentCity, // Method to save the current city to storage
+  removeCityFromStorage // Method to remove a city from storage
 } = useWeatherNow()
 
+// Extract drag-and-drop methods for the saved cities
 const { handleDragStart, handleDragOver, handleDrop } = useDragAndDrop(savedCities)
 
+// Event handler for pressing Enter in the input field
 const handleKeyDown = (event: KeyboardEvent) => {
   if (event.key === 'Enter') {
     fetchWeatherForQuery.value
   }
 }
 
+// Select and save city from autocomplete suggestions
+const selectCity = async () => {
+  saveCurrentCity(theQuery.value)
+  theQuery.value = ''
+}
+
+// Wrapper function for saving the city and clearing the input after
+// const handleSaveCity = () => {
+//   saveCurrentCity(theQuery.value)
+//   theQuery.value = ''
+// }
+
+// Watch effect to reset the error message after 2 seconds
 watchEffect(() => {
   if (error.value) {
-    const showError = error.value
     setTimeout(() => {
       error.value = null
     }, 2000)
@@ -55,15 +69,27 @@ watchEffect(() => {
       </div>
     </div>
 
-    <!-- Input Field -->
-    <div class="flex flex-col justify-center p-4">
+    <!-- Input Field and Autocomplete Dropdown -->
+    <div class="flex justify-center p-4">
       <TheInput
         class="max-w-xs"
         @keydown.enter="handleKeyDown"
         label="city name"
         v-model="theQuery"
       />
-      <TheAutocomplete />
+      <ul
+        v-if="suggestions.length"
+        class="absolute max-w-xs bg-white shadow-lg rounded-md mt-12 border border-gray-300"
+      >
+        <li
+          v-for="(city, index) in suggestions"
+          :key="index"
+          @mousedown="selectCity()"
+          class="cursor-pointer p-2 hover:bg-gray-200"
+        >
+          {{ city }}
+        </li>
+      </ul>
     </div>
 
     <!-- Error and Loading Messages -->
@@ -76,13 +102,10 @@ watchEffect(() => {
     <div v-if="theWeather[theQuery]" class="query_weather flex flex-col py-4">
       <div>
         <div class="flex justify-center my-2">
-          <TheButton
-            :disabled="isSaveDisabled"
-            @click="saveCurrentCity(theQuery)"
-            class="w-auto text-white font-bold py-2 px-4 rounded disabled:opacity-50 disabled:cursor-not-allowed"
-          >
+          <!-- <TheButton :disabled="isSaveDisabled" @click="handleSaveCity"
+            class="w-auto text-white font-bold py-2 px-4 rounded disabled:opacity-50 disabled:cursor-not-allowed">
             Save City
-          </TheButton>
+          </TheButton> -->
         </div>
       </div>
       <div>

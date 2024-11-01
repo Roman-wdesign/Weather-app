@@ -37,20 +37,12 @@ describe('WeatherNow Component', () => {
         }
       }
     } as any)
-
-    const button = wrapper.findComponent({ name: 'TheButton' })
-    expect(button.exists()).toBe(true)
-
-    await button.trigger('click')
-
-    expect(saveCurrentCityMock).toHaveBeenCalledWith('Test City')
     expect(wrapper.find('.query_weather').exists()).toBe(true)
   })
 
-  it('should be to serve the error when data about wweather is download', async () => {
+  it('should be to serve the error when data about weather is download', async () => {
     const wrapper = mount(WeatherNow, {
       global: {
-        components: { TheButton: true },
         mocks: {
           savedCities: [],
           theQuery: 'Test City',
@@ -58,25 +50,23 @@ describe('WeatherNow Component', () => {
           error: 'API Error',
           loading: false,
           fetchWeatherForQuery: fetchWeatherForQueryMock,
-          isSaveDisabled: false,
-          saveCurrentCity: saveCurrentCityMock,
-          removeCityFromStorage: removeCityFromStorageMock
+          isSaveDisabled: false
         }
       }
     } as any)
 
     await fetchWeatherForQueryMock()
-
     await nextTick()
 
-    expect(wrapper.find('.error-message').exists()).toBe(true)
-    expect(wrapper.find('.error-message').text()).toContain('Error: API Error')
+    // Check error message render
+    const errorMessage = wrapper.find('.error-message')
+    expect(errorMessage.exists()).toBe(true)
+    expect(errorMessage.text()).toContain('Error: API Error')
   })
 
   it('should be correct drag-and-drop', async () => {
     const wrapper = mount(WeatherNow, {
       global: {
-        components: { TheButton: true },
         mocks: {
           savedCities: ['City 1'],
           theWeather: { 'City 1': { temp: 20 } },
@@ -89,8 +79,8 @@ describe('WeatherNow Component', () => {
 
     const draggableItem = wrapper.find('[draggable="true"]')
 
+    //Check events dragstart, dragover, drop
     expect(draggableItem.exists()).toBe(true)
-
     await draggableItem.trigger('dragstart')
     await draggableItem.trigger('dragover')
     await draggableItem.trigger('drop')
