@@ -74,13 +74,13 @@ const temperatureRanges: TemperatureRange[] = [
   { min: -4.9, max: -0.1, color: 'text-cyan-400' },
   { min: -0.1, max: -0.0, color: 'text-neutral-900 dark:text-neutral-200' }, // - 0
   { min: 0.0, max: 0.1, color: 'text-zinc-900 dark:text-zinc-500' }, // 0
-  { min: 0.1, max: 5, color: 'text-emerald-400' }, // arctic spring
-  { min: 5.1, max: 10, color: 'text-lime-400' }, //  siberian spring
-  { min: 10.1, max: 15, color: 'text-yellow-400' }, // europian spring
-  { min: 15.1, max: 20, color: 'text-amber-300' },
-  { min: 20.1, max: 35, color: 'text-orange-600' }, // miami summer
-  { min: 35.1, max: 40, color: 'text-pink-600' }, // turkmenistan summer
-  { min: 40.1, max: Infinity, color: 'text-rose-600' } // quatar summer
+  { min: 0.2, max: 5.1, color: 'text-emerald-400' }, // arctic spring
+  { min: 5.2, max: 10.1, color: 'text-lime-400' }, //  siberian spring
+  { min: 10.2, max: 15.1, color: 'text-yellow-400' }, // europian spring
+  { min: 15.2, max: 20.1, color: 'text-amber-300' },
+  { min: 20.2, max: 35.1, color: 'text-orange-600' }, // miami summer
+  { min: 35.1, max: 40.1, color: 'text-pink-600' }, // turkmenistan summer
+  { min: 40.2, max: Infinity, color: 'text-rose-600' } // quatar summer
 ]
 
 const getTemperatureColor = (tempCelsius: number): string => {
@@ -114,11 +114,8 @@ const getTemperatureColor = (tempCelsius: number): string => {
         </div>
       </div>
       <div v-if="paginatedData && paginatedData.length > 0">
-        <div
-          class="flex justify-between items-center max-w-screen-sm mx-auto px-4"
-          v-for="(forecast, index) in paginatedData"
-          :key="index"
-        >
+        <div class="flex justify-between items-center max-w-screen-sm mx-auto px-4"
+          v-for="(forecast, index) in paginatedData" :key="index">
           <div class="flex items-center">
             <!-- date format -->
             <div class="date-format flex flex-col dark:text-gray-400">
@@ -178,13 +175,8 @@ const getTemperatureColor = (tempCelsius: number): string => {
           </div>
         </div>
       </div>
-      <PaginationComponent
-        class="flex justify-center mt-6 dark:text-gray-400"
-        :currentPage="currentPage"
-        :totalPages="totalPages"
-        :nextPage="nextPage"
-        :prevPage="prevPage"
-      />
+      <PaginationComponent class="flex justify-center mt-6 dark:text-gray-400" :currentPage="currentPage"
+        :totalPages="totalPages" :nextPage="nextPage" :prevPage="prevPage" />
     </div>
     <div v-else>
       <p>No forecast data available.</p>
