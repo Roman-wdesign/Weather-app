@@ -6,6 +6,11 @@ export interface Props {
   imgUrl: string
 }
 
+function getWindDirection(angle: number) {
+    const directions = ['⭡ N', '⭧ NE', '⭢ E', '⭨ SE', '⭣ S', '⭩ SW', '⭠ W', '⭦ NW'];
+    return directions[Math.round(angle / 45) % 8];
+}
+
 const props = defineProps<Partial<Props>>()
 </script>
 
@@ -24,6 +29,14 @@ const props = defineProps<Partial<Props>>()
     <div class="weather-box py-3" v-if="props.weather?.main">
       <div class="temp flex justify-center py-3">
         <h2 class="text-2xl font-extrabold">{{ Math.round(props.weather.main.temp) }} °c</h2>
+      </div>
+      <div class="temp flex justify-center py-3">
+        <h2 class="text-2xl font-extrabold">
+          {{ props.weather.wind.speed.toFixed(1) }}&nbsp;
+          <template v-if="props.weather.wind.gust != null "> ({{ props.weather.wind.gust.toFixed(1) }})&nbsp;</template>
+          m/s
+          {{getWindDirection(props.weather.wind.deg)}}
+        </h2>
       </div>
       <div class="px-2">
         <div class="div flex justify-center">

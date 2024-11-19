@@ -47,6 +47,11 @@ const parsedResponse = computed(() => {
   return rawResponse.value ? JSON.parse(rawResponse.value) : null
 })
 
+function getWindDirection(angle: number) {
+    const directions = ['⭡ N', '⭧ NE', '⭢ E', '⭨ SE', '⭣ S', '⭩ SW', '⭠ W', '⭦ NW'];
+    return directions[Math.round(angle / 45) % 8];
+}
+
 // Pagination logic
 const paginatedList: any = computed(() => (parsedResponse.value ? parsedResponse.value.list : []))
 const itemsPerPage = 5
@@ -159,6 +164,14 @@ const getTemperatureColor = (tempCelsius: number): string => {
               <p :class="getTemperatureColor(forecast.main.temp - temperFaringate)">
                 {{ (forecast.main.temp - temperFaringate).toFixed(1) }}&nbsp;°C
               </p>
+            </div>
+
+            <div>
+              <p class="dark:text-stone-400"> &nbsp{{ (forecast.wind.speed).toFixed(1) }}&nbsp;
+                <span v-if="forecast.wind.gust != null">({{ (forecast.wind.gust).toFixed(1) }}) m/s</span>
+                                    {{getWindDirection(forecast.wind.deg)}}
+              </p>
+                                <!--<p class="dark:text-stone-400" v-if="forecast.wind.gust != null">({{ (forecast.wind.gust).toFixed(1) }}) m/s</p>-->
             </div>
           </div>
           <div class="flex items-center">
