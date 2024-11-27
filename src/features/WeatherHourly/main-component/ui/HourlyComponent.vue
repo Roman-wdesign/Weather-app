@@ -167,7 +167,7 @@ const getTemperatureColor = (tempCelsius: number): string => {
             </div>
 
             <div>
-              <p class="dark:text-stone-400"> &nbsp{{ (forecast.wind.speed).toFixed(1) }}&nbsp;
+              <p class="dark:text-stone-400"> &nbsp;{{ (forecast.wind.speed).toFixed(1) }}&nbsp;
                 <span v-if="forecast.wind.gust != null">({{ (forecast.wind.gust).toFixed(1) }}) m/s</span>
                                     {{getWindDirection(forecast.wind.deg)}}
               </p>

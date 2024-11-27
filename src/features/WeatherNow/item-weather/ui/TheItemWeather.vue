@@ -28,10 +28,10 @@ const props = defineProps<Partial<Props>>()
     </div>
     <div class="weather-box py-3" v-if="props.weather?.main">
       <div class="temp flex justify-center py-3">
-        <h2 class="text-2xl font-extrabold">{{ Math.round(props.weather.main.temp) }} °c</h2>
+        <h2 class="text-small font-extrabold">{{ Math.round(props.weather.main.temp) }} °c</h2>
       </div>
       <div class="temp flex justify-center py-3">
-        <h2 class="text-2xl font-extrabold">
+        <h2 class="text-small font-extrabold">
           {{ props.weather.wind.speed.toFixed(1) }}&nbsp;
           <template v-if="props.weather.wind.gust != null "> ({{ props.weather.wind.gust.toFixed(1) }})&nbsp;</template>
           m/s
