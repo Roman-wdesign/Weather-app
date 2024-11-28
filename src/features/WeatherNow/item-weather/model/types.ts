@@ -10,4 +10,9 @@ export interface IWeather {
     main: string
     icon: string
   }>
+  wind: {
+    speed: number
+    gust: number
+    deg: number
+}
 }

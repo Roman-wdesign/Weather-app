@@ -16,7 +16,13 @@ describe('TheItemWeather.vue', () => {
         main: 'Clear',
         icon: '01d'
       }
-    ]
+    ],
+    wind:
+      {
+        speed: 5,
+        gust: 8,
+        deg: 120,
+      },
   }
 
   const imgUrl = 'http://example.com/img/'
