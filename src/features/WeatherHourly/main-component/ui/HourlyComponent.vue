@@ -121,51 +121,55 @@ const getTemperatureColor = (tempCelsius: number): string => {
       <div v-if="paginatedData && paginatedData.length > 0">
         <div class="flex justify-between items-center max-w-screen-sm mx-auto px-4"
           v-for="(forecast, index) in paginatedData" :key="index">
-          <div class="flex items-center">
-            <!-- date format -->
-            <div class="date-format flex flex-col dark:text-gray-400">
-              <div class="flex flex-row">
-                <div>
-                  <p>{{ new Date(forecast.dt * 1000).getHours().toString().padStart(2, '0') }}:</p>
-                </div>
-                <div>
+          <!-- date format -->
+          <div class="date-format flex flex-col dark:text-gray-400">
+            <div class="flex flex-row">
+              <div>
+                <p>{{ new Date(forecast.dt * 1000).getHours().toString().padStart(2, '0') }}:</p>
+              </div>
+              <div>
                   <p>
                     {{ new Date(forecast.dt * 1000).getMinutes().toString().padStart(2, '0') }}
                   </p>
-                </div>
-              </div>
-              <div class="flex flex-row">
-                <div>
-                  <p>
-                    {{
-                      new Date(forecast.dt * 1000).toLocaleDateString('ru-RU', {
-                        day: '2-digit'
-                      })
-                    }}
-                  </p>
-                </div>
-                <div>
-                  <p>/</p>
-                </div>
-                <div>
-                  <p>
-                    {{
-                      new Date(forecast.dt * 1000).toLocaleDateString('ru-RU', {
-                        month: '2-digit'
-                      })
-                    }}
-                  </p>
-                </div>
               </div>
             </div>
-
+            <div class="flex flex-row">
+              <div>
+                <p>
+                  {{
+                    new Date(forecast.dt * 1000).toLocaleDateString('ru-RU', {
+                    day: '2-digit'
+                    })
+                  }}
+                </p>
+              </div>
+              <div>
+                <p>/</p>
+              </div>
+              <div>
+                <p>
+                  {{
+                    new Date(forecast.dt * 1000).toLocaleDateString('ru-RU', {
+                    month: '2-digit'
+                    })
+                  }}
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="flex flex-wrap items-center justify-center">
             <!-- temperature -->
             <div class="temperature flex flex-col pl-4">
               <p :class="getTemperatureColor(forecast.main.temp - temperFaringate)">
-                {{ (forecast.main.temp - temperFaringate).toFixed(1) }}&nbsp;°C
+                {{ (forecast.main.temp - temperFaringate).toFixed(1) }}&nbsp;°C&nbsp;
               </p>
             </div>
-
+            <div>
+              <p class="dark:text-gray-400">{{ forecast.main.pressure }}&nbsp;hpa&nbsp; </p>
+            </div>
+            <div>
+              <p class="dark:text-gray-400">{{ Math.round(forecast.main.humidity) }}%</p>
+            </div>
             <div>
               <p class="dark:text-stone-400"> &nbsp;{{ (forecast.wind.speed).toFixed(1) }}&nbsp;
                 <span v-if="forecast.wind.gust != null">({{ (forecast.wind.gust).toFixed(1) }}) m/s</span>
