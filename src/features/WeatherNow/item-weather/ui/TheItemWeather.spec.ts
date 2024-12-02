@@ -9,7 +9,9 @@ describe('TheItemWeather.vue', () => {
       country: 'TC'
     },
     main: {
-      temp: 22
+      temp: 22,
+      pressure: 1013,
+      humidity: 80
     },
     weather: [
       {

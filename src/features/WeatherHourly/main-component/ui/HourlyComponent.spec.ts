@@ -101,9 +101,9 @@ describe('HourlyComponent.vue', () => {
 
     await flushPromises()
 
-    expect(wrapper.findAll('.temp-date').length).toBe(+0)
+    expect(wrapper.findAll('.temp-date').length).toBe(0)
 
-    wrapper.findComponent({ name: 'PaginationComponent' }).vm.nextPage()
+    mockedPagination.nextPage()
     await flushPromises()
 
     expect(mockedPagination.nextPage).toHaveBeenCalled()
