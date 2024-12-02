@@ -15,7 +15,7 @@ const props = defineProps<Partial<Props>>()
 </script>
 
 <template>
-  <div class="dark:bg-gray-800 dark:text-gray-400">
+  <div class="dark:bg-gray-800 dark:text-gray-400 px-3 h-auto">
     <div class="weather-wrap" v-if="props.weather?.main">
       <div class="location-box">
         <div class="location px-2">
@@ -29,6 +29,14 @@ const props = defineProps<Partial<Props>>()
     <div class="weather-box py-3" v-if="props.weather?.main">
       <div class="temp flex justify-center py-3">
         <h2 class="text-small font-extrabold">{{ Math.round(props.weather.main.temp) }} °c</h2>
+      </div>
+      <div class="pressure flex flex-col items-center py-3">
+        <h2>Atmospheric pressure</h2>
+        <h3 class="font-bold">{{ Math.round(props.weather.main.pressure) }} hPa</h3>
+      </div>
+      <div class="humidity flex flex-col items-center py-3">
+        <h2>Humidity</h2>
+        <h3 class=" font-bold">{{ Math.round(props.weather.main.humidity) }} %</h3>
       </div>
       <div class="temp flex justify-center py-3">
         <h2 class="text-small font-extrabold">
