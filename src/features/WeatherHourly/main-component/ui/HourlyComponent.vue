@@ -42,13 +42,22 @@ onMounted(async () => {
     await fetchWeather()
   }
 })
-
+  
 const parsedResponse = computed(() => {
   return rawResponse.value ? JSON.parse(rawResponse.value) : null
 })
 
-function getWindDirection(angle: number) {
-    const directions = ['⭡ N', '⭧ NE', '⭢ E', '⭨ SE', '⭣ S', '⭩ SW', '⭠ W', '⭦ NW'];
+function getWindDirection(angle: number): { name: string; icon: string } {
+  const directions = [
+        { name: 'N', icon: '/windDirectionIcons/North.svg' },
+        { name: 'NE', icon: '/windDirectionIcons/NorthEast.svg' },
+        { name: 'E', icon: '/windDirectionIcons/East.svg' },
+        { name: 'SE', icon: '/windDirectionIcons/SouthEast.svg' },
+        { name: 'S', icon: '/windDirectionIcons/South.svg' },
+        { name: 'SW', icon: '/windDirectionIcons/SouthWest.svg' },
+        { name: 'W', icon: '/windDirectionIcons/West.svg' },
+        { name: 'NW', icon: '/windDirectionIcons/NorthWest.svg' },
+    ];
     return directions[Math.round(angle / 45) % 8];
 }
 
@@ -173,9 +182,9 @@ const getTemperatureColor = (tempCelsius: number): string => {
             <div>
               <p class="dark:text-stone-400"> &nbsp;{{ (forecast.wind.speed).toFixed(1) }}&nbsp;
                 <span v-if="forecast.wind.gust != null">({{ (forecast.wind.gust).toFixed(1) }}) m/s</span>
-                                    {{getWindDirection(forecast.wind.deg)}}
+                <img :src="getWindDirection(forecast.wind.deg).icon" class="inline-block w-5 h-5" />
+                {{ getWindDirection(forecast.wind.deg).name }}
               </p>
-                                <!--<p class="dark:text-stone-400" v-if="forecast.wind.gust != null">({{ (forecast.wind.gust).toFixed(1) }}) m/s</p>-->
             </div>
           </div>
           <div class="flex items-center">

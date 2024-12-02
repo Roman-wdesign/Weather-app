@@ -6,8 +6,17 @@ export interface Props {
   imgUrl: string
 }
 
-function getWindDirection(angle: number) {
-    const directions = ['⭡ N', '⭧ NE', '⭢ E', '⭨ SE', '⭣ S', '⭩ SW', '⭠ W', '⭦ NW'];
+function getWindDirection(angle: number): { name: string; icon: string } {
+  const directions = [
+        { name: 'N', icon: '/windDirectionIcons/North.svg' },
+        { name: 'NE', icon: '/windDirectionIcons/NorthEast.svg' },
+        { name: 'E', icon: '/windDirectionIcons/East.svg' },
+        { name: 'SE', icon: '/windDirectionIcons/SouthEast.svg' },
+        { name: 'S', icon: '/windDirectionIcons/South.svg' },
+        { name: 'SW', icon: '/windDirectionIcons/SouthWest.svg' },
+        { name: 'W', icon: '/windDirectionIcons/West.svg' },
+        { name: 'NW', icon: '/windDirectionIcons/NorthWest.svg' },
+    ];
     return directions[Math.round(angle / 45) % 8];
 }
 
@@ -43,7 +52,12 @@ const props = defineProps<Partial<Props>>()
           {{ props.weather.wind.speed.toFixed(1) }}&nbsp;
           <template v-if="props.weather.wind.gust != null "> ({{ props.weather.wind.gust.toFixed(1) }})&nbsp;</template>
           m/s
-          {{getWindDirection(props.weather.wind.deg)}}
+          <img 
+            v-if="props.weather?.wind?.deg != null"
+            :src="getWindDirection(props.weather.wind.deg).icon" 
+            class="inline-block w-5 h-5 align-middle" 
+          />
+          {{ getWindDirection(props.weather.wind.deg).name }}
         </h2>
       </div>
       <div class="px-2">
