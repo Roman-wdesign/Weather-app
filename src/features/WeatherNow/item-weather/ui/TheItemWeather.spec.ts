@@ -85,4 +85,24 @@ describe('TheItemWeather.vue', () => {
     })
     expect(wrapper.find('.weather-wrap').exists()).toBe(true)
   })
+
+  it('should render atmospheric pressure', () => {
+    const wrapper = mount(TheItemWeather, {
+      props: {
+        weather,
+        imgUrl
+      }
+    })
+    expect(wrapper.text()).toContain('1013 hPa')
+  })
+  
+  it('should render humidity', () => {
+    const wrapper = mount(TheItemWeather, {
+      props: {
+        weather,
+        imgUrl
+      }
+    })
+    expect(wrapper.text()).toContain('80 %')
+  })
 })
