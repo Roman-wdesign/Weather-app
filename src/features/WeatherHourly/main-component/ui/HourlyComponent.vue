@@ -9,6 +9,22 @@ import { fetchWithCache } from '@/shared/composables/cache/model'
 
 import { PaginationComponent } from '@/shared/ui/pagination/ui'
 
+import { 
+  IconPressure, 
+  IconHumidity 
+} from '@/shared/assets/image/svg/humidity-and-pressure';
+
+import { 
+  IconNorth, 
+  IconNorthEast, 
+  IconEast, 
+  IconSouthEast, 
+  IconSouth, 
+  IconSouthWest, 
+  IconWest, 
+  IconNorthWest 
+} from '@/shared/assets/image/svg/wind-directions';
+
 const { isGeolocationEnabled, latitude, longitude, error: geoError } = useGeolocation()
 const { error } = useFetch()
 
@@ -47,18 +63,18 @@ const parsedResponse = computed(() => {
   return rawResponse.value ? JSON.parse(rawResponse.value) : null
 })
 
-function getWindDirection(angle: number): { name: string; icon: string } {
+function getWindDirection(angle: number): { name: string; icon: any } {
   const directions = [
-        { name: 'N', icon: '/windDirectionIcons/North.svg' },
-        { name: 'NE', icon: '/windDirectionIcons/NorthEast.svg' },
-        { name: 'E', icon: '/windDirectionIcons/East.svg' },
-        { name: 'SE', icon: '/windDirectionIcons/SouthEast.svg' },
-        { name: 'S', icon: '/windDirectionIcons/South.svg' },
-        { name: 'SW', icon: '/windDirectionIcons/SouthWest.svg' },
-        { name: 'W', icon: '/windDirectionIcons/West.svg' },
-        { name: 'NW', icon: '/windDirectionIcons/NorthWest.svg' },
-    ];
-    return directions[Math.round(angle / 45) % 8];
+    { name: 'N', icon: IconNorth },
+    { name: 'NE', icon: IconNorthEast },
+    { name: 'E', icon: IconEast },
+    { name: 'SE', icon: IconSouthEast },
+    { name: 'S', icon: IconSouth },
+    { name: 'SW', icon: IconSouthWest },
+    { name: 'W', icon: IconWest },
+    { name: 'NW', icon: IconNorthWest },
+  ];
+  return directions[Math.round(angle / 45) % 8];
 }
 
 // Pagination logic
@@ -173,17 +189,21 @@ const getTemperatureColor = (tempCelsius: number): string => {
                 {{ (forecast.main.temp - temperFaringate).toFixed(1) }}&nbsp;°C&nbsp;
               </p>
             </div>
-            <div>
+            <div class="dark:text-gray-400 flex items-center">
+              <component :is="IconPressure" class="w-5 h-5 mr-1" />
               <p class="dark:text-gray-400">{{ forecast.main.pressure }}&nbsp;hpa&nbsp; </p>
             </div>
-            <div>
+            <div class="dark:text-gray-400 flex items-center">
+              <component :is="IconHumidity" class="w-5 h-5 mr-1" />        
               <p class="dark:text-gray-400">{{ Math.round(forecast.main.humidity) }}%</p>
             </div>
-            <div>
-              <p class="dark:text-stone-400"> &nbsp;{{ (forecast.wind.speed).toFixed(1) }}&nbsp;
+            <div class="dark:text-stone-400">
+              <p> &nbsp;{{ (forecast.wind.speed).toFixed(1) }}&nbsp;
                 <span v-if="forecast.wind.gust != null">({{ (forecast.wind.gust).toFixed(1) }}) m/s</span>
-                <img :src="getWindDirection(forecast.wind.deg).icon" class="inline-block w-5 h-5" />
-                {{ getWindDirection(forecast.wind.deg).name }}
+                <span v-if="forecast.wind?.deg != null">
+                  <component :is="getWindDirection(forecast.wind.deg).icon" class="inline-block w-5 h-5 align-middle" />
+                  {{ getWindDirection(forecast.wind.deg).name }}
+                </span>
               </p>
             </div>
           </div>

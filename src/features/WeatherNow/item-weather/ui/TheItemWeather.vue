@@ -1,23 +1,39 @@
 <script setup lang="ts">
 import type { IWeather } from '@/features/WeatherNow/item-weather/model'
 
+import { 
+  IconPressure, 
+  IconHumidity 
+} from '@/shared/assets/image/svg/humidity-and-pressure';
+
+import { 
+  IconNorth, 
+  IconNorthEast, 
+  IconEast, 
+  IconSouthEast, 
+  IconSouth, 
+  IconSouthWest, 
+  IconWest, 
+  IconNorthWest 
+} from '@/shared/assets/image/svg/wind-directions';
+
 export interface Props {
   weather: IWeather
   imgUrl: string
 }
 
-function getWindDirection(angle: number): { name: string; icon: string } {
+function getWindDirection(angle: number): { name: string; icon: any } {
   const directions = [
-        { name: 'N', icon: '/windDirectionIcons/North.svg' },
-        { name: 'NE', icon: '/windDirectionIcons/NorthEast.svg' },
-        { name: 'E', icon: '/windDirectionIcons/East.svg' },
-        { name: 'SE', icon: '/windDirectionIcons/SouthEast.svg' },
-        { name: 'S', icon: '/windDirectionIcons/South.svg' },
-        { name: 'SW', icon: '/windDirectionIcons/SouthWest.svg' },
-        { name: 'W', icon: '/windDirectionIcons/West.svg' },
-        { name: 'NW', icon: '/windDirectionIcons/NorthWest.svg' },
-    ];
-    return directions[Math.round(angle / 45) % 8];
+    { name: 'N', icon: IconNorth },
+    { name: 'NE', icon: IconNorthEast },
+    { name: 'E', icon: IconEast },
+    { name: 'SE', icon: IconSouthEast },
+    { name: 'S', icon: IconSouth },
+    { name: 'SW', icon: IconSouthWest },
+    { name: 'W', icon: IconWest },
+    { name: 'NW', icon: IconNorthWest },
+  ];
+  return directions[Math.round(angle / 45) % 8];
 }
 
 const props = defineProps<Partial<Props>>()
@@ -36,15 +52,15 @@ const props = defineProps<Partial<Props>>()
       </div>
     </div>
     <div class="weather-box py-3" v-if="props.weather?.main">
-      <div class="temp flex justify-center py-3">
+      <div class="temp flex justify-center py-1">
         <h2 class="text-small font-extrabold">{{ Math.round(props.weather.main.temp) }} °c</h2>
       </div>
-      <div class="pressure flex flex-col items-center py-3">
-        <h2>Atmospheric pressure</h2>
+      <div class="pressure flex justify-center items-center py-3">
+        <component :is="IconPressure" class="w-5 h-5 mr-1" />
         <h3 class="font-bold">{{ Math.round(props.weather.main.pressure) }} hPa</h3>
       </div>
-      <div class="humidity flex flex-col items-center py-3">
-        <h2>Humidity</h2>
+      <div class="humidity flex justify-center items-center py-3">
+        <component :is="IconHumidity" class="w-5 h-5 mr-1" />        
         <h3 class=" font-bold">{{ Math.round(props.weather.main.humidity) }} %</h3>
       </div>
       <div class="temp flex justify-center py-3">
@@ -52,11 +68,9 @@ const props = defineProps<Partial<Props>>()
           {{ props.weather.wind.speed.toFixed(1) }}&nbsp;
           <template v-if="props.weather.wind.gust != null "> ({{ props.weather.wind.gust.toFixed(1) }})&nbsp;</template>
           m/s
-          <img 
-            v-if="props.weather?.wind?.deg != null"
-            :src="getWindDirection(props.weather.wind.deg).icon" 
-            class="inline-block w-5 h-5 align-middle" 
-          />
+          <span v-if="props.weather?.wind?.deg != null">
+            <component :is="getWindDirection(props.weather.wind.deg).icon" class="inline-block w-5 h-5 align-middle" />
+          </span>
           {{ getWindDirection(props.weather.wind.deg).name }}
         </h2>
       </div>
