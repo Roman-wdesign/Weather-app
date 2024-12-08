@@ -3,6 +3,7 @@
 Hi! I'm really excited that you are interested in contributing to Weather-app. Before submitting your contribution, please make sure to take a moment and read through the following guidelines:
 
 - [The Architectural Methodology](#the-architectural-methodology)
+- [FSD settings from eslint-plugin-boundaries](#fsd-settings-from-eslint-plugin-boundaries)
 - [Naming of Branches](#naming-of-branches)
 - [Naming of Commits](#naming-of-commits)
 - [Development Setup](#development-setup)
@@ -12,6 +13,14 @@ Hi! I'm really excited that you are interested in contributing to Weather-app. B
 ## The Architectural Methodology
 
 In this App use the [FSD](https://feature-sliced.design/docs) Architectural methodology.
+
+## FSD settings from eslint-plugin-boundaries
+
+Rules: prohibition of cross imports (except those inside features). That is, a feature cannot import a feature. The page cannot import the page, and so on. More details into the [.eslintrc.cjs](https://github.com/Roman-wdesign/Weather-app/blob/main/.eslintrc.cjs)
+
+**Example of the error**
+
+![Example of the error](https://i.ibb.co/B6GzgH5/Screenshot-1.png)
 
 ## Naming of Branches
 

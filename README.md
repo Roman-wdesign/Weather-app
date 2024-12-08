@@ -18,6 +18,8 @@
 
 ## Features
 
+🔵 FSD settings from eslint-plugin-boundaries ([see details](https://github.com/Roman-wdesign/Weather-app/blob/main/CONTRIBUTING.md))
+
 🔵 Geolocation (switch-controlled)
 
 🔵 Drag saved cities
