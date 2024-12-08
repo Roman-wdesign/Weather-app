@@ -9,24 +9,24 @@ import { fetchWithCache } from '@/shared/composables/cache/model'
 
 import { PaginationComponent } from '@/shared/ui/pagination/ui'
 
-import { 
-  IconPressure, 
-  IconHumidity 
+import {
+  IconPressure,
+  IconHumidity
 } from '@/shared/assets/image/svg/humidity-and-pressure';
 
-import { 
-  IconNorth, 
-  IconNorthEast, 
-  IconEast, 
-  IconSouthEast, 
-  IconSouth, 
-  IconSouthWest, 
-  IconWest, 
-  IconNorthWest 
+import {
+  IconNorth,
+  IconNorthEast,
+  IconEast,
+  IconSouthEast,
+  IconSouth,
+  IconSouthWest,
+  IconWest,
+  IconNorthWest
 } from '@/shared/assets/image/svg/wind-directions';
 
 const { isGeolocationEnabled, latitude, longitude, error: geoError } = useGeolocation()
-const { error } = useFetch()
+const { error: fetchError } = useFetch()
 
 const rawResponse = ref<string | null>(null)
 
@@ -58,7 +58,7 @@ onMounted(async () => {
     await fetchWeather()
   }
 })
-  
+
 const parsedResponse = computed(() => {
   return rawResponse.value ? JSON.parse(rawResponse.value) : null
 })
@@ -126,7 +126,7 @@ const getTemperatureColor = (tempCelsius: number): string => {
 <template>
   <div>
     <div v-if="geoError" class="text-red-500">{{ geoError }}</div>
-    <div v-else class="text-red-500">{{ error }}</div>
+    <div v-else class="text-red-500">{{ fetchError }}</div>
 
     <div v-if="parsedResponse">
       <!-- <p>Coordinates: {{ parsedResponse.city.coord.lat }}, {{ parsedResponse.city.coord.lon }}</p>
@@ -153,9 +153,9 @@ const getTemperatureColor = (tempCelsius: number): string => {
                 <p>{{ new Date(forecast.dt * 1000).getHours().toString().padStart(2, '0') }}:</p>
               </div>
               <div>
-                  <p>
-                    {{ new Date(forecast.dt * 1000).getMinutes().toString().padStart(2, '0') }}
-                  </p>
+                <p>
+                  {{ new Date(forecast.dt * 1000).getMinutes().toString().padStart(2, '0') }}
+                </p>
               </div>
             </div>
             <div class="flex flex-row">
@@ -163,7 +163,7 @@ const getTemperatureColor = (tempCelsius: number): string => {
                 <p>
                   {{
                     new Date(forecast.dt * 1000).toLocaleDateString('ru-RU', {
-                    day: '2-digit'
+                      day: '2-digit'
                     })
                   }}
                 </p>
@@ -175,7 +175,7 @@ const getTemperatureColor = (tempCelsius: number): string => {
                 <p>
                   {{
                     new Date(forecast.dt * 1000).toLocaleDateString('ru-RU', {
-                    month: '2-digit'
+                      month: '2-digit'
                     })
                   }}
                 </p>
@@ -194,7 +194,7 @@ const getTemperatureColor = (tempCelsius: number): string => {
               <p class="dark:text-gray-400">{{ forecast.main.pressure }}&nbsp;hpa&nbsp; </p>
             </div>
             <div class="dark:text-gray-400 flex items-center">
-              <component :is="IconHumidity" class="w-5 h-5 mr-1" />        
+              <component :is="IconHumidity" class="w-5 h-5 mr-1" />
               <p class="dark:text-gray-400">{{ Math.round(forecast.main.humidity) }}%</p>
             </div>
             <div class="dark:text-stone-400">
