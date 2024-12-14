@@ -11,11 +11,13 @@ vi.mock('@/shared/composables/localStorage/storage/model/useLocalStorage', () =>
 describe('useSavedCities', () => {
   let firstCityArg: ReturnType<typeof ref>
   let secondCityArg: MockedFunction<(city: string) => void>
+  let thirdCityArg: MockedFunction<(city: string) => void>
   let mockUseLocalStorage: any
 
   beforeEach(() => {
     firstCityArg = ref({})
     secondCityArg = vi.fn()
+    thirdCityArg = vi.fn()
 
     mockUseLocalStorage = {
       storedValue: ref([]),
@@ -25,12 +27,12 @@ describe('useSavedCities', () => {
   })
 
   it('should initialize savedCities as an empty array if not present in localStorage', () => {
-    useSavedCities(firstCityArg, secondCityArg)
+    useSavedCities(firstCityArg, secondCityArg, thirdCityArg)
     expect(mockUseLocalStorage.storedValue.value).toEqual([])
   })
 
   it('should save a city if it is not already in the savedCities array', () => {
-    const { saveCurrentCity } = useSavedCities(firstCityArg, secondCityArg)
+    const { saveCurrentCity } = useSavedCities(firstCityArg, secondCityArg, thirdCityArg)
 
     mockUseLocalStorage.setValue.mockImplementation((newCities: string[]) => {
       mockUseLocalStorage.storedValue.value = newCities
@@ -44,7 +46,7 @@ describe('useSavedCities', () => {
 
   it('should not save a city if it is already in the savedCities array', () => {
     mockUseLocalStorage.storedValue.value = ['New York']
-    const { saveCurrentCity } = useSavedCities(firstCityArg, secondCityArg)
+    const { saveCurrentCity } = useSavedCities(firstCityArg, secondCityArg, thirdCityArg)
     saveCurrentCity('New York')
 
     expect(mockUseLocalStorage.setValue).not.toHaveBeenCalled()
@@ -54,7 +56,7 @@ describe('useSavedCities', () => {
     mockUseLocalStorage.storedValue.value = ['New York', 'Los Angeles']
     firstCityArg.value = { 'New York': {}, 'Los Angeles': {} }
 
-    const { removeCityFromStorage } = useSavedCities(firstCityArg, secondCityArg)
+    const { removeCityFromStorage } = useSavedCities(firstCityArg, secondCityArg, thirdCityArg)
     removeCityFromStorage('New York')
 
     expect(mockUseLocalStorage.setValue).toHaveBeenCalledWith(['Los Angeles'])
@@ -64,15 +66,18 @@ describe('useSavedCities', () => {
   it('should load saved cities into firstCityArg when loadSavedCities is called', () => {
     mockUseLocalStorage.storedValue.value = ['New York', 'Los Angeles']
 
-    const { loadSavedCities } = useSavedCities(firstCityArg, secondCityArg)
+    const { loadSavedCities } = useSavedCities(firstCityArg, secondCityArg, thirdCityArg)
     loadSavedCities()
 
     expect(secondCityArg).toHaveBeenCalledWith('New York')
     expect(secondCityArg).toHaveBeenCalledWith('Los Angeles')
+
+    expect(thirdCityArg).toHaveBeenCalledWith('New York')
+    expect(thirdCityArg).toHaveBeenCalledWith('Los Angeles')
   })
 
   it('should call secondCityArg when a new city is added via savedCities watch', async () => {
-    const { savedCities } = useSavedCities(firstCityArg, secondCityArg)
+    const { savedCities } = useSavedCities(firstCityArg, secondCityArg, thirdCityArg)
     mockUseLocalStorage.storedValue.value = []
 
     savedCities.value = ['San Francisco']
@@ -80,5 +85,7 @@ describe('useSavedCities', () => {
     await flushPromises()
 
     expect(secondCityArg).toHaveBeenCalledWith('San Francisco')
+
+    expect(thirdCityArg).toHaveBeenCalledWith('San Francisco')
   })
 })

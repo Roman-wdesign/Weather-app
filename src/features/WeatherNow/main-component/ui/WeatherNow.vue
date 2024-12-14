@@ -23,7 +23,7 @@ const {
   loading, // Loading state for the fetch process
   imgUrl, // URL for the weather icon image
   fetchWeatherForQuery, // Method to fetch weather data for a city
-  fetchAirPollutionForQuery,
+  fetchAirPollutionForQuery, // Method to fetch air pollution data for a city
   //isSaveDisabled,        // Boolean to disable "Save City" button
   saveCurrentCity, // Method to save the current city to storage
   removeCityFromStorage // Method to remove a city from storage
