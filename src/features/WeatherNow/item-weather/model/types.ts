@@ -16,5 +16,10 @@ export interface IWeather {
     speed: number
     gust: number
     deg: number
-}
+  }
+  list: Array<{
+    main: {
+      aqi: number
+    }
+  }>
 }
