@@ -26,30 +26,6 @@ export function useWeatherNow() {
     try {
       const data = await fetchWithCache(apiUrl)
       setResults(city, data)
-
-      // const geoUrl = generateGeocodingUrl(reverseGeo, city, token)
-      // const geoResponse = await fetchWithCache(geoUrl)
-      // const geoData = geoResponse[0]
-
-      // if (!geoData || !geoData.lat || !geoData.lon) {
-      //   throw new Error('Unable to fetch geolocation data')
-      // }
-
-      // const pollutionUrl = generatePolutionUrl(urlBase, geoData.lat, geoData.lon, token)
-      // const pollutionData = await fetchWithCache(pollutionUrl)
-
-      // //console.log('Air pollution data:', pollutionData)
-
-      // // Merge pollution data into theWeather
-      // if (theWeather.value[city]) {
-      //   theWeather.value[city] = {
-      //     ...theWeather.value[city],
-      //     ...pollutionData,
-      //   }
-      // } else {
-      //   theWeather.value[city] = { pollutionData }
-      // }
-
     } catch (err) {
       if (err instanceof Error) {
         error.value = err.message
