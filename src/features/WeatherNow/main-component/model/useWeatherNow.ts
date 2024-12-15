@@ -1,10 +1,10 @@
 import { ref, computed, onMounted, watch } from 'vue'
 
-import { urlBase, imgUrl, token } from '@/shared/config'
+import { urlBase, imgUrl, token, reverseGeo } from '@/shared/config'
 
 import { fetchWithCache } from '@/shared/composables/cache/model'
 
-import { generateWeatherUrl } from '@/features/WeatherNow/main-component/api'
+import { generateGeocodingUrl, generatePolutionUrl, generateWeatherUrl } from '@/features/WeatherNow/main-component/api'
 import { useSavedCities } from '@/shared/composables/localStorage/saved-cities/model'
 
 export function useWeatherNow() {
@@ -57,13 +57,55 @@ export function useWeatherNow() {
     }
   }
 
+  const fetchAirPollutionData = async (city: string) => {
+    loading.value = true
+    error.value = null
+    try {
+      // Fetch latitude and longitude from Geocoding API
+      const geoUrl = generateGeocodingUrl(reverseGeo, city, token)
+      const geoResponse = await fetchWithCache(geoUrl)
+      const geoData = geoResponse[0]
+
+      if (!geoData || !geoData.lat || !geoData.lon) {
+        throw new Error('Unable to fetch geolocation data')
+      }
+
+      console.log('Geolocation response:', geoData)
+
+      // Fetch air pollution data using latitude and longitude
+      const pollutionUrl = generatePolutionUrl(urlBase, geoData.lat, geoData.lon, token)
+      const pollutionData = await fetchWithCache(pollutionUrl)
+
+      console.log('Air pollution data:', pollutionData)
+
+      // Merge pollution data into theWeather
+      if (theWeather.value[city]) {
+        theWeather.value[city] = {
+          ...theWeather.value[city],
+          ...pollutionData,
+        }
+      } else {
+        theWeather.value[city] = { pollution: pollutionData }
+      }
+    } catch (err) {
+      if (err instanceof Error) {
+        error.value = err.message
+      } else {
+        error.value = 'An unknown error occurred while fetching air pollution data'
+      }
+    } finally {
+      loading.value = false
+    }
+  }
+
   watch(theQuery, (newQuery) => {
     fetchCitySuggestions(newQuery)
   })
 
   const { savedCities, saveCurrentCity, removeCityFromStorage, loadSavedCities } = useSavedCities(
     theWeather,
-    fetchWeather
+    fetchWeather,
+    fetchAirPollutionData
   )
 
   const isSaveDisabled = computed(() => savedCities.value.length >= 3)
@@ -82,6 +124,9 @@ export function useWeatherNow() {
     suggestions,
     fetchWeatherForQuery: computed(async () =>
       theQuery.value ? await fetchWeather(theQuery.value) : undefined
+    ),
+    fetchAirPollutionForQuery: computed(async () =>
+      theQuery.value ? await fetchAirPollutionData(theQuery.value) : undefined
     ),
     isSaveDisabled,
     saveCurrentCity,

@@ -25,6 +25,13 @@ describe('TheItemWeather.vue', () => {
         gust: 8,
         deg: 120,
       },
+    list: [
+      {
+        main: {
+          aqi: 1,
+        }
+      }
+    ]
   }
 
   const imgUrl = 'http://example.com/img/'
@@ -104,5 +111,15 @@ describe('TheItemWeather.vue', () => {
       }
     })
     expect(wrapper.text()).toContain('80 %')
+  })
+
+  it('should render air quality', () => {
+    const wrapper = mount(TheItemWeather, {
+      props: {
+        weather,
+        imgUrl
+      }
+    })
+    expect(wrapper.text()).toContain('Good')
   })
 })

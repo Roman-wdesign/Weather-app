@@ -60,6 +60,11 @@ function getWindDirection(angle: number): { name: string; icon: any } {
   return directions[Math.round(angle / 45) % 8];
 }
 
+function getAirQuality(aqi: number) {
+  const quality = ["Good", "Fair", "Moderate", "Poor", "Very Poor"];
+  return quality[aqi-1];
+}
+
 const weatherIconMap = (iconCode: string) => {
   const conditions = [
     { nameCondition: '01d', icon: IconClearSkyDay },
@@ -128,6 +133,16 @@ const props = defineProps<Partial<Props>>()
         </div>
         <div class="div flex justify-center h-8 w-8">
           <component :is="weatherIconMap(props.weather.weather[0].icon)" class="weather-icon" />
+        </div>
+      </div>
+      <div class="pollution flex justify-center py-1">
+        <div class="text-small font-bold text-center flex flex-col justify-center">
+          <p>
+            <template v-if="props.weather && props.weather.list && props.weather.list.length > 0">Air quality:<br></template>
+          </p>
+          <p>
+            <template v-if="props.weather && props.weather.list && props.weather.list.length > 0">{{getAirQuality(props.weather.list[0].main.aqi)}}</template>
+          </p>
         </div>
       </div>
     </div>
