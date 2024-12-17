@@ -46,7 +46,6 @@ const selectCity = async () => {
   theQuery.value = ''
 }
 
-
 // Watch effect to reset the error message after 2 seconds
 watchEffect(() => {
   if (error.value) {
@@ -68,11 +67,22 @@ watchEffect(() => {
 
     <!-- Input Field and Autocomplete Dropdown -->
     <div class="flex justify-center p-4">
-      <TheInput class="max-w-xs" @keydown.enter="handleKeyDown" label="city name" v-model="theQuery" />
-      <ul v-if="suggestions.length"
-        class="absolute max-w-xs bg-white shadow-lg rounded-md mt-12 border border-gray-300">
-        <li v-for="(city, index) in suggestions" :key="index" @mousedown="selectCity()"
-          class="cursor-pointer p-2 hover:bg-gray-200">
+      <TheInput
+        class="max-w-xs"
+        @keydown.enter="handleKeyDown"
+        label="city name"
+        v-model="theQuery"
+      />
+      <ul
+        v-if="suggestions.length"
+        class="absolute max-w-xs bg-white shadow-lg rounded-md mt-12 border border-gray-300"
+      >
+        <li
+          v-for="(city, index) in suggestions"
+          :key="index"
+          @mousedown="selectCity()"
+          class="cursor-pointer p-2 hover:bg-gray-200"
+        >
           {{ city }}
         </li>
       </ul>
@@ -87,11 +97,14 @@ watchEffect(() => {
     <!-- Queried Weather -->
     <div v-if="theWeather[theQuery]" class="query_weather flex flex-col py-4">
       <div>
-        <div class="flex justify-center my-2">
-        </div>
+        <div class="flex justify-center my-2"></div>
       </div>
       <div>
-        <TheItemWeather v-if="theWeather[theQuery]" :weather="theWeather[theQuery]" :imgUrl="imgUrl" />
+        <TheItemWeather
+          v-if="theWeather[theQuery]"
+          :weather="theWeather[theQuery]"
+          :imgUrl="imgUrl"
+        />
       </div>
     </div>
 
@@ -101,17 +114,30 @@ watchEffect(() => {
         <h3 class="text-xl font-semibold dark:text-gray-400">Saved Cities</h3>
       </div>
       <ul class="flex flex-wrap justify-center gap-4">
-        <li v-for="(city, index) in savedCities" :key="city" :data-index="index" class="relative min-w-40"
-          draggable="true" @dragstart="handleDragStart" @dragover="handleDragOver" @drop="handleDrop">
+        <li
+          v-for="(city, index) in savedCities"
+          :key="city"
+          :data-index="index"
+          class="relative min-w-40"
+          draggable="true"
+          @dragstart="handleDragStart"
+          @dragover="handleDragOver"
+          @drop="handleDrop"
+        >
           <IconClose
             class="absolute top-0 right-0 w-8 h-8 rounded-full fill-blue-600 hover:fill-blue-500 cursor-pointer"
-            @click="removeCityFromStorage(city)">
+            @click="removeCityFromStorage(city)"
+          >
           </IconClose>
           <div>
             <BarsFour class="absolute top-2 left-2 hover: cursor-pointer" />
           </div>
-          <TheItemWeather v-if="theWeather[city]" :weather="theWeather[city]" :imgUrl="imgUrl"
-            class="w-full h-80 pt-10 border-2 rounded-md border-blue-500">
+          <TheItemWeather
+            v-if="theWeather[city]"
+            :weather="theWeather[city]"
+            :imgUrl="imgUrl"
+            class="w-full h-80 pt-10 border-2 rounded-md border-blue-500"
+          >
           </TheItemWeather>
         </li>
       </ul>

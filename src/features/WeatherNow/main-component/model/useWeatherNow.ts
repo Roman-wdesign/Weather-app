@@ -4,10 +4,14 @@ import { urlBase, imgUrl, token, reverseGeo } from '@/shared/config'
 
 import { fetchWithCache } from '@/shared/composables/cache/model'
 
-import { generateGeocodingUrl, generatePolutionUrl, generateWeatherUrl } from '@/features/WeatherNow/main-component/api'
+import {
+  generateGeocodingUrl,
+  generatePolutionUrl,
+  generateWeatherUrl
+} from '@/features/WeatherNow/main-component/api'
 import { useSavedCities } from '@/shared/composables/localStorage/saved-cities/model'
 
-export function useWeatherNow() {
+export const useWeatherNow = () => {
   const theQuery = ref<string>('')
   const theWeather = ref<Record<string, any>>({})
   const error = ref<string | null>(null)
@@ -45,7 +49,7 @@ export function useWeatherNow() {
 
     try {
       const response = await fetch(
-        `https://api.openweathermap.org/data/2.5/find?q=${query}&appid=${token}`
+        `${urlBase}find?q=${query}&appid=${token}`
       )
       const data = await response.json()
       suggestions.value = (
@@ -66,7 +70,7 @@ export function useWeatherNow() {
       const geoResponse = await fetchWithCache(geoUrl)
       const geoData = geoResponse[0]
 
-      if (!geoData || !geoData.lat || !geoData.lon) {
+      if (!geoData?.lat || !geoData?.lon) {
         throw new Error('Unable to fetch geolocation data')
       }
 
@@ -82,7 +86,7 @@ export function useWeatherNow() {
       if (theWeather.value[city]) {
         theWeather.value[city] = {
           ...theWeather.value[city],
-          ...pollutionData,
+          ...pollutionData
         }
       } else {
         theWeather.value[city] = { pollution: pollutionData }

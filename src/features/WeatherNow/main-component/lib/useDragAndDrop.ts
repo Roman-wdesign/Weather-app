@@ -3,7 +3,7 @@ import type { Ref } from 'vue'
 
 // argument of this funcrtion is saved cities in array
 
-export function useDragAndDrop(savedCities: Ref<string[]>) {
+export const useDragAndDrop = (savedCities: Ref<string[]>) => {
   const draggedIndex = ref<number | null>(null)
 
   const handleDragStart = (event: DragEvent) => {
