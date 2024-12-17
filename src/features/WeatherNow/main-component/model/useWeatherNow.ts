@@ -18,6 +18,7 @@ export const useWeatherNow = () => {
   const loading = ref<boolean>(false)
   const suggestions = ref<string[]>([])
   const maxResults = 5
+  const isSaveDisabled = computed(() => savedCities.value.length >= 3)
 
   const setResults = (city: string, results: any) => {
     theWeather.value[city] = results
@@ -110,8 +111,6 @@ export const useWeatherNow = () => {
     fetchAirPollutionData
   )
 
-  const isSaveDisabled = computed(() => savedCities.value.length >= 3)
-
   onMounted(() => {
     loadSavedCities()
   })
@@ -124,12 +123,16 @@ export const useWeatherNow = () => {
     loading,
     imgUrl,
     suggestions,
-    fetchWeatherForQuery: computed(async () =>
-      theQuery.value ? await fetchWeather(theQuery.value) : undefined
-    ),
-    fetchAirPollutionForQuery: computed(async () =>
-      theQuery.value ? await fetchAirPollutionData(theQuery.value) : undefined
-    ),
+    async fetchWeatherForQuery() {
+      theQuery.value
+        ? await fetchWeather(theQuery.value)
+        : console.log('fetchWeatherForQuery error')
+    },
+    async fetchAirPollutionForQuery() {
+      theQuery.value
+        ? await fetchAirPollutionData(theQuery.value)
+        : console.log('fetchAirPollutionForQuery error')
+    },
     isSaveDisabled,
     saveCurrentCity,
     removeCityFromStorage

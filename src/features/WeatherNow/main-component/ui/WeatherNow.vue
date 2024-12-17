@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watchEffect } from 'vue'
+import { ref, watchEffect, onMounted } from 'vue'
 
 import { useWeatherNow } from '@/features/WeatherNow/main-component/model'
 import { dateBuilder } from '@/shared/api/helpers/date-builder/api'
@@ -24,7 +24,7 @@ const {
   imgUrl, // URL for the weather icon image
   fetchWeatherForQuery, // Method to fetch weather data for a city
   fetchAirPollutionForQuery, // Method to fetch air pollution data for a city
-  //isSaveDisabled,        // Boolean to disable "Save City" button
+  isSaveDisabled, // Boolean to disable "Save City" button
   saveCurrentCity, // Method to save the current city to storage
   removeCityFromStorage // Method to remove a city from storage
 } = useWeatherNow()
@@ -35,8 +35,8 @@ const { handleDragStart, handleDragOver, handleDrop } = useDragAndDrop(savedCiti
 // Event handler for pressing Enter in the input field
 const handleKeyDown = (event: KeyboardEvent) => {
   if (event.key === 'Enter') {
-    fetchWeatherForQuery.value
-    fetchAirPollutionForQuery.value
+    fetchWeatherForQuery
+    fetchAirPollutionForQuery
   }
 }
 
@@ -52,6 +52,15 @@ watchEffect(() => {
     setTimeout(() => {
       error.value = null
     }, 2000)
+  }
+})
+
+onMounted(async () => {
+  try {
+    await fetchWeatherForQuery()
+    await fetchAirPollutionForQuery()
+  } catch (error) {
+    console.error('Error async load ddata', error)
   }
 })
 </script>
@@ -72,6 +81,7 @@ watchEffect(() => {
         @keydown.enter="handleKeyDown"
         label="city name"
         v-model="theQuery"
+        :disabled="isSaveDisabled"
       />
       <ul
         v-if="suggestions.length"
