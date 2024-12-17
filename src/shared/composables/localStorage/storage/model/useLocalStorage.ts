@@ -1,19 +1,20 @@
 import { ref, watch } from 'vue'
+import type { Ref } from 'vue'
 
-export function useLocalStorage(key: string, initialValue: any) {
-  const storedValue = ref(initialValue)
+export function useLocalStorage<T>(key: string, initialValue: T) {
+  const storedValue = ref(initialValue) as Ref<T>
 
-  const readValue = () => {
+  const readValue = (): T => {
     const item = window.localStorage.getItem(key)
     try {
-      return item ? JSON.parse(item) : initialValue
+      return item ? (JSON.parse(item) as T) : initialValue
     } catch (error) {
       console.error(`Error parsing localStorage key "${key}":`, error)
       return initialValue
     }
   }
 
-  const setValue = (value: any) => {
+  const setValue = (value: T) => {
     storedValue.value = value
     window.localStorage.setItem(key, JSON.stringify(value))
   }

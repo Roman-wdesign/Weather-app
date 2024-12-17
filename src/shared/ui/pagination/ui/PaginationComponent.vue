@@ -4,8 +4,8 @@ import { TheButton } from '@/shared/ui/buttons/main-btn/ui'
 interface Props {
   currentPage: number
   totalPages: number
-  nextPage: any
-  prevPage: any
+  nextPage: () => void
+  prevPage: () => void
 }
 
 const props = defineProps<Props>()

@@ -1,8 +1,16 @@
 import { watch } from 'vue'
 import { useLocalStorage } from '@/shared/composables/localStorage/storage/model'
+import type { Ref } from 'vue'
 
-export function useSavedCities(firstCityArg: any, secondCityArg: any, thirdCityArg: any) {
-  const { storedValue: savedCities, setValue: saveCity } = useLocalStorage('savedCities', [])
+export function useSavedCities(
+  firstCityArg: Ref<Record<string, any>>,
+  secondCityArg: (city: string) => void,
+  thirdCityArg: (city: string) => void
+) {
+  const { storedValue: savedCities, setValue: saveCity } = useLocalStorage<string[]>(
+    'savedCities',
+    []
+  )
   if (!Array.isArray(savedCities.value)) {
     savedCities.value = []
   }
@@ -25,7 +33,7 @@ export function useSavedCities(firstCityArg: any, secondCityArg: any, thirdCityA
     })
   }
 
-  watch(savedCities, (newCities: any) => {
+  watch(savedCities, (newCities: string[]) => {
     newCities.forEach((city: string) => {
       if (!firstCityArg.value[city]) {
         secondCityArg(city)

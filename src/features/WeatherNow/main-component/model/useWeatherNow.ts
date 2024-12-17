@@ -48,9 +48,7 @@ export const useWeatherNow = () => {
     }
 
     try {
-      const response = await fetch(
-        `${urlBase}find?q=${query}&appid=${token}`
-      )
+      const response = await fetch(`${urlBase}find?q=${query}&appid=${token}`)
       const data = await response.json()
       suggestions.value = (
         data.list.map((city: any) => `${city.name}, ${city.sys.country}`) || []
