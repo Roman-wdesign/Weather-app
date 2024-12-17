@@ -45,7 +45,7 @@ describe('useWeatherNow composable', () => {
     fetchWithCacheMock.mockResolvedValueOnce({ temp: 25 })
 
     theQuery.value = 'Test City'
-    await fetchWeatherForQuery.value
+    await fetchWeatherForQuery
 
     expect(loading.value).toBe(false)
     expect(error.value).toBeNull()
@@ -59,7 +59,7 @@ describe('useWeatherNow composable', () => {
     fetchWithCacheMock.mockRejectedValueOnce(new Error('API Error'))
 
     theQuery.value = 'Test City'
-    await fetchWeatherForQuery.value
+    await fetchWeatherForQuery
 
     expect(loading.value).toBe(false)
     expect(error.value).toBe('API Error')
