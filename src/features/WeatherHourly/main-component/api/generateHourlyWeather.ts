@@ -3,6 +3,4 @@ export const generateHourlyWeather = (
   lat: number,
   lon: number,
   token: string
-): string => {
-  return `${urlBase}forecast?lat=${lat}&lon=${lon}&appid=${token}`
-}
+): string => `${urlBase}forecast?lat=${lat}&lon=${lon}&appid=${token}`

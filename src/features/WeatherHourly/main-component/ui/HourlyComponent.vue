@@ -9,10 +9,7 @@ import { fetchWithCache } from '@/shared/composables/cache/model'
 
 import { PaginationComponent } from '@/shared/ui/pagination/ui'
 
-import {
-  IconPressure,
-  IconHumidity
-} from '@/shared/assets/image/svg/humidity-and-pressure';
+import { IconPressure, IconHumidity } from '@/shared/assets/image/svg/humidity-and-pressure'
 
 import {
   IconNorth,
@@ -23,8 +20,7 @@ import {
   IconSouthWest,
   IconWest,
   IconNorthWest
-} from '@/shared/assets/image/svg/wind-directions';
-
+} from '@/shared/assets/image/svg/wind-directions'
 
 import {
   IconBrokenCloudsDay,
@@ -50,12 +46,10 @@ import {
   IconMistNight
 } from '@/shared/assets/image/svg/condtitions/night'
 
-
 const { isGeolocationEnabled, latitude, longitude, error: geoError } = useGeolocation()
 const { error: fetchError } = useFetch()
 
 const rawResponse = ref<string | null>(null)
-
 
 const fetchWeather = async () => {
   if (latitude.value !== null && longitude.value !== null) {
@@ -99,9 +93,9 @@ function getWindDirection(angle: number): { name: string; icon: any } {
     { name: 'S', icon: IconSouth },
     { name: 'SW', icon: IconSouthWest },
     { name: 'W', icon: IconWest },
-    { name: 'NW', icon: IconNorthWest },
-  ];
-  return directions[Math.round(angle / 45) % 8];
+    { name: 'NW', icon: IconNorthWest }
+  ]
+  return directions[Math.round(angle / 45) % 8]
 }
 
 const weatherIconMap = (iconCode: string) => {
@@ -123,13 +117,11 @@ const weatherIconMap = (iconCode: string) => {
     { nameCondition: '13d', icon: IconSnowDay },
     { nameCondition: '13n', icon: IconSnowNight },
     { nameCondition: '50d', icon: IconMistDay },
-    { nameCondition: '50n', icon: IconMistNight },
+    { nameCondition: '50n', icon: IconMistNight }
   ]
   const condition = conditions.find((c) => c.nameCondition === iconCode) || null
   return condition ? condition.icon : null
 }
-
-
 
 // Pagination logic
 const paginatedList: any = computed(() => (parsedResponse.value ? parsedResponse.value.list : []))
@@ -198,8 +190,11 @@ const getTemperatureColor = (tempCelsius: number): string => {
         </div>
       </div>
       <div v-if="paginatedData && paginatedData.length > 0">
-        <div class="flex justify-between items-center max-w-screen-sm mx-auto px-4 mt-6"
-          v-for="(forecast, index) in paginatedData" :key="index">
+        <div
+          class="flex justify-between items-center max-w-screen-sm mx-auto px-4 mt-6"
+          v-for="(forecast, index) in paginatedData"
+          :key="index"
+        >
           <!-- date format -->
           <div class="date-format flex flex-col dark:text-gray-400">
             <div class="flex flex-row">
@@ -244,25 +239,31 @@ const getTemperatureColor = (tempCelsius: number): string => {
               </p>
               <div class="dark:text-gray-400 flex items-center">
                 <component :is="IconHumidity" class="w-2 h-4 mr-1 flex-no-shrink fill-current" />
-                <p class="dark:text-gray-400 text-xs sm:text-sm  md:text-base">{{ Math.round(forecast.main.humidity) }}%
+                <p class="dark:text-gray-400 text-xs sm:text-sm md:text-base">
+                  {{ Math.round(forecast.main.humidity) }}%
                 </p>
               </div>
             </div>
 
             <!-- pressure -->
             <div class="dark:text-stone-400">
-              <div class="dark:text-gray-400 flex items-center text-xs sm:text-sm  md:text-base">
+              <div class="dark:text-gray-400 flex items-center text-xs sm:text-sm md:text-base">
                 <component :is="IconPressure" class="w-5 h-5 mr-1 hidden sm:block" />
-                <p class="dark:text-gray-400 text-xs hidden sm:block sm:text-sm  md:text-base">{{ forecast.main.pressure
-                  }}&nbsp;hpa&nbsp;
+                <p class="dark:text-gray-400 text-xs hidden sm:block sm:text-sm md:text-base">
+                  {{ forecast.main.pressure }}&nbsp;hpa&nbsp;
                 </p>
               </div>
               <!-- wind direction -->
-              <p class="text-xs sm:text-sm hidden sm:block md:text-base"> &nbsp;{{ (forecast.wind.speed).toFixed(1)
-                }}&nbsp;
-                <span v-if="forecast.wind.gust != null">({{ (forecast.wind.gust).toFixed(1) }}) m/s</span>
+              <p class="text-xs sm:text-sm hidden sm:block md:text-base">
+                &nbsp;{{ forecast.wind.speed.toFixed(1) }}&nbsp;
+                <span v-if="forecast.wind.gust != null"
+                  >({{ forecast.wind.gust.toFixed(1) }}) m/s</span
+                >
                 <span v-if="forecast.wind?.deg != null">
-                  <component :is="getWindDirection(forecast.wind.deg).icon" class="inline-block w-5 h-5 align-middle" />
+                  <component
+                    :is="getWindDirection(forecast.wind.deg).icon"
+                    class="inline-block w-5 h-5 align-middle"
+                  />
                   {{ getWindDirection(forecast.wind.deg).name }}
                 </span>
               </p>
@@ -272,7 +273,9 @@ const getTemperatureColor = (tempCelsius: number): string => {
             <!-- description -->
             <div class="description">
               <div>
-                <p class="dark:text-gray-400 hidden sm:block">{{ forecast.weather[0].description }}</p>
+                <p class="dark:text-gray-400 hidden sm:block">
+                  {{ forecast.weather[0].description }}
+                </p>
               </div>
             </div>
             <!-- description-icon -->
@@ -282,8 +285,13 @@ const getTemperatureColor = (tempCelsius: number): string => {
           </div>
         </div>
       </div>
-      <PaginationComponent class="flex justify-center mt-6 dark:text-gray-400" :currentPage="currentPage"
-        :totalPages="totalPages" :nextPage="nextPage" :prevPage="prevPage" />
+      <PaginationComponent
+        class="flex justify-center mt-6 dark:text-gray-400"
+        :currentPage="currentPage"
+        :totalPages="totalPages"
+        :nextPage="nextPage"
+        :prevPage="prevPage"
+      />
     </div>
     <div v-else>
       <p>No forecast data available.</p>

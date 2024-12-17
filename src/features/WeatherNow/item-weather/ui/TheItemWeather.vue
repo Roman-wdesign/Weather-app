@@ -1,10 +1,7 @@
 <script setup lang="ts">
 import type { IWeather } from '@/features/WeatherNow/item-weather/model'
 
-import {
-  IconPressure,
-  IconHumidity
-} from '@/shared/assets/image/svg/humidity-and-pressure';
+import { IconPressure, IconHumidity } from '@/shared/assets/image/svg/humidity-and-pressure'
 
 import {
   IconNorth,
@@ -15,7 +12,7 @@ import {
   IconSouthWest,
   IconWest,
   IconNorthWest
-} from '@/shared/assets/image/svg/wind-directions';
+} from '@/shared/assets/image/svg/wind-directions'
 
 import {
   IconBrokenCloudsDay,
@@ -55,14 +52,14 @@ function getWindDirection(angle: number): { name: string; icon: any } {
     { name: 'S', icon: IconSouth },
     { name: 'SW', icon: IconSouthWest },
     { name: 'W', icon: IconWest },
-    { name: 'NW', icon: IconNorthWest },
-  ];
-  return directions[Math.round(angle / 45) % 8];
+    { name: 'NW', icon: IconNorthWest }
+  ]
+  return directions[Math.round(angle / 45) % 8]
 }
 
 function getAirQuality(aqi: number) {
-  const quality = ["Good", "Fair", "Moderate", "Poor", "Very Poor"];
-  return quality[aqi-1];
+  const quality = ['Good', 'Fair', 'Moderate', 'Poor', 'Very Poor']
+  return quality[aqi - 1]
 }
 
 const weatherIconMap = (iconCode: string) => {
@@ -84,7 +81,7 @@ const weatherIconMap = (iconCode: string) => {
     { nameCondition: '13d', icon: IconSnowDay },
     { nameCondition: '13n', icon: IconSnowNight },
     { nameCondition: '50d', icon: IconMistDay },
-    { nameCondition: '50n', icon: IconMistNight },
+    { nameCondition: '50n', icon: IconMistNight }
   ]
   const condition = conditions.find((c) => c.nameCondition === iconCode) || null
   return condition ? condition.icon : null
@@ -114,15 +111,20 @@ const props = defineProps<Partial<Props>>()
       </div>
       <div class="humidity flex justify-center items-center py-3">
         <component :is="IconHumidity" class="w-5 h-5 mr-1" />
-        <h3 class=" font-bold">{{ Math.round(props.weather.main.humidity) }} %</h3>
+        <h3 class="font-bold">{{ Math.round(props.weather.main.humidity) }} %</h3>
       </div>
       <div class="temp flex justify-center py-3">
         <h2 class="text-small font-extrabold">
           {{ props.weather.wind.speed.toFixed(1) }}&nbsp;
-          <template v-if="props.weather.wind.gust != null"> ({{ props.weather.wind.gust.toFixed(1) }})&nbsp;</template>
+          <template v-if="props.weather.wind.gust != null">
+            ({{ props.weather.wind.gust.toFixed(1) }})&nbsp;</template
+          >
           m/s
           <span v-if="props.weather?.wind?.deg != null">
-            <component :is="getWindDirection(props.weather.wind.deg).icon" class="inline-block w-5 h-5 align-middle" />
+            <component
+              :is="getWindDirection(props.weather.wind.deg).icon"
+              class="inline-block w-5 h-5 align-middle"
+            />
           </span>
           {{ getWindDirection(props.weather.wind.deg).name }}
         </h2>
@@ -138,10 +140,12 @@ const props = defineProps<Partial<Props>>()
       <div class="pollution flex justify-center py-1">
         <div class="text-small font-bold text-center flex flex-col justify-center">
           <p>
-            <template v-if="props.weather && props.weather.list && props.weather.list.length > 0">Air quality:<br></template>
+            <template v-if="props.weather?.list?.length > 0">Air quality:<br /></template>
           </p>
           <p>
-            <template v-if="props.weather && props.weather.list && props.weather.list.length > 0">{{getAirQuality(props.weather.list[0].main.aqi)}}</template>
+            <template v-if="props.weather?.list?.length > 0">{{
+              getAirQuality(props.weather.list[0].main.aqi)
+            }}</template>
           </p>
         </div>
       </div>

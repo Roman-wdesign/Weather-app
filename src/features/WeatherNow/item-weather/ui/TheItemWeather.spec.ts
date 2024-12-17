@@ -19,16 +19,15 @@ describe('TheItemWeather.vue', () => {
         icon: '01d'
       }
     ],
-    wind:
-      {
-        speed: 5,
-        gust: 8,
-        deg: 120,
-      },
+    wind: {
+      speed: 5,
+      gust: 8,
+      deg: 120
+    },
     list: [
       {
         main: {
-          aqi: 1,
+          aqi: 1
         }
       }
     ]
@@ -102,7 +101,7 @@ describe('TheItemWeather.vue', () => {
     })
     expect(wrapper.text()).toContain('1013 hPa')
   })
-  
+
   it('should render humidity', () => {
     const wrapper = mount(TheItemWeather, {
       props: {
