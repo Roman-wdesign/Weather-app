@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach, vi, type MockedFunction } from 'vitest'
 import { ref } from 'vue'
-import type {Ref} from 'vue'
+import type { Ref } from 'vue'
 import { flushPromises } from '@vue/test-utils'
 import { useSavedCities } from '@/shared/composables/localStorage/saved-cities/model/useSavedCities'
 import { useLocalStorage } from '@/shared/composables/localStorage/storage/model/useLocalStorage'
@@ -13,10 +13,13 @@ describe('useSavedCities', () => {
   let firstCityArg: Ref<Record<string, any>>
   let secondCityArg: MockedFunction<(city: string) => void>
   let thirdCityArg: MockedFunction<(city: string) => void>
-  let mockUseLocalStorage: { storedValue: Ref<string[]>; setValue: MockedFunction<(value: string[]) => void> }
+  let mockUseLocalStorage: {
+    storedValue: Ref<string[]>
+    setValue: MockedFunction<(value: string[]) => void>
+  }
 
   beforeEach(() => {
-    firstCityArg = ref<Record<string, any >>({})
+    firstCityArg = ref<Record<string, any>>({})
     secondCityArg = vi.fn()
     thirdCityArg = vi.fn()
 
