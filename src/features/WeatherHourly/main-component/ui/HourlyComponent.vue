@@ -190,11 +190,8 @@ const getTemperatureColor = (tempCelsius: number): string => {
         </div>
       </div>
       <div v-if="paginatedData && paginatedData.length > 0">
-        <div
-          class="flex justify-between items-center max-w-screen-sm mx-auto px-4 mt-6"
-          v-for="(forecast, index) in paginatedData"
-          :key="index"
-        >
+        <div class="flex justify-between items-center max-w-screen-sm mx-auto px-4 mt-6"
+          v-for="(forecast, index) in paginatedData" :key="index">
           <!-- date format -->
           <div class="date-format flex flex-col dark:text-gray-400">
             <div class="flex flex-row">
@@ -256,14 +253,9 @@ const getTemperatureColor = (tempCelsius: number): string => {
               <!-- wind direction -->
               <p class="text-xs sm:text-sm hidden sm:block md:text-base">
                 &nbsp;{{ forecast.wind.speed.toFixed(1) }}&nbsp;
-                <span v-if="forecast.wind.gust != null"
-                  >({{ forecast.wind.gust.toFixed(1) }}) m/s</span
-                >
+                <span v-if="forecast.wind.gust != null">({{ forecast.wind.gust.toFixed(1) }}) m/s</span>
                 <span v-if="forecast.wind?.deg != null">
-                  <component
-                    :is="getWindDirection(forecast.wind.deg).icon"
-                    class="inline-block w-5 h-5 align-middle"
-                  />
+                  <component :is="getWindDirection(forecast.wind.deg).icon" class="inline-block w-5 h-5 align-middle" />
                   {{ getWindDirection(forecast.wind.deg).name }}
                 </span>
               </p>
@@ -285,16 +277,11 @@ const getTemperatureColor = (tempCelsius: number): string => {
           </div>
         </div>
       </div>
-      <PaginationComponent
-        class="flex justify-center mt-6 dark:text-gray-400"
-        :currentPage="currentPage"
-        :totalPages="totalPages"
-        :nextPage="nextPage"
-        :prevPage="prevPage"
-      />
+      <PaginationComponent class="flex justify-center mt-6 dark:text-gray-400" :currentPage="currentPage"
+        :totalPages="totalPages" :nextPage="nextPage" :prevPage="prevPage" />
     </div>
     <div v-else>
-      <p>No forecast data available.</p>
+      <p class="dark:text-gray-50">Loading...</p>
     </div>
   </div>
 </template>

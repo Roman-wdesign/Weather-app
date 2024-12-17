@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watchEffect } from 'vue'
+import { ref, watchEffect, onMounted } from 'vue'
 
 import { useWeatherNow } from '@/features/WeatherNow/main-component/model'
 import { dateBuilder } from '@/shared/api/helpers/date-builder/api'
@@ -24,7 +24,7 @@ const {
   imgUrl, // URL for the weather icon image
   fetchWeatherForQuery, // Method to fetch weather data for a city
   fetchAirPollutionForQuery, // Method to fetch air pollution data for a city
-  //isSaveDisabled,        // Boolean to disable "Save City" button
+  isSaveDisabled, // Boolean to disable "Save City" button
   saveCurrentCity, // Method to save the current city to storage
   removeCityFromStorage // Method to remove a city from storage
 } = useWeatherNow()
@@ -35,8 +35,8 @@ const { handleDragStart, handleDragOver, handleDrop } = useDragAndDrop(savedCiti
 // Event handler for pressing Enter in the input field
 const handleKeyDown = (event: KeyboardEvent) => {
   if (event.key === 'Enter') {
-    fetchWeatherForQuery.value
-    fetchAirPollutionForQuery.value
+    fetchWeatherForQuery
+    fetchAirPollutionForQuery
   }
 }
 
@@ -54,6 +54,15 @@ watchEffect(() => {
     }, 2000)
   }
 })
+
+onMounted(async () => {
+  try {
+    await fetchWeatherForQuery()
+    await fetchAirPollutionForQuery()
+  } catch (error) {
+    console.error('Error async load ddata', error)
+  }
+})
 </script>
 
 <template>
@@ -67,22 +76,12 @@ watchEffect(() => {
 
     <!-- Input Field and Autocomplete Dropdown -->
     <div class="flex justify-center p-4">
-      <TheInput
-        class="max-w-xs"
-        @keydown.enter="handleKeyDown"
-        label="city name"
-        v-model="theQuery"
-      />
-      <ul
-        v-if="suggestions.length"
-        class="absolute max-w-xs bg-white shadow-lg rounded-md mt-12 border border-gray-300"
-      >
-        <li
-          v-for="(city, index) in suggestions"
-          :key="index"
-          @mousedown="selectCity()"
-          class="cursor-pointer p-2 hover:bg-gray-200"
-        >
+      <TheInput v-if="!isSaveDisabled" class="max-w-xs" @keydown.enter="handleKeyDown" label="city name"
+        v-model="theQuery" :disabled="isSaveDisabled" />
+      <ul v-if="suggestions.length"
+        class="absolute max-w-xs bg-white shadow-lg rounded-md mt-12 border border-gray-300">
+        <li v-for="(city, index) in suggestions" :key="index" @mousedown="selectCity()"
+          class="cursor-pointer p-2 hover:bg-gray-200">
           {{ city }}
         </li>
       </ul>
@@ -100,11 +99,7 @@ watchEffect(() => {
         <div class="flex justify-center my-2"></div>
       </div>
       <div>
-        <TheItemWeather
-          v-if="theWeather[theQuery]"
-          :weather="theWeather[theQuery]"
-          :imgUrl="imgUrl"
-        />
+        <TheItemWeather v-if="theWeather[theQuery]" :weather="theWeather[theQuery]" :imgUrl="imgUrl" />
       </div>
     </div>
 
@@ -114,30 +109,17 @@ watchEffect(() => {
         <h3 class="text-xl font-semibold dark:text-gray-400">Saved Cities</h3>
       </div>
       <ul class="flex flex-wrap justify-center gap-4">
-        <li
-          v-for="(city, index) in savedCities"
-          :key="city"
-          :data-index="index"
-          class="relative min-w-40"
-          draggable="true"
-          @dragstart="handleDragStart"
-          @dragover="handleDragOver"
-          @drop="handleDrop"
-        >
+        <li v-for="(city, index) in savedCities" :key="city" :data-index="index" class="relative min-w-40"
+          draggable="true" @dragstart="handleDragStart" @dragover="handleDragOver" @drop="handleDrop">
           <IconClose
             class="absolute top-0 right-0 w-8 h-8 rounded-full fill-blue-600 hover:fill-blue-500 cursor-pointer"
-            @click="removeCityFromStorage(city)"
-          >
+            @click="removeCityFromStorage(city)">
           </IconClose>
           <div>
             <BarsFour class="absolute top-2 left-2 hover: cursor-pointer" />
           </div>
-          <TheItemWeather
-            v-if="theWeather[city]"
-            :weather="theWeather[city]"
-            :imgUrl="imgUrl"
-            class="w-full h-80 pt-10 border-2 rounded-md border-blue-500"
-          >
+          <TheItemWeather v-if="theWeather[city]" :weather="theWeather[city]" :imgUrl="imgUrl"
+            class="w-full h-80 pt-10 border-2 rounded-md border-blue-500">
           </TheItemWeather>
         </li>
       </ul>
