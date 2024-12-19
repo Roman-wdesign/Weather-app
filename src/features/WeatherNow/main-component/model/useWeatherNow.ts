@@ -20,7 +20,7 @@ export const useWeatherNow = () => {
   const maxResults = 5
   const isSaveDisabled = computed(() => savedCities.value.length >= 3)
 
-  const setResults = (city: string, results: any) => {
+  const setResults = (city: string, results: string) => {
     theWeather.value[city] = results
   }
 
@@ -55,7 +55,7 @@ export const useWeatherNow = () => {
         data.list.map((city: any) => `${city.name}, ${city.sys.country}`) || []
       ).slice(0, maxResults)
     } catch (err) {
-      console.error('Ошибка при получении подсказок:', err)
+      console.error('Error when receiving hints:', err) 
       suggestions.value = []
     }
   }

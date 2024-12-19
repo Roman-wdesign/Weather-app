@@ -141,22 +141,21 @@ type TemperatureRange = {
 
 const temperatureRanges: TemperatureRange[] = [
   { min: -Infinity, max: -60, color: 'text-fuchsia-900' }, // yakut winter
-  { min: -59.9, max: -49.9, color: 'text-purple-800' }, // arctic winter
-  { min: -49.9, max: -39.9, color: 'text-violet-600' }, // siberian winter
-  { min: -39.9, max: -29.9, color: 'text-violet-500' }, // ural winter
-  { min: -29.9, max: -19.9, color: 'text-indigo-400' }, // asian winter
-  { min: -19.9, max: -9.9, color: 'text-cyan-300' }, // europian winter
-  { min: -9.9, max: -4.9, color: 'text-sky-400' },
-  { min: -4.9, max: -0.1, color: 'text-cyan-400' },
-  { min: -0.1, max: -0.0, color: 'text-neutral-900 dark:text-neutral-200' }, // - 0
-  { min: 0.0, max: 0.1, color: 'text-zinc-900 dark:text-zinc-500' }, // 0
-  { min: 0.2, max: 5.1, color: 'text-emerald-400' }, // arctic spring
-  { min: 5.2, max: 10.1, color: 'text-lime-400' }, //  siberian spring
-  { min: 10.2, max: 15.1, color: 'text-yellow-400' }, // europian spring
-  { min: 15.2, max: 20.1, color: 'text-amber-300' },
-  { min: 20.2, max: 35.1, color: 'text-orange-600' }, // miami summer
-  { min: 35.1, max: 40.1, color: 'text-pink-600' }, // turkmenistan summer
-  { min: 40.2, max: Infinity, color: 'text-rose-600' } // quatar summer
+  { min: -60, max: -50, color: 'text-purple-800' }, // arctic winter
+  { min: -50, max: -40, color: 'text-violet-600' }, // siberian winter
+  { min: -40, max: -30, color: 'text-violet-500' }, // ural winter
+  { min: -30, max: -20, color: 'text-indigo-400' }, // asian winter
+  { min: -20, max: -10, color: 'text-sky-600' }, // europian winter
+  { min: -10, max: -5, color: 'text-cyan-500' },
+  { min: -5, max: 0, color: 'text-cyan-300' },
+  { min: 0, max: 5, color: 'text-zinc-900 dark:text-zinc-500' }, // 0
+  { min: 5, max: 10, color: 'text-emerald-400' }, // arctic spring
+  { min: 10, max: 15, color: 'text-lime-400' }, //  siberian spring
+  { min: 15, max: 20, color: 'text-yellow-400' }, // europian spring
+  { min: 20, max: 30, color: 'text-amber-300' },
+  { min: 30, max: 35, color: 'text-orange-600' }, // miami summer
+  { min: 35, max: 40, color: 'text-pink-600' }, // turkmenistan summer
+  { min: 40, max: Infinity, color: 'text-rose-600' } // quatar summer
 ]
 
 const getTemperatureColor = (tempCelsius: number): string => {

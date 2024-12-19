@@ -90,7 +90,7 @@ const props = defineProps<Partial<Props>>()
 </script>
 
 <template>
-  <div class="dark:bg-gray-800 dark:text-gray-400 px-3 h-auto">
+  <div>
     <div class="weather-wrap" v-if="props.weather?.main">
       <div class="location-box">
         <div class="location px-2">
