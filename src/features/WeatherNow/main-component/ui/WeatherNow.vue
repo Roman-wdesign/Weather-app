@@ -112,14 +112,14 @@ onMounted(async () => {
         <li v-for="(city, index) in savedCities" :key="city" :data-index="index" class="relative min-w-40"
           draggable="true" @dragstart="handleDragStart" @dragover="handleDragOver" @drop="handleDrop">
           <IconClose
-            class="absolute top-0 right-0 w-8 h-8 rounded-full fill-blue-600 hover:fill-blue-500 cursor-pointer"
+            class="absolute top-0 right-0 w-8 h-8 rounded-full fill-orange-tomato hover:fill-white dark:fill-gray-500 dark:hover:fill-blue-300 cursor-pointer"
             @click="removeCityFromStorage(city)">
           </IconClose>
           <div>
-            <BarsFour class="absolute top-2 left-2 hover: cursor-pointer" />
+            <BarsFour class="absolute top-2 left-2 cursor-grab dark:bg-gray-700" />
           </div>
           <TheItemWeather v-if="theWeather[city]" :weather="theWeather[city]" :imgUrl="imgUrl"
-            class="w-full h-80 pt-10 border-2 rounded-md border-blue-500">
+            class="w-full pt-10 rounded-md bg-orange-fruit text-white dark:bg-gray-700 dark:text-gray-400 px-3 h-auto">
           </TheItemWeather>
         </li>
       </ul>

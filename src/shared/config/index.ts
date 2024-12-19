@@ -7,4 +7,4 @@ export const urlBase: string = 'https://api.openweathermap.org/data/2.5/'
 export const imgUrl: string = 'https://openweathermap.org/img/wn/'
 
 // url to geo
-export const reverseGeo: string = 'http://api.openweathermap.org/geo/1.0/'
+export const reverseGeo: string = 'https://api.openweathermap.org/geo/1.0/'

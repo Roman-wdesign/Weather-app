@@ -7,6 +7,13 @@ module.exports = {
     extend: {
       fontFamily: {
         sans: ['"Roboto"', ...defaultTheme.fontFamily.sans]
+      },
+      colors: {
+        'orange-fruit': '#c5948c',
+        'orange-tomato': '#e7b382',
+        'green-banana': '#85DCB9',
+        'sea-mood': '#81BECE',
+        'deep-sea': '#378BA4'
       }
     }
   },
