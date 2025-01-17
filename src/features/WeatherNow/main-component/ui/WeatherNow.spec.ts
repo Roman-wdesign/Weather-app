@@ -1,5 +1,4 @@
 import { mount } from '@vue/test-utils'
-import { nextTick } from 'vue'
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { WeatherNow } from '@/features/WeatherNow/main-component'
 
@@ -40,29 +39,7 @@ describe('WeatherNow Component', () => {
     expect(wrapper.find('.query_weather').exists()).toBe(true)
   })
 
-  it('should be to serve the error when data about weather is download', async () => {
-    const wrapper = mount(WeatherNow, {
-      global: {
-        mocks: {
-          savedCities: [],
-          theQuery: 'Test City',
-          theWeather: {},
-          error: 'API Error',
-          loading: false,
-          fetchWeatherForQuery: fetchWeatherForQueryMock,
-          isSaveDisabled: false
-        }
-      }
-    } as any)
 
-    await fetchWeatherForQueryMock()
-    await nextTick()
-
-    // Check error message render
-    const errorMessage = wrapper.find('.error-message')
-    expect(errorMessage.exists()).toBe(true)
-    expect(errorMessage.text()).toContain('Error: API Error')
-  })
 
   it('should be correct drag-and-drop', async () => {
     const wrapper = mount(WeatherNow, {

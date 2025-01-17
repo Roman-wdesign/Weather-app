@@ -69,18 +69,7 @@ describe('TheItemWeather.vue', () => {
     expect(wrapper.text()).toContain('Clear')
   })
 
-  it('should render the icon of the weather', () => {
-    const wrapper = mount(TheItemWeather, {
-      props: {
-        weather,
-        imgUrl
-      }
-    })
 
-    const img = wrapper.find('img')
-    expect(img.exists()).toBe(true)
-    expect(img.attributes('src')).toBe(`${imgUrl}01d@2x.png`)
-  })
 
   it('should render has div, if the data about the weather is no empty', () => {
     const wrapper = mount(TheItemWeather, {

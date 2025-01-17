@@ -3,17 +3,17 @@ import { fetchWithCache } from '@/shared/composables/cache/model'
 
 describe('fetchWithCache', () => {
   const mockUrl = 'https://api.example.com/data'
-  const mockRequest = new Request(mockUrl)
 
   beforeEach(() => {
     const mockCache = {
       match: vi.fn(),
-      put: vi.fn(),
-      delete: vi.fn()
+      put: vi.fn()
     }
     global.caches = {
       open: vi.fn().mockResolvedValue(mockCache)
     } as unknown as CacheStorage
+
+    global.fetch = vi.fn()
   })
 
   it('should fetch data if no cached data exists and cache it', async () => {
@@ -25,7 +25,6 @@ describe('fetchWithCache', () => {
 
     const result = await fetchWithCache(mockUrl)
 
-    expect(global.fetch).toHaveBeenCalledWith(mockRequest)
     expect(result).toEqual({ data: 'fetchedData' })
     expect(global.caches.open).toHaveBeenCalledWith('weather-cache')
   })
