@@ -9,12 +9,7 @@ describe('useGeolocation', () => {
     watchPositionMock = vi.fn()
     clearWatchMock = vi.fn()
 
-    const globalNavigator = {
-      geolocation: {
-        watchPosition: watchPositionMock,
-        clearWatch: clearWatchMock
-      }
-    }
+  
   })
 
   it('should start geolocation when enabled', () => {
@@ -53,11 +48,7 @@ describe('useGeolocation', () => {
   })
 
   it('should set error if geolocation is not supported', () => {
-    const globalNavigator = {
-      geolocation: {
-        return: null
-      }
-    }
+ 
 
     const { error } = useGeolocation()
 

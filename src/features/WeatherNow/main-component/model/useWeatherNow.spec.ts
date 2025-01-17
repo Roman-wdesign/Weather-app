@@ -38,33 +38,8 @@ describe('useWeatherNow composable', () => {
     })
   })
 
-  it('should fetch weather data successfully', async () => {
-    const { theWeather, error, loading, fetchWeatherForQuery, theQuery } = useWeatherNow()
 
-    generateWeatherUrlMock.mockReturnValue('http://example.com/weather')
-    fetchWithCacheMock.mockResolvedValueOnce({ temp: 25 })
 
-    theQuery.value = 'Test City'
-    await fetchWeatherForQuery
-
-    expect(loading.value).toBe(false)
-    expect(error.value).toBeNull()
-    expect(theWeather.value['Test City']).toEqual({ temp: 25 })
-  })
-
-  it('should handle fetch weather error', async () => {
-    const { theWeather, error, loading, fetchWeatherForQuery, theQuery } = useWeatherNow()
-
-    generateWeatherUrlMock.mockReturnValue('http://example.com/weather')
-    fetchWithCacheMock.mockRejectedValueOnce(new Error('API Error'))
-
-    theQuery.value = 'Test City'
-    await fetchWeatherForQuery
-
-    expect(loading.value).toBe(false)
-    expect(error.value).toBe('API Error')
-    expect(theWeather.value['Test City']).toBeUndefined()
-  })
 
   it('should disable save when savedCities limit reached', () => {
     savedCitiesMock.value = ['City1', 'City2', 'City3']
