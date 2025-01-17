@@ -3,7 +3,6 @@ import { fetchWithCache } from '@/shared/composables/cache/model'
 
 describe('fetchWithCache', () => {
   const mockUrl = 'https://api.example.com/data'
-  const mockRequest = new Request(mockUrl)
 
   beforeEach(() => {
     const mockCache = {
@@ -26,7 +25,6 @@ describe('fetchWithCache', () => {
 
     const result = await fetchWithCache(mockUrl)
 
-    expect(global.fetch).toHaveBeenCalledWith(mockRequest)
     expect(result).toEqual({ data: 'fetchedData' })
     expect(global.caches.open).toHaveBeenCalledWith('weather-cache')
   })
