@@ -39,8 +39,6 @@ describe('WeatherNow Component', () => {
     expect(wrapper.find('.query_weather').exists()).toBe(true)
   })
 
-
-
   it('should be correct drag-and-drop', async () => {
     const wrapper = mount(WeatherNow, {
       global: {

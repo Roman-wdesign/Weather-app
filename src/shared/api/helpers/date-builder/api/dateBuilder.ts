@@ -1,8 +1,10 @@
 import type { IdateBuilder } from '@/shared/api/helpers/date-builder/model'
 
 export const dateBuilder = (): string => {
-  const d = new Date()
-  const months: string[] = [
+  const d = new Date() // Get the current date
+
+  // Array of months with literal values (readonly)
+  const months = [
     'January',
     'February',
     'March',
@@ -15,8 +17,10 @@ export const dateBuilder = (): string => {
     'October',
     'November',
     'December'
-  ]
-  const days: string[] = [
+  ] as const
+
+  // Array of weekdays with literal values (readonly)
+  const days = [
     'Sunday',
     'Monday',
     'Tuesday',
@@ -24,13 +28,15 @@ export const dateBuilder = (): string => {
     'Thursday',
     'Friday',
     'Saturday'
-  ]
+  ] as const
 
-  const dayOfWeek: string = days[d.getDay()]
-  const dayOfMonth: number = d.getDate()
-  const monthName: string = months[d.getMonth()]
+  // Get the day of the week, day of the month, and month name with correct typing
+  const dayOfWeek = days[d.getDay()]
+  const dayOfMonth = d.getDate()
+  const monthName = months[d.getMonth()]
 
-  const dateObj: Readonly<IdateBuilder<string, number>> = {
+  // Create a date object that cannot be modified (Readonly)
+  const dateObj: Readonly<IdateBuilder> = {
     dayOfWeek,
     dayOfMonth,
     monthName

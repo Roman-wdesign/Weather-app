@@ -38,9 +38,6 @@ describe('useWeatherNow composable', () => {
     })
   })
 
-
-
-
   it('should disable save when savedCities limit reached', () => {
     savedCitiesMock.value = ['City1', 'City2', 'City3']
 

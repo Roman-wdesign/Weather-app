@@ -69,8 +69,6 @@ describe('TheItemWeather.vue', () => {
     expect(wrapper.text()).toContain('Clear')
   })
 
-
-
   it('should render has div, if the data about the weather is no empty', () => {
     const wrapper = mount(TheItemWeather, {
       props: {

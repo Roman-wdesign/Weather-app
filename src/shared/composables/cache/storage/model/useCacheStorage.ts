@@ -1,5 +1,10 @@
-const CACHE_NAME = 'weather-cache'
+const CACHE_NAME = 'weather-cache' // Name of the cache storage
 const CACHE_TTL = 60 * 60 * 1000 // TTL im milliseconds (now is 1 hour)
+
+/**
+ * Retrieves cached data for a given request.
+ * If the cache exists but is outdated, it will be deleted.
+ */
 
 export async function getCachedData(request: Request): Promise<Response | undefined> {
   const cache = await caches.open(CACHE_NAME)
@@ -11,6 +16,7 @@ export async function getCachedData(request: Request): Promise<Response | undefi
       const cachedTime = new Date(dateHeader).getTime()
       const currentTime = new Date().getTime()
 
+      // Check if cache is expired
       if (currentTime - cachedTime > CACHE_TTL) {
         console.log('Cache is old, will be delete', request.url)
         await cache.delete(request) // Delete old cache
@@ -19,14 +25,19 @@ export async function getCachedData(request: Request): Promise<Response | undefi
     }
   }
 
-  return cachedResponse || undefined
+  return cachedResponse || undefined // Return cached response if valid
 }
 
+/**
+ * Stores a response in the cache with a timestamp header.
+ * Only caches successful (200 OK) responses.
+ */
 export async function setCachedData(request: Request, response: Response): Promise<void> {
   if (response.status === 200) {
     // Cache 200 status only
     const cache = await caches.open(CACHE_NAME)
 
+    // Clone response and add timestamp header
     const clonedResponse = response.clone()
     const headers = new Headers(clonedResponse.headers)
     headers.set('sw-cache-date', new Date().toISOString())
@@ -44,6 +55,9 @@ export async function setCachedData(request: Request, response: Response): Promi
   }
 }
 
+/**
+ * Deletes cached data for a specific request.
+ */
 export async function clearCachedData(request: Request): Promise<void> {
   const cache = await caches.open(CACHE_NAME)
   const result = await cache.delete(request)
@@ -54,6 +68,9 @@ export async function clearCachedData(request: Request): Promise<void> {
   }
 }
 
+/**
+ * Clears all cached data.
+ */
 export async function clearAllCachedData(): Promise<void> {
   await caches.delete(CACHE_NAME)
   console.log('All cache is delete')
