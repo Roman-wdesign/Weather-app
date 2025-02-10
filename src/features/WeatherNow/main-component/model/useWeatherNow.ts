@@ -55,7 +55,7 @@ export const useWeatherNow = () => {
         data.list.map((city: any) => `${city.name}, ${city.sys.country}`) || []
       ).slice(0, maxResults)
     } catch (err) {
-      console.error('Error when receiving hints:', err) 
+      console.error('Error when receiving hints:', err)
       suggestions.value = []
     }
   }

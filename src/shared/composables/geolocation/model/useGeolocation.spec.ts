@@ -8,8 +8,6 @@ describe('useGeolocation', () => {
   beforeEach(() => {
     watchPositionMock = vi.fn()
     clearWatchMock = vi.fn()
-
-  
   })
 
   it('should start geolocation when enabled', () => {
@@ -48,8 +46,6 @@ describe('useGeolocation', () => {
   })
 
   it('should set error if geolocation is not supported', () => {
- 
-
     const { error } = useGeolocation()
 
     expect(error.value).toBe(null)

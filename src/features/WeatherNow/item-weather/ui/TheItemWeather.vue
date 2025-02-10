@@ -2,59 +2,12 @@
 import type { IWeather } from '@/features/WeatherNow/item-weather/model'
 
 import { IconPressure, IconHumidity } from '@/shared/assets/image/svg/humidity-and-pressure'
-
-import {
-  IconNorth,
-  IconNorthEast,
-  IconEast,
-  IconSouthEast,
-  IconSouth,
-  IconSouthWest,
-  IconWest,
-  IconNorthWest
-} from '@/shared/assets/image/svg/wind-directions'
-
-import {
-  IconBrokenCloudsDay,
-  IconClearSkyDay,
-  IconFewCloudsDay,
-  IconScatteredCloudsDay,
-  IconShowerRainDay,
-  IconThunderstormDay,
-  IconRainDay,
-  IconSnowDay,
-  IconMistDay
-} from '@/shared/assets/image/svg/condtitions/day'
-
-import {
-  IconBrokenCloudsNight,
-  IconClearSkyNight,
-  IconFewCloudsNight,
-  IconScatteredCloudsNight,
-  IconShowerRainNight,
-  IconThunderstormNight,
-  IconRainNight,
-  IconSnowNight,
-  IconMistNight
-} from '@/shared/assets/image/svg/condtitions/night'
+import { weatherIcons } from '@/shared/composables/iconsAndTemperatureAndDirections'
+import { getWindDirection } from '@/shared/composables/iconsAndTemperatureAndDirections'
 
 export interface Props {
   weather: IWeather
   imgUrl: string
-}
-
-function getWindDirection(angle: number): { name: string; icon: any } {
-  const directions = [
-    { name: 'N', icon: IconNorth },
-    { name: 'NE', icon: IconNorthEast },
-    { name: 'E', icon: IconEast },
-    { name: 'SE', icon: IconSouthEast },
-    { name: 'S', icon: IconSouth },
-    { name: 'SW', icon: IconSouthWest },
-    { name: 'W', icon: IconWest },
-    { name: 'NW', icon: IconNorthWest }
-  ]
-  return directions[Math.round(angle / 45) % 8]
 }
 
 function getAirQuality(aqi: number) {
@@ -62,30 +15,8 @@ function getAirQuality(aqi: number) {
   return quality[aqi - 1]
 }
 
-const weatherIconMap = (iconCode: string) => {
-  const conditions = [
-    { nameCondition: '01d', icon: IconClearSkyDay },
-    { nameCondition: '01n', icon: IconClearSkyNight },
-    { nameCondition: '02d', icon: IconFewCloudsDay },
-    { nameCondition: '02n', icon: IconFewCloudsNight },
-    { nameCondition: '03d', icon: IconScatteredCloudsDay },
-    { nameCondition: '03n', icon: IconScatteredCloudsNight },
-    { nameCondition: '04d', icon: IconBrokenCloudsDay },
-    { nameCondition: '04n', icon: IconBrokenCloudsNight },
-    { nameCondition: '09d', icon: IconShowerRainDay },
-    { nameCondition: '09n', icon: IconShowerRainNight },
-    { nameCondition: '10d', icon: IconRainDay },
-    { nameCondition: '10n', icon: IconRainNight },
-    { nameCondition: '11d', icon: IconThunderstormDay },
-    { nameCondition: '11n', icon: IconThunderstormNight },
-    { nameCondition: '13d', icon: IconSnowDay },
-    { nameCondition: '13n', icon: IconSnowNight },
-    { nameCondition: '50d', icon: IconMistDay },
-    { nameCondition: '50n', icon: IconMistNight }
-  ]
-  const condition = conditions.find((c) => c.nameCondition === iconCode) || null
-  return condition ? condition.icon : null
-}
+const weatherIconMap = (iconCode: string) => weatherIcons.get(iconCode) ?? null
+
 const props = defineProps<Partial<Props>>()
 </script>
 

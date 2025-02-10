@@ -1,60 +1,30 @@
 <script setup lang="ts">
-import { watch, onMounted, ref, computed } from 'vue'
+import { watch, onMounted, ref, computed, nextTick } from 'vue'
 import { useGeolocation } from '@/shared/composables/geolocation/model'
 import { useFetch } from '@/shared/composables/fetch/api'
 import { generateHourlyWeather } from '@/features/WeatherHourly/main-component/api'
 import { urlBase, token } from '@/shared/config'
 import { usePagination } from '@/shared/ui/pagination/model'
 import { fetchWithCache } from '@/shared/composables/cache/model'
+import { weatherIcons } from '@/shared/composables/iconsAndTemperatureAndDirections'
+import { temperatureRanges } from '@/shared/composables/iconsAndTemperatureAndDirections'
+import { getWindDirection } from '@/shared/composables/iconsAndTemperatureAndDirections'
 
 import { PaginationComponent } from '@/shared/ui/pagination/ui'
 
 import { IconPressure, IconHumidity } from '@/shared/assets/image/svg/humidity-and-pressure'
 
-import {
-  IconNorth,
-  IconNorthEast,
-  IconEast,
-  IconSouthEast,
-  IconSouth,
-  IconSouthWest,
-  IconWest,
-  IconNorthWest
-} from '@/shared/assets/image/svg/wind-directions'
-
-import {
-  IconBrokenCloudsDay,
-  IconClearSkyDay,
-  IconFewCloudsDay,
-  IconScatteredCloudsDay,
-  IconShowerRainDay,
-  IconThunderstormDay,
-  IconRainDay,
-  IconSnowDay,
-  IconMistDay
-} from '@/shared/assets/image/svg/condtitions/day'
-
-import {
-  IconBrokenCloudsNight,
-  IconClearSkyNight,
-  IconFewCloudsNight,
-  IconScatteredCloudsNight,
-  IconShowerRainNight,
-  IconThunderstormNight,
-  IconRainNight,
-  IconSnowNight,
-  IconMistNight
-} from '@/shared/assets/image/svg/condtitions/night'
-
 const { isGeolocationEnabled, latitude, longitude, error: geoError } = useGeolocation()
 const { error: fetchError } = useFetch()
-
+const isLoading = ref(false)
 const rawResponse = ref<string | null>(null)
 
+const temperFaringate = 273.15
+
 const fetchWeather = async () => {
-  if (latitude.value !== null && longitude.value !== null) {
+  if (latitude.value && longitude.value) {
     const url = generateHourlyWeather(urlBase, latitude.value, longitude.value, token)
-    console.log(url)
+    isLoading.value = true
     try {
       const data = await fetchWithCache(url)
       rawResponse.value = JSON.stringify(data)
@@ -63,6 +33,8 @@ const fetchWeather = async () => {
       if (err instanceof TypeError) {
         console.error('Network Error: ', err.message)
       }
+    } finally {
+      isLoading.value = false
     }
   }
 }
@@ -74,54 +46,11 @@ watch(isGeolocationEnabled, async (newValue) => {
   }
 })
 
-onMounted(async () => {
-  if (isGeolocationEnabled.value) {
-    await fetchWeather()
-  }
-})
-
 const parsedResponse = computed(() => {
   return rawResponse.value ? JSON.parse(rawResponse.value) : null
 })
 
-function getWindDirection(angle: number): { name: string; icon: any } {
-  const directions = [
-    { name: 'N', icon: IconNorth },
-    { name: 'NE', icon: IconNorthEast },
-    { name: 'E', icon: IconEast },
-    { name: 'SE', icon: IconSouthEast },
-    { name: 'S', icon: IconSouth },
-    { name: 'SW', icon: IconSouthWest },
-    { name: 'W', icon: IconWest },
-    { name: 'NW', icon: IconNorthWest }
-  ]
-  return directions[Math.round(angle / 45) % 8]
-}
-
-const weatherIconMap = (iconCode: string) => {
-  const conditions = [
-    { nameCondition: '01d', icon: IconClearSkyDay },
-    { nameCondition: '01n', icon: IconClearSkyNight },
-    { nameCondition: '02d', icon: IconFewCloudsDay },
-    { nameCondition: '02n', icon: IconFewCloudsNight },
-    { nameCondition: '03d', icon: IconScatteredCloudsDay },
-    { nameCondition: '03n', icon: IconScatteredCloudsNight },
-    { nameCondition: '04d', icon: IconBrokenCloudsDay },
-    { nameCondition: '04n', icon: IconBrokenCloudsNight },
-    { nameCondition: '09d', icon: IconShowerRainDay },
-    { nameCondition: '09n', icon: IconShowerRainNight },
-    { nameCondition: '10d', icon: IconRainDay },
-    { nameCondition: '10n', icon: IconRainNight },
-    { nameCondition: '11d', icon: IconThunderstormDay },
-    { nameCondition: '11n', icon: IconThunderstormNight },
-    { nameCondition: '13d', icon: IconSnowDay },
-    { nameCondition: '13n', icon: IconSnowNight },
-    { nameCondition: '50d', icon: IconMistDay },
-    { nameCondition: '50n', icon: IconMistNight }
-  ]
-  const condition = conditions.find((c) => c.nameCondition === iconCode) || null
-  return condition ? condition.icon : null
-}
+const weatherIconMap = (iconCode: string) => weatherIcons.get(iconCode) ?? null
 
 // Pagination logic
 const paginatedList: any = computed(() => (parsedResponse.value ? parsedResponse.value.list : []))
@@ -131,33 +60,7 @@ const { currentPage, totalPages, paginatedData, nextPage, prevPage } = usePagina
   itemsPerPage
 )
 
-const temperFaringate = 273.15
-
-type TemperatureRange = {
-  min: number
-  max: number
-  color: string
-}
-
-const temperatureRanges: TemperatureRange[] = [
-  { min: -Infinity, max: -60, color: 'text-fuchsia-900' }, // yakut winter
-  { min: -60, max: -50, color: 'text-purple-800' }, // arctic winter
-  { min: -50, max: -40, color: 'text-violet-600' }, // siberian winter
-  { min: -40, max: -30, color: 'text-violet-500' }, // ural winter
-  { min: -30, max: -20, color: 'text-indigo-400' }, // asian winter
-  { min: -20, max: -10, color: 'text-sky-600' }, // europian winter
-  { min: -10, max: -5, color: 'text-cyan-500' },
-  { min: -5, max: 0, color: 'text-cyan-300' },
-  { min: 0, max: 5, color: 'text-zinc-900 dark:text-zinc-500' }, // 0
-  { min: 5, max: 10, color: 'text-emerald-400' }, // arctic spring
-  { min: 10, max: 15, color: 'text-lime-400' }, //  siberian spring
-  { min: 15, max: 20, color: 'text-yellow-400' }, // europian spring
-  { min: 20, max: 30, color: 'text-amber-300' },
-  { min: 30, max: 35, color: 'text-orange-600' }, // miami summer
-  { min: 35, max: 40, color: 'text-pink-600' }, // turkmenistan summer
-  { min: 40, max: Infinity, color: 'text-rose-600' } // quatar summer
-]
-
+// Function to get the color class based on temperature in Celsius
 const getTemperatureColor = (tempCelsius: number): string => {
   for (const range of temperatureRanges) {
     if (tempCelsius >= range.min && tempCelsius <= range.max) {
@@ -166,32 +69,53 @@ const getTemperatureColor = (tempCelsius: number): string => {
   }
   return 'text-stone-300' // default color
 }
+
+onMounted(async () => {
+  await nextTick()
+  if (isGeolocationEnabled.value) {
+    await fetchWeather()
+  }
+})
 </script>
 
 <template>
   <div>
+    <!-- Display geolocation or fetch errors -->
     <div v-if="geoError" class="text-red-500">{{ geoError }}</div>
     <div v-else class="text-red-500">{{ fetchError }}</div>
 
+    <!-- Loading indicator -->
+    <div v-if="isLoading" class="flex justify-center items-center h-20">
+      <div
+        class="w-6 h-6 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"
+      ></div>
+      <div class="text-stone-300">Loading ...</div>
+    </div>
+
+    <!-- Display weather data if available -->
     <div v-if="parsedResponse">
-      <!-- <p>Coordinates: {{ parsedResponse.city.coord.lat }}, {{ parsedResponse.city.coord.lon }}</p>
-                <p>Population: {{ parsedResponse.city.population }}</p>
-                <p>Timezone: {{ parsedResponse.city.timezone }}</p> -->
       <div v-if="parsedResponse.city">
         <div class="city flex justify-center my-4">
           <h1 class="text-2xl dark:text-gray-400">
             City: {{ parsedResponse.city.name }}, {{ parsedResponse.city.country }}
           </h1>
         </div>
+
+        <!-- Sunrise and sunset times -->
         <div class="city-sun_sun flex justify-evenly my-8 text-slate-700 dark:text-slate-400">
           <p>Sunrise: {{ new Date(parsedResponse.city.sunrise * 1000).toLocaleTimeString() }}</p>
           <p>Sunset: {{ new Date(parsedResponse.city.sunset * 1000).toLocaleTimeString() }}</p>
         </div>
       </div>
+
+      <!-- Paginated weather forecast data -->
       <div v-if="paginatedData && paginatedData.length > 0">
-        <div class="flex justify-between items-center max-w-screen-sm mx-auto px-4 mt-6"
-          v-for="(forecast, index) in paginatedData" :key="index">
-          <!-- date format -->
+        <div
+          class="flex justify-between items-center max-w-screen-sm mx-auto px-4 mt-6"
+          v-for="(forecast, index) in paginatedData"
+          :key="index"
+        >
+          <!-- Date and time formatting -->
           <div class="date-format flex flex-col dark:text-gray-400">
             <div class="flex flex-row">
               <div>
@@ -227,8 +151,9 @@ const getTemperatureColor = (tempCelsius: number): string => {
               </div>
             </div>
           </div>
+
+          <!-- Temperature, humidity, pressure, and wind data -->
           <div class="flex flex-wrap items-center justify-center">
-            <!-- temperature -->
             <div class="temperature flex flex-col text-sm sm:text-sm md:text-base">
               <p :class="getTemperatureColor(forecast.main.temp - temperFaringate)">
                 {{ (forecast.main.temp - temperFaringate).toFixed(1) }}&nbsp;°C&nbsp;
@@ -241,7 +166,7 @@ const getTemperatureColor = (tempCelsius: number): string => {
               </div>
             </div>
 
-            <!-- pressure -->
+            <!-- Pressure -->
             <div class="dark:text-stone-400">
               <div class="dark:text-gray-400 flex items-center text-xs sm:text-sm md:text-base">
                 <component :is="IconPressure" class="w-5 h-5 mr-1 hidden sm:block" />
@@ -249,19 +174,24 @@ const getTemperatureColor = (tempCelsius: number): string => {
                   {{ forecast.main.pressure }}&nbsp;hpa&nbsp;
                 </p>
               </div>
-              <!-- wind direction -->
+              <!-- Wind direction -->
               <p class="text-xs sm:text-sm hidden sm:block md:text-base">
                 &nbsp;{{ forecast.wind.speed.toFixed(1) }}&nbsp;
-                <span v-if="forecast.wind.gust != null">({{ forecast.wind.gust.toFixed(1) }}) m/s</span>
+                <span v-if="forecast.wind.gust != null"
+                  >({{ forecast.wind.gust.toFixed(1) }}) m/s</span
+                >
                 <span v-if="forecast.wind?.deg != null">
-                  <component :is="getWindDirection(forecast.wind.deg).icon" class="inline-block w-5 h-5 align-middle" />
+                  <component
+                    :is="getWindDirection(forecast.wind.deg).icon"
+                    class="inline-block w-5 h-5 align-middle"
+                  />
                   {{ getWindDirection(forecast.wind.deg).name }}
                 </span>
               </p>
             </div>
           </div>
           <div class="flex items-center">
-            <!-- description -->
+            <!-- Weather and icon -->
             <div class="description">
               <div>
                 <p class="dark:text-gray-400 hidden sm:block">
@@ -269,18 +199,19 @@ const getTemperatureColor = (tempCelsius: number): string => {
                 </p>
               </div>
             </div>
-            <!-- description-icon -->
             <div class="description-icon flex flex-col img-container h-4 w-4">
               <component :is="weatherIconMap(forecast.weather[0].icon)" class="weather-icon" />
             </div>
           </div>
         </div>
       </div>
-      <PaginationComponent class="flex justify-center mt-6 dark:text-gray-400" :currentPage="currentPage"
-        :totalPages="totalPages" :nextPage="nextPage" :prevPage="prevPage" />
-    </div>
-    <div v-else>
-      <p class="dark:text-gray-50">Loading...</p>
+      <PaginationComponent
+        class="flex justify-center mt-6 dark:text-gray-400"
+        :currentPage="currentPage"
+        :totalPages="totalPages"
+        :nextPage="nextPage"
+        :prevPage="prevPage"
+      />
     </div>
   </div>
 </template>
