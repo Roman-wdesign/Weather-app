@@ -12,14 +12,15 @@ import { getWindDirection } from '@/shared/composables/iconsAndTemperatureAndDir
 
 import { PaginationComponent } from '@/shared/ui/pagination/ui'
 
-import { IconPressure, IconHumidity } from '@/shared/assets/image/svg/humidity-and-pressure'
+import { IconHumidity } from '@/shared/assets/image/svg/humidity-and-pressure'
+import { IconMinMaxTemperature } from '@/shared/assets/image/svg/min-max-temperature'
 
 const { isGeolocationEnabled, latitude, longitude, error: geoError } = useGeolocation()
 const { error: fetchError } = useFetch()
 const isLoading = ref(false)
 const rawResponse = ref<string | null>(null)
 
-const temperFaringate = 273.15
+const temperKelvin = 273.15
 
 const fetchWeather = async () => {
   if (latitude.value && longitude.value) {
@@ -86,9 +87,7 @@ onMounted(async () => {
 
     <!-- Loading indicator -->
     <div v-if="isLoading" class="flex justify-center items-center h-20">
-      <div
-        class="w-6 h-6 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"
-      ></div>
+      <div class="w-6 h-6 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
       <div class="text-stone-300">Loading ...</div>
     </div>
 
@@ -110,11 +109,9 @@ onMounted(async () => {
 
       <!-- Paginated weather forecast data -->
       <div v-if="paginatedData && paginatedData.length > 0">
-        <div
-          class="flex justify-between items-center max-w-screen-sm mx-auto px-4 mt-6"
-          v-for="(forecast, index) in paginatedData"
-          :key="index"
-        >
+        <div class="flex justify-between items-center max-w-screen-sm mx-auto px-4 mt-6"
+          v-for="(forecast, index) in paginatedData" :key="index">
+
           <!-- Date and time formatting -->
           <div class="date-format flex flex-col dark:text-gray-400">
             <div class="flex flex-row">
@@ -155,8 +152,8 @@ onMounted(async () => {
           <!-- Temperature, humidity, pressure, and wind data -->
           <div class="flex flex-wrap items-center justify-center">
             <div class="temperature flex flex-col text-sm sm:text-sm md:text-base">
-              <p :class="getTemperatureColor(forecast.main.temp - temperFaringate)">
-                {{ (forecast.main.temp - temperFaringate).toFixed(1) }}&nbsp;°C&nbsp;
+              <p :class="getTemperatureColor(forecast.main.temp - temperKelvin)">
+                {{ (Math.round(forecast.main.temp_max - temperKelvin)) }}&nbsp;°C&nbsp;
               </p>
               <div class="dark:text-gray-400 flex items-center">
                 <component :is="IconHumidity" class="w-2 h-4 mr-1 flex-no-shrink fill-current" />
@@ -166,25 +163,22 @@ onMounted(async () => {
               </div>
             </div>
 
-            <!-- Pressure -->
+            <!-- Temp min -->
             <div class="dark:text-stone-400">
               <div class="dark:text-gray-400 flex items-center text-xs sm:text-sm md:text-base">
-                <component :is="IconPressure" class="w-5 h-5 mr-1 hidden sm:block" />
-                <p class="dark:text-gray-400 text-xs hidden sm:block sm:text-sm md:text-base">
-                  {{ forecast.main.pressure }}&nbsp;hpa&nbsp;
+                <component :is="IconMinMaxTemperature" class="w-5 h-5 mr-1 hidden sm:block" />
+                <p :class="getTemperatureColor(forecast.main.temp_min - temperKelvin)">
+
+                  {{ (Math.round(forecast.main.temp_min - temperKelvin)) }}&nbsp;°C&nbsp;
                 </p>
               </div>
+
               <!-- Wind direction -->
               <p class="text-xs sm:text-sm hidden sm:block md:text-base">
                 &nbsp;{{ forecast.wind.speed.toFixed(1) }}&nbsp;
-                <span v-if="forecast.wind.gust != null"
-                  >({{ forecast.wind.gust.toFixed(1) }}) m/s</span
-                >
+                <span v-if="forecast.wind.gust != null">({{ forecast.wind.gust.toFixed(1) }}) m/s</span>
                 <span v-if="forecast.wind?.deg != null">
-                  <component
-                    :is="getWindDirection(forecast.wind.deg).icon"
-                    class="inline-block w-5 h-5 align-middle"
-                  />
+                  <component :is="getWindDirection(forecast.wind.deg).icon" class="inline-block w-5 h-5 align-middle" />
                   {{ getWindDirection(forecast.wind.deg).name }}
                 </span>
               </p>
@@ -205,13 +199,8 @@ onMounted(async () => {
           </div>
         </div>
       </div>
-      <PaginationComponent
-        class="flex justify-center mt-6 dark:text-gray-400"
-        :currentPage="currentPage"
-        :totalPages="totalPages"
-        :nextPage="nextPage"
-        :prevPage="prevPage"
-      />
+      <PaginationComponent class="flex justify-center mt-6 dark:text-gray-400" :currentPage="currentPage"
+        :totalPages="totalPages" :nextPage="nextPage" :prevPage="prevPage" />
     </div>
   </div>
 </template>
