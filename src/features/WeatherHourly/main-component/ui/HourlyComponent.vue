@@ -111,7 +111,6 @@ onMounted(async () => {
       <div v-if="paginatedData && paginatedData.length > 0">
         <div class="flex justify-between items-center max-w-screen-sm mx-auto px-4 mt-6"
           v-for="(forecast, index) in paginatedData" :key="index">
-
           <!-- Date and time formatting -->
           <div class="date-format flex flex-col dark:text-gray-400">
             <div class="flex flex-row">
@@ -153,7 +152,7 @@ onMounted(async () => {
           <div class="flex flex-wrap items-center justify-center">
             <div class="temperature flex flex-col text-sm sm:text-sm md:text-base">
               <p :class="getTemperatureColor(forecast.main.temp - temperKelvin)">
-                {{ (Math.round(forecast.main.temp_max - temperKelvin)) }}&nbsp;°C&nbsp;
+                {{ Math.round(forecast.main.temp_max - temperKelvin) }}&nbsp;°C&nbsp;
               </p>
               <div class="dark:text-gray-400 flex items-center">
                 <component :is="IconHumidity" class="w-2 h-4 mr-1 flex-no-shrink fill-current" />
@@ -168,8 +167,7 @@ onMounted(async () => {
               <div class="dark:text-gray-400 flex items-center text-xs sm:text-sm md:text-base">
                 <component :is="IconMinMaxTemperature" class="w-5 h-5 mr-1 hidden sm:block" />
                 <p :class="getTemperatureColor(forecast.main.temp_min - temperKelvin)">
-
-                  {{ (Math.round(forecast.main.temp_min - temperKelvin)) }}&nbsp;°C&nbsp;
+                  {{ Math.round(forecast.main.temp_min - temperKelvin) }}&nbsp;°C&nbsp;
                 </p>
               </div>
 

@@ -1,1 +1,1 @@
-export {default as IconMinMaxTemperature} from './ui/IconMinMaxTemperature.vue'
+export { default as IconMinMaxTemperature } from './ui/IconMinMaxTemperature.vue'
