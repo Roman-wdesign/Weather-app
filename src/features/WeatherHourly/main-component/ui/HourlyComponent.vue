@@ -13,7 +13,6 @@ import { getWindDirection } from '@/shared/composables/iconsAndTemperatureAndDir
 import { PaginationComponent } from '@/shared/ui/pagination/ui'
 
 import { IconHumidity } from '@/shared/assets/image/svg/humidity-and-pressure'
-import { IconMinMaxTemperature } from '@/shared/assets/image/svg/min-max-temperature'
 
 const { isGeolocationEnabled, latitude, longitude, error: geoError } = useGeolocation()
 const { error: fetchError } = useFetch()
@@ -108,8 +107,8 @@ onMounted(async () => {
       </div>
 
       <!-- Paginated weather forecast data -->
-      <div v-if="paginatedData && paginatedData.length > 0">
-        <div class="flex justify-between items-center max-w-screen-sm mx-auto px-4 mt-6"
+      <div v-if="paginatedData && paginatedData.length > 0" class=" flex-col justify-center">
+        <div class="flex justify-between items-center max-w-screen-sm mx-auto mt-6"
           v-for="(forecast, index) in paginatedData" :key="index">
           <!-- Date and time formatting -->
           <div class="date-format flex flex-col dark:text-gray-400">
@@ -149,7 +148,7 @@ onMounted(async () => {
           </div>
 
           <!-- Temperature, humidity, pressure, and wind data -->
-          <div class="flex flex-wrap items-center justify-center">
+          <div class="xs:min-w-20 xs:max-w-20 flex-col items-center justify-center  md:max-w-32 md:min-w-32">
             <div class="temperature flex flex-col text-sm sm:text-sm md:text-base">
               <p :class="getTemperatureColor(forecast.main.temp - temperKelvin)">
                 {{ Math.round(forecast.main.temp_max - temperKelvin) }}&nbsp;°C&nbsp;
@@ -162,19 +161,11 @@ onMounted(async () => {
               </div>
             </div>
 
-            <!-- Temp min -->
             <div class="dark:text-stone-400">
-              <div class="dark:text-gray-400 flex items-center text-xs sm:text-sm md:text-base">
-                <component :is="IconMinMaxTemperature" class="w-5 h-5 mr-1 hidden sm:block" />
-                <p :class="getTemperatureColor(forecast.main.temp_min - temperKelvin)">
-                  {{ Math.round(forecast.main.temp_min - temperKelvin) }}&nbsp;°C&nbsp;
-                </p>
-              </div>
-
               <!-- Wind direction -->
               <p class="text-xs sm:text-sm hidden sm:block md:text-base">
-                &nbsp;{{ forecast.wind.speed.toFixed(1) }}&nbsp;
-                <span v-if="forecast.wind.gust != null">({{ forecast.wind.gust.toFixed(1) }}) m/s</span>
+                &nbsp;{{ forecast.wind.speed.toFixed(1) }}&nbsp; m/s
+
                 <span v-if="forecast.wind?.deg != null">
                   <component :is="getWindDirection(forecast.wind.deg).icon" class="inline-block w-5 h-5 align-middle" />
                   {{ getWindDirection(forecast.wind.deg).name }}
@@ -184,14 +175,14 @@ onMounted(async () => {
           </div>
           <div class="flex items-center">
             <!-- Weather and icon -->
-            <div class="description">
+            <div class="description hidden md:block max-w-24 min-w-24">
               <div>
                 <p class="dark:text-gray-400 hidden sm:block">
                   {{ forecast.weather[0].description }}
                 </p>
               </div>
             </div>
-            <div class="description-icon flex flex-col img-container h-4 w-4">
+            <div class="description-icon flex flex-col img-container h-7 w-7">
               <component :is="weatherIconMap(forecast.weather[0].icon)" class="weather-icon" />
             </div>
           </div>
